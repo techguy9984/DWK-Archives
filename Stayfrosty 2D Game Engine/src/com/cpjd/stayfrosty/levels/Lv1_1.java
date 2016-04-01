@@ -1,3 +1,4 @@
+
 package com.cpjd.stayfrosty.levels;
 
 import java.awt.Color;
@@ -20,7 +21,7 @@ import com.cpjd.stayfrosty.files.Load;
 import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.input.Mouse;
+import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.PauseState;
 import com.cpjd.stayfrosty.shop.Consumables;
@@ -269,3 +270,4 @@ public class Lv1_1 extends GameState {// intro
 	
 	
 }
+

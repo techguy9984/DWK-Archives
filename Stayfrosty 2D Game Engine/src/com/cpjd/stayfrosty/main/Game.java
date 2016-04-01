@@ -30,7 +30,7 @@ public class Game extends JFrame implements WindowListener {
 		
 		// FPS
 		if(joe) GamePanel.FPS = 10;
-		if(!joe) GamePanel.FPS = 60;
+		if(!joe) GamePanel.FPS = 150;
 		
 		// Cursor
 		if(hideCursor) GamePanel.hideCursor = true;

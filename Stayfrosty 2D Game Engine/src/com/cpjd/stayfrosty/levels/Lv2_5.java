@@ -16,7 +16,7 @@ import com.cpjd.stayfrosty.files.Load;
 import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.input.Mouse;
+import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.PauseState;
 import com.cpjd.stayfrosty.shop.Consumables;
@@ -191,8 +191,8 @@ public class Lv2_5 extends GameState {
 		
 		if(!Player.freecam) tileMap.setPosition(GamePanel.WIDTH / 2 - player.getx(), GamePanel.HEIGHT / 2 - player.gety()); 
 		
-		if(GamePanel.debug && Mouse.isPressed(Mouse.LEFT)) {
-			player.setPosition((int)Math.abs(tileMap.getx()) + (Mouse.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse.y / 2));
+		if(GamePanel.debug && Mouse2.isPressed(Mouse2.LEFT)) {
+			player.setPosition((int)Math.abs(tileMap.getx()) + (Mouse2.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse2.y / 2));
 		}
 		
 		checkBullets();
