@@ -1,5 +1,9 @@
+
 package com.cpjd.stayfrosty.levels;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,20 +32,13 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
 import com.cpjd.stayfrosty.weapons.Weapon;
 
 // APROVED
-public class Lv1_1 extends GameState {
+public class Lv1_1 extends GameState {// intro
 	
-	private TileMap tileMap; 
-	private Background bg;
-	private Player player;
-
-	private HUD hud;
-	
-	private MovingBlock mb;
-	
-	private ArrayList<Enemy> illuminati;
-	private ArrayList<Explosion> explosions;
-	
-	Minimap m;
+	//private TileMap tileMap; 
+	//private Background bg;
+	private int counter = 0;
+	private int storyLevel = 0;
+	private String[] Narration = new String[10];
 	
 	public Lv1_1(GameStateManager gsm, Load load, Save save) {
 		super(gsm, load, save);
@@ -53,35 +50,22 @@ public class Lv1_1 extends GameState {
 	
 
 	public void init() {
-		tileMap = new TileMap(64); // The tile size (in pixels) of each tile
-		tileMap.load64("/Tilesets/tileset.png"); // The tileset artwork
-		tileMap.loadTiledMap("/Maps/Lv1_1.txt"); // The map file, generated from Tiled
-		tileMap.setPosition(300,1700); // The camera view
-		tileMap.setTween(0.07);
-		
-		bg = new Background("/Backgrounds/wood.png",0.1); // The background image location and it's movespeed
+		storyLevel = 0;
+		Narration[0] = " The DWK Archives: vol 1";
+		Narration[1] = " Sometime in the ancient past three great warriors formed a bond, this bond was more powerful than any other known to man.";
+		Narration[2] = " They drew upon each other's strengths to outwit, outlast, and overpower their enemies.";
+		Narration[3] = " These three great warriors eventually died together in battle. However, their legacy was continued by their followers. Their following formed a union with one purpose, to eradicate the world of injustice.";
+		Narration[4] = " This purpose was upheld by the great constitution which held the rules for the perfect society. The followers of this constitution began to be called the illuminati.";
+		Narration[5] = " Those under the illuminati experienced great peace and wealth and the constitution was upheld at all costs.";
+		Narration[6] = " One day, a young man by the name of Alex Sparker infiltrated the illuminati and attempted to corrupt its followers.";
+		Narration[7] = " His plan succeeded, many fell to his sly words and the illuminati began to fall. The days of peace and prosperity seemed to come to an end, the illuminati lost its fame and became only legend.";
+		Narration[8] = " Until one day, when three new young heroes joined together to fight the evil plans of Alex Sparker and his new found followers, and to promote justice found in the ideals of the illuminati.";
+		Narration[9] = " Here is the tale of the victory of the three united, the DWK.";
 
-		player = new Player(tileMap, gsm, load);
-		
-		mb = new MovingBlock(tileMap, 2049, 1100, 500); // The x position, y position, and range
-
-		player.setPosition(300, 1700); // Player location on tilemap
 		
 		AudioPlayer.loopMusic(SKeys.Main);
-		
-		
-		m = new Minimap("/Minimaps/Lv1_1.png", 1, 1);
-		
-		populateEnemies(); // Adds all the enemies
-		
-		hud = new HUD(player); // The heads up display
-
-		explosions = new ArrayList<Explosion>();
 
 		if(gsm.getState() == GameStateManager.entry) save();
-		
-		//JukeBox.load("/Music/level1-1.mp3", "bg");
-		//JukeBox.loop("bg");
 		
 		
 	}
@@ -169,155 +153,75 @@ public class Lv1_1 extends GameState {
 	}
 	
 	
-	private void populateEnemies() {
-		illuminati = new ArrayList<Enemy>();
-		
-		Illuminati il;
-		il = new Illuminati(tileMap);
-		il.setPosition(1913, 1815);
-		illuminati.add(il);
-		
-	}
 	
 	public void update() {
-		player.update();
-		
-		hud.update();		
-		
-		checkMelee();
-		
-		// Set the location of the background
-		bg.setPosition(tileMap.getx(),tileMap.gety());
-		
-		// If we aren't freecaming, move the camera to the player location
-		if(!Player.freecam) tileMap.setPosition(GamePanel.WIDTH / 2 - player.getx(), GamePanel.HEIGHT / 2 - player.gety()); 
-		
-		// If we are debugging, set the location of the player to a mouse click
-		if(GamePanel.debug && Mouse2.isPressed(Mouse2.LEFT)) {
-			player.setPosition((int)Math.abs(tileMap.getx()) + (Mouse2.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse2.y / 2));
+		counter ++;
+		if(counter>Narration[storyLevel].length()*2){
+			counter = Narration[storyLevel].length()*2;
 		}
-		
-		// Check for moving block collision
-		mb.checkPlayerCollision(player);
-		
-		mb.update();
-		
-		checkBullets();
-		
-		removeEnemies();
-		
-		checkAttack();
-		
-		// Update explosions
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).update();
-			if(explosions.get(i).shouldRemove()) {
-				explosions.remove(i);
-			}
-		}
+		if (storyLevel == 10){
+        	//gsm.nextLevel();
+        }
 		
 
 	}
 	
-	private void checkBullets() {
-		// Test for bullet collisions on illuminati
-		for(int i = 0; i < illuminati.size(); i++) {
-			// Run through all of the bullets (illuminati)
-			for(int j = 0; j < illuminati.get(i).getBulletArray().size(); j++) {
-				if(illuminati.get(i).getBulletArray().get(j).getCollisionBox().intersects(player.getCollisionBox())) {
-					if(!illuminati.get(i).isDead()) player.hit(illuminati.get(i).getDamage());
-				}
-			}
-		}
-	}
 	
-	private void checkAttack() {
-		player.checkAttack(illuminati);
-	}
+
 	
-	private void checkMelee() {}
+
+
 	
-	private void removeEnemies() {
-		// Illuminati
-		for (int i = 0; i < illuminati.size(); i++) {
-			Enemy e = illuminati.get(i);
-			e.update();
-			if (e.isDead()) {
-				illuminati.remove(i);
-				i--;
-				explosions.add(new Explosion(e.getx(), e.gety())); 
-			}
-		}
-	}
 	
 	public void draw(Graphics2D g) {
 
-		// draw background
-		bg.draw(g);
+		//bg.draw(g);
+		g.setColor(Color.white);
 		
-		// draw tilemap
-		tileMap.draw(g);
+		Font font = new Font("Monospaced", Font.PLAIN, 18);
+        g.setFont( font );
 		
-		// moving block
-		mb.draw(g);
-		
-		drawEnemies(g);
-		
-		// draw hud
-		hud.draw(g);
-		
-		// draw player
-		player.draw(g);
-		
-		// draw explosion
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).setMapPosition((int)tileMap.getx(),(int) tileMap.gety());
-			explosions.get(i).draw(g);
-		}
+        displayString(Narration[storyLevel].substring(0,counter/2), 20, 20, 50, 20, g);
 
-		m.draw(g);
+
 		
 	}
 	
-	private void drawEnemies(Graphics2D g) {
-		for (int i = 0; i < illuminati.size(); i++) {
-			illuminati.get(i).draw(g);
+	public static void displayString(String str, int x, int y, int width,int height, Graphics g){
+		while(str.length() > width){
+			for(int i = width-1;i>=0;i--){
+				if(str.charAt(i)==' '){
+					g.drawString(str.substring(0,i), x, y);
+					str = str.substring(i,str.length());
+					y += height;
+					break;
+					
+				}
+			}
 		}
+		g.drawString(str,x,y);
 	}
 	
 	public void keyPressed(int k) {
-		player.keyPressed(k);
+		//player.keyPressed(k);
 		
-		m.keyPressed(k);
+		//m.keyPressed(k);
 		
-		if(k == KeyEvent.VK_W && GamePanel.debug) {
-			if(Player.freecam)tileMap.setPosition(tileMap.getx(), tileMap.gety() + 450);
-			Player.freecam = true;
-			
+		
+		
+		//if(k == KeyEvent.VK_SPACE) player.setUp(true);
+		//if(k == KeyEvent.VK_LEFT) player.setLeft(true);
+		//if(k == KeyEvent.VK_DOWN) player.setDown(true);
+		//if(k == KeyEvent.VK_RIGHT) player.setRight(true);
+		//if(k == KeyEvent.VK_SPACE) player.setJumping(true);
+		
+		
+		//if(k == KeyEvent.VK_SHIFT) player.setSprinting(true);
+		//if(k == KeyEvent.VK_S) player.setSmoking();
+		if(k == KeyEvent.VK_ENTER){
+			storyLevel++;
+			counter = 0;
 		}
-		if(k == KeyEvent.VK_A && GamePanel.debug) {
-			if(Player.freecam)tileMap.setPosition(tileMap.getx() + 450, tileMap.gety());
-			Player.freecam = true;
-			
-		}
-		if(k == KeyEvent.VK_S && GamePanel.debug) {
-			if(Player.freecam)tileMap.setPosition(tileMap.getx(), tileMap.gety() - 450);
-			Player.freecam = true;
-		}
-		if(k == KeyEvent.VK_D && GamePanel.debug) {
-			if(Player.freecam) tileMap.setPosition(tileMap.getx() - 450, tileMap.gety());
-			Player.freecam = true;
-		};
-		
-		if(k == KeyEvent.VK_SPACE) player.setUp(true);
-		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(k == KeyEvent.VK_DOWN) player.setDown(true);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		
-		
-		if(k == KeyEvent.VK_SHIFT) player.setSprinting(true);
-		if(k == KeyEvent.VK_S) player.setSmoking();
 		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) {
 			gsm.setPaused(true);
 		}
@@ -325,17 +229,19 @@ public class Lv1_1 extends GameState {
 	}
 	
 	public void keyReleased(int k) {
-		player.keyReleased(k);
+		//player.keyReleased(k);
 
 		PauseState.keyLock = false;
 		
-		if(k == KeyEvent.VK_SPACE) player.setUp(false);
-		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
-		if(k == KeyEvent.VK_DOWN) player.setDown(false);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
-		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
-		if(k == KeyEvent.VK_SHIFT) player.setSprinting(false);
+		//if(k == KeyEvent.VK_SPACE) player.setUp(false);
+		//if(k == KeyEvent.VK_LEFT) player.setLeft(false);
+		//if(k == KeyEvent.VK_DOWN) player.setDown(false);
+		//if(k == KeyEvent.VK_RIGHT) player.setRight(false);
+		//if(k == KeyEvent.VK_SPACE) player.setJumping(false);
+		//if(k == KeyEvent.VK_SHIFT) player.setSprinting(false);
 		
 	}
 	
+	
 }
+
