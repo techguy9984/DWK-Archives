@@ -2,7 +2,7 @@ package com.cpjd.stayfrosty.input;
 
 import java.awt.event.MouseEvent;
 
-public class Mouse {
+public class Mouse2 {
 	
 	public static final int NUM_VARS = 3;
 	
@@ -23,11 +23,13 @@ public class Mouse {
 	}
 	
 	public static void setMousePos(int x, int y) {
-		Mouse.x = x;
-		Mouse.y = y;
+		Mouse2.x = x;
+		Mouse2.y = y;
 	}
 	
 	public static void update() {
+		
+		
 		for(int i = 0; i < NUM_VARS; i++) {
 			prevMouseState[i] = mouseState[i];
 		}

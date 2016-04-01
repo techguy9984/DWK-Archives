@@ -18,10 +18,10 @@ import javax.swing.JPanel;
 
 import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.input.Mouse;
+import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.util.Error;
 import com.cpjd.stayfrosty.util.Time;
-
+import com.cpjd.tools.Mouse;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	
@@ -41,8 +41,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Thread
 	private Thread thread;
 	private volatile boolean running;
-	public static int FPS;
-	private long targetTime = 1000 / FPS;
+	public static int FPS = 120;
+	public static long targetTime = 1000 / FPS;
 	
 	// Image
 	private BufferedImage image;
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		time = new Time();
 		
 		// Get rid of the mouse
-		hideCursor(hideCursor);
+		//hideCursor(hideCursor);
 	}
 	
 	private void hideCursor(boolean b) {
@@ -127,7 +127,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		
 		time.update();
 		
-		Mouse.update();
+
+		
+		Mouse2.update();
 
 	}
 	
@@ -165,9 +167,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	public void keyReleased(KeyEvent key) { gsm.keyReleased(key.getKeyCode()); }
 	public void keyTyped(KeyEvent key) {}
-	public void mousePressed(MouseEvent mouse) { Mouse.mouseSet(mouse.getButton(), true); }
-	public void mouseReleased(MouseEvent mouse) { Mouse.mouseSet(mouse.getButton(), false); }
-	public void mouseMoved(MouseEvent mouse) { Mouse.setMousePos(mouse.getX(), mouse.getY()); }
+
+	public void mousePressed(MouseEvent mouse) {
+		Mouse2.mouseSet(mouse.getButton(), true);
+		Mouse.leftPressed = true;
+	}
+
+	public void mouseReleased(MouseEvent mouse) {
+		Mouse2.mouseSet(mouse.getButton(), false);
+		Mouse.leftPressed = false;
+	}
+
+	public void mouseMoved(MouseEvent mouse) {
+		Mouse2.setMousePos(mouse.getX(), mouse.getY());
+		Mouse.x = (int)(mouse.getX() * 0.5);
+		Mouse.y = (int)(mouse.getY() * 0.5);
+	}
 	public void mouseDragged(MouseEvent mouse) {}
 	public void mouseClicked(MouseEvent mouse) {}
 	public void mouseEntered(MouseEvent mouse) {}

@@ -18,6 +18,7 @@ import com.cpjd.stayfrosty.files.Directory;
 import com.cpjd.stayfrosty.files.Load;
 import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.files.SaveAnim;
+import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.levels.Lv1_1;
 import com.cpjd.stayfrosty.levels.Lv1_2;
 import com.cpjd.stayfrosty.levels.Lv1_3;
@@ -238,7 +239,13 @@ public class GameStateManager {
 		paused = b;
 	}
 	
+	public void nextLevel() {
+		int current2 = getState() + 1;
+		setState(current2);
+	}
+	
 	public void update() {
+		
 		// Check if the player is dead
 		if(Player.globalDead) {
 			pauseState.reset();
@@ -352,6 +359,10 @@ public class GameStateManager {
 			} catch(Exception e) {
 				
 			}
+		}
+		
+		if(GamePanel.debug && k == KeyEvent.VK_F4) {
+			setState(currentState);
 		}
 		
 		if(GamePanel.debug && k == KeyEvent.VK_L) {
