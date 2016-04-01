@@ -86,7 +86,7 @@ public class GameStateManager {
 	public static final int MENU = 1;
 	public static final int CREDITS = 2;
 	// Levels
-	public static final int L_TUTORIAL = 4;
+	public static final int L_TUTORIAL = 5;
 	public static final int L1_1 = 5;
 	public static final int L1_2 = 6;
 	public static final int L1_3 = 7;
