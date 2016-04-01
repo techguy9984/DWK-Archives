@@ -36,7 +36,9 @@ public class Lv1_1 extends GameState {// intro
 	//private TileMap tileMap; 
 	//private Background bg;
 	private int counter = 0;
+	private int blinker = 0;
 	private int storyLevel = 0;
+	private boolean finishedTyping = false;
 	private String[] Narration = new String[10];
 	
 	public Lv1_1(GameStateManager gsm, Load load, Save save) {
@@ -155,11 +157,18 @@ public class Lv1_1 extends GameState {// intro
 	
 	public void update() {
 		counter ++;
+		blinker ++;
+		if(blinker ==20){
+			blinker = 0;
+		}
 		if(counter>Narration[storyLevel].length()*2){
 			counter = Narration[storyLevel].length()*2;
 		}
 		if (storyLevel == 10){
         	//gsm.nextLevel();
+        }
+		if(counter == Narration[storyLevel].length()*2){
+        	finishedTyping = true;
         }
 		
 
@@ -175,30 +184,42 @@ public class Lv1_1 extends GameState {// intro
 	public void draw(Graphics2D g) {
 
 		//bg.draw(g);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		g.setColor(Color.white);
 		
 		Font font = new Font("Monospaced", Font.PLAIN, 18);
         g.setFont( font );
 		
-        displayString(Narration[storyLevel].substring(0,counter/2), 20, 20, 50, 20, g);
-
+        boolean cursor;
+        if(blinker >= 10){
+        	cursor = true;
+        }else{
+        	cursor = false;
+        }
+        displayString(Narration[storyLevel].substring(0,counter/2), 100, 100, 50, 20,cursor, g);
+        
 
 		
 	}
 	
-	public static void displayString(String str, int x, int y, int width,int height, Graphics g){
+	public static void displayString(String str, int x, int y, int width,int height, boolean cursor, Graphics g){
 		while(str.length() > width){
 			for(int i = width-1;i>=0;i--){
 				if(str.charAt(i)==' '){
 					g.drawString(str.substring(0,i), x, y);
 					str = str.substring(i,str.length());
 					y += height;
+					
 					break;
 					
 				}
 			}
 		}
 		g.drawString(str,x,y);
+		//int width = g.getFontMetrics().stringWidth(str);
+		if (cursor)
+			g.drawString("|", x+g.getFontMetrics().stringWidth(str), y);
 	}
 	
 	public void keyPressed(int k) {
@@ -215,11 +236,16 @@ public class Lv1_1 extends GameState {// intro
 		//if(k == KeyEvent.VK_SPACE) player.setJumping(true);
 		
 		
-		//if(k == KeyEvent.VK_SHIFT) player.setSprinting(true);
+		if(k == KeyEvent.VK_SHIFT){
+			storyLevel--;
+			counter = 0;
+			finishedTyping = false;
+		}
 		//if(k == KeyEvent.VK_S) player.setSmoking();
 		if(k == KeyEvent.VK_ENTER){
 			storyLevel++;
 			counter = 0;
+			finishedTyping = false;
 		}
 		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) {
 			gsm.setPaused(true);
