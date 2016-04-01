@@ -38,7 +38,7 @@ public class AudioLoad {
 		AudioPlayer.addSound(SKeys.Shotgun_Fire, "/Audio/SFX/Weapons/Shot/shotgun.ogg");
 		AudioPlayer.addSound(SKeys.Sniper_Fire, "/Audio/SFX/Weapons/Shot/sniper.ogg");
 		AudioPlayer.addSound(SKeys.Uzi_Fire, "/Audio/SFX/Weapons/Shot/uzi.ogg");
-		
+
 		AudioPlayer.addMusic(SKeys.Main, "/Audio/Music/main.ogg");
 		AudioPlayer.addMusic(SKeys.MLG_Epic, "/Audio/Music/mlg_epic.ogg");
 		AudioPlayer.addMusic(SKeys.Boss, "/Audio/Music/Boss/boss.ogg");

@@ -55,7 +55,6 @@ public class Menu extends GameState {
 	
 	BufferedImage bryan;
 	
-	
 	private int bx;
 	private int by;
 	private int xinc;
