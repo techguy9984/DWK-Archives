@@ -40,8 +40,8 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	// Game parameters
-	public static String title = "Bryan Simulator Beta 3 by Will Davies";
-	private static String version = "Beta 3.0";
+	public static String title = "The DWK Archives";
+	private static String version = "Alpha 1.0";
 	private static int versionCode  = 31;
 	
 	// Mouse tracking

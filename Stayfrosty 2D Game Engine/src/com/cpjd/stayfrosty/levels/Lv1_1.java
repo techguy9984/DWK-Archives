@@ -39,7 +39,9 @@ public class Lv1_1 extends GameState {// intro
 	private int counter = 0;
 	private int blinker = 0;
 	private int storyLevel = 0;
+	private int selected = 0;
 	private boolean finishedTyping = false;
+	private String[] descriptions = new String[3];
 	private String[] Narration = new String[10];
 	
 	public Lv1_1(GameStateManager gsm, Load load, Save save) {
@@ -63,7 +65,10 @@ public class Lv1_1 extends GameState {// intro
 		Narration[7] = " His plan succeeded, many fell to his sly words and the illuminati began to fall. The days of peace and prosperity seemed to come to an end, the illuminati lost its fame and became only legend.";
 		Narration[8] = " Until one day, when three new young heroes joined together to fight the evil plans of Alex Sparker and his new found followers, and to promote justice found in the ideals of the illuminati.";
 		Narration[9] = " Here is the tale of the victory of the three united, the DWK.";
-
+		
+		descriptions[0] = "A competetive track runner and hobbies enthusiast";
+		descriptions[1] = "A dedicated programmer and certified csgo pro";
+		descriptions[2] = "A flawless man";
 		
 		AudioPlayer.loopMusic(SKeys.Main);
 
@@ -159,19 +164,21 @@ public class Lv1_1 extends GameState {// intro
 	public void update() {
 		counter ++;
 		blinker ++;
-		if(blinker ==20){
+		if(blinker ==40){
 			blinker = 0;
 		}
-		if(counter>Narration[storyLevel].length()*2){
-			counter = Narration[storyLevel].length()*2;
-		}
-		if (storyLevel == 10){
-        	//gsm.nextLevel();
-        }
-		if(counter == Narration[storyLevel].length()*2){
-        	finishedTyping = true;
-        }
-		
+		if(storyLevel <= 9){
+			if(counter>Narration[storyLevel].length()*2){
+				counter = Narration[storyLevel].length()*2;
+			}
+			if(counter == Narration[storyLevel].length()*2){
+				finishedTyping = true;
+        	}
+		}else if (storyLevel == 10){
+			if(counter>90){
+				counter = 90;
+			}
+    	}
 
 	}
 	
@@ -193,12 +200,27 @@ public class Lv1_1 extends GameState {// intro
         g.setFont( font );
 		
         boolean cursor;
-        if(blinker >= 10){
+        if(blinker >= 20){
         	cursor = true;
         }else{
         	cursor = false;
         }
-        displayString(Narration[storyLevel].substring(0,counter/2), 100, 100, 50, 20,cursor, g);
+        if(storyLevel <= 9){
+        	displayString(Narration[storyLevel].substring(0,counter/2), 100, 100, 50, 20,cursor, g);
+        }else if (storyLevel == 10){
+        	g.drawString(" Select Your Character",100,100);
+        	if(counter>70)
+        	g.drawString("   Daniel",100,40+counter);
+        	if(counter>40)
+        	g.drawString("   Will",100,70+counter);
+        	if(counter>10)
+        	g.drawString("   Kade",100,100+counter);
+        	if(counter==90){
+        		g.drawString("[",115,130+selected*30);
+        		g.drawString(descriptions[selected],130,300);
+        	}
+        	
+        }
         
 
 		
@@ -235,7 +257,38 @@ public class Lv1_1 extends GameState {// intro
 		//if(k == KeyEvent.VK_DOWN) player.setDown(true);
 		//if(k == KeyEvent.VK_RIGHT) player.setRight(true);
 		//if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		
+		if(k == KeyEvent.VK_W){
+			if (storyLevel == 10){
+				selected -= 1;
+				if (selected == -1){
+					selected = 2;
+				}
+			}
+		}
+		if(k == KeyEvent.VK_S){
+			if (storyLevel == 10){
+				selected += 1;
+				if (selected == 3){
+					selected = 0;
+				}
+			}
+		}
+		if(k == KeyEvent.VK_UP){
+			if (storyLevel == 10){
+				selected -= 1;
+				if (selected == -1){
+					selected = 2;
+				}
+			}
+		}
+		if(k == KeyEvent.VK_DOWN){
+			if (storyLevel == 10){
+				selected += 1;
+				if (selected == 3){
+					selected = 0;
+				}
+			}
+		}
 		
 		if(k == KeyEvent.VK_SHIFT){
 			storyLevel--;
@@ -244,6 +297,7 @@ public class Lv1_1 extends GameState {// intro
 		}
 		//if(k == KeyEvent.VK_S) player.setSmoking();
 		if(k == KeyEvent.VK_ENTER){
+			if (storyLevel <= 9)
 			storyLevel++;
 			counter = 0;
 			finishedTyping = false;
