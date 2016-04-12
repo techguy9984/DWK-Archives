@@ -166,13 +166,6 @@ public class Lv1_1 extends GameState {// intro
 
 	}
 	
-	
-
-	
-
-
-	
-	
 	public void draw(Graphics2D g) {
 
 		//bg.draw(g);

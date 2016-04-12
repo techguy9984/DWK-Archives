@@ -81,6 +81,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 
 	// Entry point of launcher
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new Launcher().setVisible(true);
