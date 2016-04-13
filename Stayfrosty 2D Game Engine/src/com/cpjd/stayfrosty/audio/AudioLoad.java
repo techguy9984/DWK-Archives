@@ -68,6 +68,7 @@ public class AudioLoad {
 		AudioPlayer.stopMusic(SKeys.John_Cena);
 		AudioPlayer.stopMusic(SKeys.Set_2);
 		AudioPlayer.stopMusic(SKeys.Set_3);
+		AudioPlayer.stopMusic(SKeys.Theme);
 		
 	}
 	

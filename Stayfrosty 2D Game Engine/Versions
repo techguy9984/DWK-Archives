@@ -1,0 +1,19 @@
+Versions
+
+Alpha 1.0
+-Basic engine
+-Text intro
+Alpha 2.0
+-Added new menu
+-Updated credits
+
+TODO:
+-Art for all 3 characters (+ animations)
+-Fix thread issue with loading at game startup
+-Sound for beginning intro - cry for help from the last of the illuminati (saved as .ogg)
+-Design "tutorial level" or first level
+-New dialog system (show captions at correct time, on-screen location)
+-New credits music (check out freesound.org)
+-Remove shop and inventory classes - they need to be redone
+-Remove unused sounds
+Alpha 3.0

@@ -123,6 +123,7 @@ public class Menu extends GameState {
 		}
 		if(k == KeyEvent.VK_ENTER) {
 			if(currentSelection == 0) gsm.setState(GameStateManager.L1_1);
+			if(currentSelection == 1) gsm.setState(GameStateManager.CREDITS);
 			if(currentSelection == 2) {
 				AL.destroy();
 				System.exit(0);

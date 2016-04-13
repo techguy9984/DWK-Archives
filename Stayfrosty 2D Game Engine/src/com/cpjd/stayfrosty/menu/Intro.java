@@ -95,9 +95,6 @@ public class Intro extends GameState {
 				} catch(Exception e) {
 					Error.error(e, Error.THREAD_ERROR);
 				}
-				if(state == 3) {
-					gsm.setState(GameStateManager.MENU);
-				}
 				state++;
 			}
 		}
