@@ -30,7 +30,6 @@ import com.cpjd.tools.Layout;
 public class Menu extends GameState {
 
 	// Images
-	private BufferedImage selectImage;
 	private BufferedImage titleImage;
 	private Background background;
 	private BufferedImage ilum;
@@ -65,7 +64,6 @@ public class Menu extends GameState {
 			
 			titleImage = ImageIO.read(getClass().getResourceAsStream("/CPJD/title.png"));
 
-			selectImage = ImageIO.read(getClass().getResourceAsStream("/Interface/select.png"));
 		} catch(Exception e) {
 			Error.error(e,Error.IO_IMAGE_ERROR);
 		}
@@ -75,11 +73,12 @@ public class Menu extends GameState {
 	public void update() {
 		background.update();
 		
-		if(r.nextInt(60 * 60) < 2) {
+		// Manage creepy effect
+		if(r.nextInt(60 * 120) < 1 && !display) {
 			display = true;
 			AudioPlayer.playSound(SKeys.Creepy);
 		}
-		if(r.nextInt(60 * 8) < 1 && display) {
+		if(r.nextInt(60 * 12) < 1 && display) {
 			AudioPlayer.stopSound(SKeys.Creepy);
 			display = false;
 		}
