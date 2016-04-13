@@ -5,8 +5,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import org.lwjgl.openal.AL;
 
 import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
@@ -30,6 +33,9 @@ public class Menu extends GameState {
 	private BufferedImage selectImage;
 	private BufferedImage titleImage;
 	private Background background;
+	private BufferedImage ilum;
+	Random r;
+	private boolean display;
 	
 	// Menu
 	private String[] options = {
@@ -47,10 +53,15 @@ public class Menu extends GameState {
 
 		currentSelection = 0;
 		
+		display = false;
+		r = new Random();
+		
 		// Load the images
 		try {
 			background = new Background("/Backgrounds/back_cave.png", 1);
 			background.setVector(-1,0);
+			
+			ilum = ImageIO.read(getClass().getResourceAsStream("/Backgrounds/illuminati.png"));
 			
 			titleImage = ImageIO.read(getClass().getResourceAsStream("/CPJD/title.png"));
 
@@ -64,6 +75,14 @@ public class Menu extends GameState {
 	public void update() {
 		background.update();
 		
+		if(r.nextInt(60 * 60) < 2) {
+			display = true;
+			AudioPlayer.playSound(SKeys.Creepy);
+		}
+		if(r.nextInt(60 * 8) < 1 && display) {
+			AudioPlayer.stopSound(SKeys.Creepy);
+			display = false;
+		}
 	}
 	
 	public void draw(Graphics2D g) {
@@ -85,6 +104,9 @@ public class Menu extends GameState {
 			g.drawString(options[i], (int)Layout.centerw(fm.stringWidth(options[i]), GamePanel.WIDTH), (int)Layout.aligny((i + 4) * 10, GamePanel.HEIGHT));
 			
 		}
+		
+		// Illuminati
+		if(display) g.drawImage(ilum, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
 	}
 	
 	public void keyPressed(int k) {
@@ -101,7 +123,11 @@ public class Menu extends GameState {
 			}
 		}
 		if(k == KeyEvent.VK_ENTER) {
-			gsm.setState(GameStateManager.L1_1);
+			if(currentSelection == 0) gsm.setState(GameStateManager.L1_1);
+			if(currentSelection == 2) {
+				AL.destroy();
+				System.exit(0);
+			}
 		}
 	}
 	public void keyReleased(int k) {

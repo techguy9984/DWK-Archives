@@ -26,6 +26,7 @@ public class SKeys {
 	public static final String Shotgun_Fire = "shotgunf";
 	public static final String Sniper_Fire = "sniperf";
 	public static final String Uzi_Fire = "uzif";
+	public static final String Creepy = "creepy";
 	
 	// Music keys
 	public static final String Main = "main";
