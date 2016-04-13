@@ -73,10 +73,6 @@ public class Intro extends GameState {
 
 	public void update() {
 
-		if(state == 4) {
-			gsm.setState(GameStateManager.MENU);
-		}
-		
 		// Fade images in and out
 		if(state == 0 || state == 2) {
 			alpha += 0.008f;
@@ -99,10 +95,14 @@ public class Intro extends GameState {
 				} catch(Exception e) {
 					Error.error(e, Error.THREAD_ERROR);
 				}
+				if(state == 3) {
+					gsm.setState(GameStateManager.MENU);
+				}
 				state++;
 			}
 		}
 
+		
 		
 		// Check alpha range
 		if(alpha <= 0) alpha = 0;

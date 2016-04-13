@@ -74,7 +74,7 @@ public class Menu extends GameState {
 		background.update();
 		
 		// Manage creepy effect
-		if(r.nextInt(60 * 120) < 100 && !display) {
+		if(r.nextInt(60 * 120) < 1 && !display) {
 			display = true;
 			AudioPlayer.playSound(SKeys.Creepy);
 		}
