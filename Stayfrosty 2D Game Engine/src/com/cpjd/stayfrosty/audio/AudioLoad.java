@@ -48,6 +48,7 @@ public class AudioLoad {
 		AudioPlayer.addMusic(SKeys.John_Cena, "/Audio/Music/Boss/cena.ogg");
 		AudioPlayer.addMusic(SKeys.Set_2, "/Audio/Music/set2.ogg");
 		AudioPlayer.addMusic(SKeys.Set_3, "/Audio/Music/set3.ogg");
+		AudioPlayer.addMusic(SKeys.Theme, "/Audio/Music/theme.ogg");
 		
 		long elapsed = (System.nanoTime() - start) / 1000000;
 		System.out.println("It took: "+elapsed+" ms to load all the sound");

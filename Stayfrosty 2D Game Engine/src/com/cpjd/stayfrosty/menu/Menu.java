@@ -1,14 +1,13 @@
 package com.cpjd.stayfrosty.menu;
 
+import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import org.lwjgl.openal.AL;
-
-import com.cpjd.smartui.SmartButton;
-import com.cpjd.smartui.SmartButtonGroup;
 import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
@@ -20,6 +19,7 @@ import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.Background;
 import com.cpjd.stayfrosty.util.Center;
 import com.cpjd.stayfrosty.util.Error;
+import com.cpjd.tools.Layout;
 /* Description
  *  The menu for accessing all our game stuff
  *  Runs under the the startup thread
@@ -31,38 +31,22 @@ public class Menu extends GameState {
 	private BufferedImage titleImage;
 	private Background background;
 	
-	// UI
-	SmartButton play, loadButton, settings, stats, exit;
-	SmartButtonGroup buttons;
+	// Menu
+	private String[] options = {
+			"Play","Credits","Quit"
+	};
+	
+	private int currentSelection;
 	
 	public Menu(GameStateManager gsm, Load load, Save save) {
 		super(gsm, load, save);
 		
-		// Set up buttons
-		play = new SmartButton("/UI/create.png","/UI/createClicked.png");
-		play.setBulge(true);
-		
-		loadButton = new SmartButton("/UI/loadFrames.png", "/UI/loadClicked.png",52,53,40);
-		loadButton.setBulge(true);
-		
-		settings = new SmartButton("/UI/options.png","/UI/optionsClicked.png");
-		settings.setBulge(true);
-		settings.setRotate(true);
-		
-		stats = new SmartButton("/UI/leaderboard.png","/UI/leaderboardClicked.png");
-		stats.setBulge(true);
-		
-		exit = new SmartButton("/UI/exit.png","/UI/exitClicked.png");
-		exit.setBulge(true);
-		
-		SmartButton[] list = new SmartButton[5];
-		list[0] = play; list[1] = loadButton; list[2] = settings; list[3] = stats; list[4] = exit;
-		buttons = new SmartButtonGroup("/UI/play.png","/UI/playClicked.png",list,GamePanel.WIDTH,GamePanel.HEIGHT);
-		
 		if(!AudioLoad.finished) AudioLoad.Start();
 		
-		AudioPlayer.loopMusic(SKeys.Menu_Music);
+		AudioPlayer.loopMusic(SKeys.Theme);
 
+		currentSelection = 0;
+		
 		// Load the images
 		try {
 			background = new Background("/Backgrounds/back_cave.png", 1);
@@ -80,30 +64,45 @@ public class Menu extends GameState {
 	public void update() {
 		background.update();
 		
-		buttons.update();
-		
-		if(buttons.isClicked(0)) {
-			gsm.setState(load.getCurrentLevel());
-			GamePanel.targetTime = 1000 / 60;
-		}
-		if(buttons.isClicked(4)) {
-			AL.destroy();
-			System.exit(0);
-		}
 	}
 	
-	public void draw(Graphics2D g) { 
+	public void draw(Graphics2D g) {
+		// Get font metrics
+		FontMetrics fm = g.getFontMetrics();
+		
 		// Draw the background
 		background.draw(g);
 
 		// Draw the title
-		//g.drawImage(titleImage, Center.centeri(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
-		buttons.draw(g);
+		g.drawImage(titleImage, Center.centeri(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
 		
+		// Draw options
+		for(int i = 0; i < options.length; i++) {
+			g.setColor(Color.WHITE);
+			if(currentSelection == i) {
+				g.setColor(Color.BLACK);
+			}
+			g.drawString(options[i], (int)Layout.centerw(fm.stringWidth(options[i]), GamePanel.WIDTH), (int)Layout.aligny((i + 4) * 10, GamePanel.HEIGHT));
+			
+		}
 	}
 	
 	public void keyPressed(int k) {
-
+		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W) {
+			if(currentSelection > 0) {
+				AudioPlayer.playSound(SKeys.Change);
+				currentSelection--;
+			}
+		}
+		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S) {
+			if(currentSelection < options.length) {
+				AudioPlayer.playSound(SKeys.Change);
+				currentSelection++;
+			}
+		}
+		if(k == KeyEvent.VK_ENTER) {
+			gsm.setState(GameStateManager.L1_1);
+		}
 	}
 	public void keyReleased(int k) {
 		PauseState.keyLock = false;

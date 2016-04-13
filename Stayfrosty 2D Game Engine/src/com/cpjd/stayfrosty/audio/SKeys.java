@@ -37,5 +37,7 @@ public class SKeys {
 	public static final String John_Cena = "cena";
 	public static final String Set_2 = "s2";
 	public static final String Set_3 = "s3";
+	public static final String Theme = "theme";
+			
 	
 }
