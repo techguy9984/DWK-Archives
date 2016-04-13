@@ -1,10 +1,12 @@
 package com.cpjd.stayfrosty.menu;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -36,6 +38,8 @@ public class Menu extends GameState {
 	Random r;
 	private boolean display;
 	
+	private Font font;
+	
 	// Menu
 	private String[] options = {
 			"Play","Credits","Quit"
@@ -63,7 +67,11 @@ public class Menu extends GameState {
 			ilum = ImageIO.read(getClass().getResourceAsStream("/Backgrounds/illuminati.png"));
 			
 			titleImage = ImageIO.read(getClass().getResourceAsStream("/CPJD/title.png"));
-
+			
+			InputStream inStream = getClass().getResourceAsStream("/Fonts/8-BIT WONDER.TTF");
+			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);
+			font = rawFont.deriveFont(20.0f);
+			
 		} catch(Exception e) {
 			Error.error(e,Error.IO_IMAGE_ERROR);
 		}
@@ -86,6 +94,7 @@ public class Menu extends GameState {
 	
 	public void draw(Graphics2D g) {
 		// Get font metrics
+		g.setFont(font);
 		FontMetrics fm = g.getFontMetrics();
 		
 		// Draw the background
@@ -116,7 +125,7 @@ public class Menu extends GameState {
 			}
 		}
 		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S) {
-			if(currentSelection < options.length) {
+			if(currentSelection < options.length - 1) {
 				AudioPlayer.playSound(SKeys.Change);
 				currentSelection++;
 			}
