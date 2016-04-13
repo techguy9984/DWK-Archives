@@ -39,7 +39,7 @@ public class Game extends JFrame implements WindowListener {
 		if(fullscreen) setUndecorated(true);
 		
 		// Icon image
-		ImageIcon icon = new ImageIcon(getClass().getResource("/CPJD/icon.jpg"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/CPJD/small-illuminati.png"));
 		setIconImage(icon.getImage());
 		
 		addWindowListener(this);

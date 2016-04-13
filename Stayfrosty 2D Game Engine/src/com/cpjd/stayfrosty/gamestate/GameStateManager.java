@@ -287,7 +287,7 @@ public class GameStateManager {
 			
 			g.setColor(Color.BLUE);
 			g.setFont(new Font("Arial",Font.BOLD,15));
-			double percent = AudioLoad.p /  32 * 100;
+			double percent = AudioLoad.p /  34 * 100;
 			
 			g.fillRect(Center.centeri(200), Center.aligny(90), (int)percent * 2, 20);
 			

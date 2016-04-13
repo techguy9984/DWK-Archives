@@ -74,11 +74,11 @@ public class Menu extends GameState {
 		background.update();
 		
 		// Manage creepy effect
-		if(r.nextInt(60 * 120) < 1 && !display) {
+		if(r.nextInt(60 * 120) < 100 && !display) {
 			display = true;
 			AudioPlayer.playSound(SKeys.Creepy);
 		}
-		if(r.nextInt(60 * 12) < 1 && display) {
+		if(r.nextInt(60 * 10) < 1 && display) {
 			AudioPlayer.stopSound(SKeys.Creepy);
 			display = false;
 		}
@@ -127,6 +127,10 @@ public class Menu extends GameState {
 				AL.destroy();
 				System.exit(0);
 			}
+		}
+		if(display && k == KeyEvent.VK_SPACE) {
+			display = false;
+			AudioPlayer.stopSound(SKeys.Creepy);
 		}
 	}
 	public void keyReleased(int k) {
