@@ -11,6 +11,8 @@ public class AudioLoad {
 	
 	public static boolean finished = false;
 	
+	public static final int TOTAL_ITEMS = 36;
+	
 	public static void Start() {
 		// Load SFX
 		System.out.println("Loading audio, please wait....");
