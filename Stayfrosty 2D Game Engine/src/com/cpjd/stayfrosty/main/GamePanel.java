@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Thread
 	private Thread thread;
 	private volatile boolean running;
-	public static int FPS = 120;
+	public static int FPS = 60;
 	public static long targetTime = 1000 / FPS;
 	
 	// Image
@@ -49,9 +49,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private Graphics2D g;
 
 	// Game State Manager
-	private GameStateManager gsm;
+	private GameStateManager gsm;  
 	
-	// Timing
+	// Timinghttp://applemegan.weebly.com/
 	Time time;
 	
 	public GamePanel() {
