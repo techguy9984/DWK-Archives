@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -26,25 +27,29 @@ public class Credits extends GameState {
 			"by Cats Pajamas Developers",
 			"",
 			"Team",
-			"Will \"techguy9984\"",
-			"Daniel \"boblop\"",
+			"Will (techguy9984)",
+			"Daniel (boblop)",
 			"",
-			"Thanks to",
-			"ForeignGuyMike",
-			"Eric Skiff",
 			"",
-			"This program is not intended for commerical distribution.",
+			"This program is not intended for commerical distribution",
 			"",
 			"All logos shown or represented in this game",
 			"are copyright and or trademark of their respective",
-			"corporations.",
+			"corporations",
 			"",
 	};
 	
 	// Technical
 	private int y;
 	
+	Font font;
+	
 	BufferedImage cpjd;
+	
+	int escX;
+
+	long startTime;
+	long elapsed;
 	
 	public Credits(GameStateManager gsm, Load load, Save save) {
 		super(gsm,load,save);
@@ -54,15 +59,28 @@ public class Credits extends GameState {
 		
 		try {
 			cpjd = ImageIO.read(getClass().getResourceAsStream("/CPJD/cpjdlogosmall.png"));
+			
+			escX = 5;
+			
+			startTime = System.nanoTime();
+			
+			InputStream inStream = getClass().getResourceAsStream("/Fonts/8-BIT WONDER.TTF");
+			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);
+			font = rawFont.deriveFont(15.0f);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void update() {
+		elapsed = (System.nanoTime() - startTime) / 1_000_000_000;
+		if(elapsed > 3) {
+			if(escX > -500) escX-=12;
+		}
+		
 		y--;
 		
-		if(y + (30 * items.length) < -15) {
+		if(y + (30 * items.length) < -30) {
 			//AudioPlayer.stopAll();
 			gsm.setState(GameStateManager.MENU);
 		}
@@ -77,11 +95,11 @@ public class Credits extends GameState {
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		// Draw items
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("Comic Sans MS",Font.BOLD,15));
+		g.setFont(font);
 		
 		g.drawImage(cpjd, Center.centeri(cpjd.getWidth()), y - cpjd.getHeight(), null);
 		
-		g.drawString("Press ESC to exit", 5, 15);
+		g.drawString("Press ESC to exit", escX, 15);
 		
 		for(int i = 0, j = 1; i < items.length; i++) {
 			if(i == items.length - 1) g.setColor(Color.MAGENTA);

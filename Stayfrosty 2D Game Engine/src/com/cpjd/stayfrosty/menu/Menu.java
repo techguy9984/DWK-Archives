@@ -103,6 +103,9 @@ public class Menu extends GameState {
 		// Draw the title
 		g.drawImage(titleImage, Center.centeri(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
 		
+		// Illuminati
+		if(display) g.drawImage(ilum, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
+		
 		// Draw options
 		for(int i = 0; i < options.length; i++) {
 			g.setColor(Color.WHITE);
@@ -112,9 +115,7 @@ public class Menu extends GameState {
 			g.drawString(options[i], (int)Layout.centerw(fm.stringWidth(options[i]), GamePanel.WIDTH), (int)Layout.aligny((i + 4) * 10, GamePanel.HEIGHT));
 			
 		}
-		
-		// Illuminati
-		if(display) g.drawImage(ilum, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
+
 	}
 	
 	public void keyPressed(int k) {

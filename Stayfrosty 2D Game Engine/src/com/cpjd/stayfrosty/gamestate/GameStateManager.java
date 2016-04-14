@@ -48,7 +48,6 @@ import com.cpjd.stayfrosty.levels.Lv3_7;
 import com.cpjd.stayfrosty.levels.Lv3_8;
 import com.cpjd.stayfrosty.levels.Lv3_9;
 import com.cpjd.stayfrosty.levels.Lv3_Boss;
-import com.cpjd.stayfrosty.levels.Lv_Tutorial;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.Credits;
 import com.cpjd.stayfrosty.menu.Intro;
@@ -192,7 +191,6 @@ public class GameStateManager {
 		if(state == INTRO) gameStates[state] = new Intro(this, load, save);
 		if(state == MENU) gameStates[state] = new Menu(this, load, save);
 		if(state == CREDITS) gameStates[state] = new Credits(this, load, save);
-		if(state == L_TUTORIAL) gameStates[state] = new Lv_Tutorial(this, load, save);
 		if(state == L1_1) gameStates[state] = new Lv1_1(this, load,save);
 		if(state == L1_2) gameStates[state] = new Lv1_2(this, load,save);
 		if(state == L1_3) gameStates[state] = new Lv1_3(this, load,save);
@@ -305,6 +303,11 @@ public class GameStateManager {
 		if(shopActive) shop.draw(g);
 		if(invActive) inv.draw(g);
 		sa.draw(g);
+		
+		// Draw debug
+		g.setColor(Color.RED);
+		if(GamePanel.debug) g.drawString("*",5,20);
+		
 		
 	}
 	public void keyPressed(int k) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 
 import org.lwjgl.openal.AL;
 
@@ -31,7 +32,7 @@ public class PauseState extends GameState {
 	
 	public static boolean keyLock;
 	
-	private String[] options = {"Resume","Sound: ON","Restart Level","Exit to menu","Exit"};
+	private String[] options = {"Resume","Sound (ON)","Restart Level","Exit to menu","Exit"};
 	
 	String soundState;
 	
@@ -50,15 +51,18 @@ public class PauseState extends GameState {
 		
 		restarting = false;
 		
-		if(AudioPlayer.mute) soundState = "Sound: OFF";
-		if(!AudioPlayer.mute) soundState = "Sound: ON";
+		if(AudioPlayer.mute) soundState = "Sound  (OFF)";
+		if(!AudioPlayer.mute) soundState = "Sound  (ON)";
 		
+		try {
+			InputStream inStream = getClass().getResourceAsStream("/Fonts/8-BIT WONDER.TTF");
+			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);
+			optionsFont = rawFont.deriveFont(10.0f);
+		} catch(Exception e) {}
 		
 		// fonts
 		font = new Font("Century Gothic", Font.PLAIN, 15);
-		
-		optionsFont = new Font("Arial",Font.PLAIN,13);
-		
+
 		vertStart = Center.aligny(35);
 		pad = 10; // In percent
 		
@@ -96,7 +100,7 @@ public class PauseState extends GameState {
 			else {
 				g.setColor(Color.MAGENTA);
 			}
-			g.fillRect(Center.center(g, options[i]) - 2, vertStart + Center.aligny(j * pad) - 12, Center.getSWidth(g, options[i]) + 4, 15);
+			g.fillRect(Center.center(g, options[i]) - 2, vertStart + Center.aligny(j * pad) - 14, Center.getSWidth(g, options[i]) + 4, 20);
 			
 			g.setFont(optionsFont);
 
@@ -201,9 +205,9 @@ public class PauseState extends GameState {
 		}
 		if(currentChoice == 1) { // Togglesound
 			if(AudioPlayer.mute) { 
-				options[1] = "Sound: OFF";
+				options[1] = "Sound (OFF)";
 				AudioLoad.stopAll();
-			} else options[1] = "Sound: ON";
+			} else options[1] = "Sound (ON)";
 			AudioPlayer.mute = !AudioPlayer.mute;
 		}
 		if(currentChoice == 2) { // Restart Level

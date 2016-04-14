@@ -110,7 +110,6 @@ public class HUD {
 			g.drawString(String.valueOf(Player.currentDoritoes +" / "+(GameStateManager.globalState - 26)), 25, 124);
 		}
 		
-		
 		// Draw gifs
 		if(player.isSmoking()) {
 			wow.draw(g);
@@ -127,7 +126,6 @@ public class HUD {
 			g.drawString("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB", 5, Center.aligny(92));
 			rectLength = Center.getSWidth(g, "Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
 		}
-		
 	}
 
 	int memReport; // A timer using for memory reporting
