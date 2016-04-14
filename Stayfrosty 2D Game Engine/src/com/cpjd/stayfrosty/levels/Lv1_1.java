@@ -70,7 +70,7 @@ public class Lv1_1 extends GameState {// intro
 		descriptions[1] = "A dedicated programmer and certified csgo pro";
 		descriptions[2] = "A flawless man";
 		
-		AudioPlayer.loopMusic(SKeys.Main);
+		AudioPlayer.loopMusic(SKeys.Epic);
 
 		if(gsm.getState() == GameStateManager.entry) save();
 		
@@ -294,6 +294,7 @@ public class Lv1_1 extends GameState {// intro
 			storyLevel++;
 			counter = 0;
 			finishedTyping = false;
+			AudioPlayer.playSound(SKeys.Type);
 		}
 		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) {
 			gsm.setPaused(true);

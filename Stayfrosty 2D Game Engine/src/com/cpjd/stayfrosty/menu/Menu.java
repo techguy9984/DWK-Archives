@@ -86,7 +86,7 @@ public class Menu extends GameState {
 			display = true;
 			AudioPlayer.playSound(SKeys.Creepy);
 		}
-		if(r.nextInt(60 * 10) < 1 && display) {
+		if(r.nextInt(60 * 8) < 1 && display) {
 			AudioPlayer.stopSound(SKeys.Creepy);
 			display = false;
 		}

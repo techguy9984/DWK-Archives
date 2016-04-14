@@ -27,6 +27,8 @@ public class SKeys {
 	public static final String Sniper_Fire = "sniperf";
 	public static final String Uzi_Fire = "uzif";
 	public static final String Creepy = "creepy";
+	public static final String Type = "type";
+	
 	
 	// Music keys
 	public static final String Main = "main";
@@ -39,6 +41,7 @@ public class SKeys {
 	public static final String Set_2 = "s2";
 	public static final String Set_3 = "s3";
 	public static final String Theme = "theme";
+	public static final String Epic = "epic";
 			
 	
 }

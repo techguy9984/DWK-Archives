@@ -39,7 +39,8 @@ public class AudioLoad {
 		AudioPlayer.addSound(SKeys.Sniper_Fire, "/Audio/SFX/Weapons/Shot/sniper.ogg");
 		AudioPlayer.addSound(SKeys.Uzi_Fire, "/Audio/SFX/Weapons/Shot/uzi.ogg");
 		AudioPlayer.addSound(SKeys.Creepy, "/Audio/SFX/creepy.ogg");
-
+		AudioPlayer.addSound(SKeys.Type, "/Audio/SFX/type.ogg");
+		
 		
 		AudioPlayer.addMusic(SKeys.Main, "/Audio/Music/main.ogg");
 		AudioPlayer.addMusic(SKeys.MLG_Epic, "/Audio/Music/mlg_epic.ogg");
@@ -51,6 +52,7 @@ public class AudioLoad {
 		AudioPlayer.addMusic(SKeys.Set_2, "/Audio/Music/set2.ogg");
 		AudioPlayer.addMusic(SKeys.Set_3, "/Audio/Music/set3.ogg");
 		AudioPlayer.addMusic(SKeys.Theme, "/Audio/Music/theme.ogg");
+		AudioPlayer.addMusic(SKeys.Epic, "/Audio/Music/epic.ogg");
 		
 		long elapsed = (System.nanoTime() - start) / 1000000;
 		System.out.println("It took: "+elapsed+" ms to load all the sound");
@@ -69,6 +71,7 @@ public class AudioLoad {
 		AudioPlayer.stopMusic(SKeys.Set_2);
 		AudioPlayer.stopMusic(SKeys.Set_3);
 		AudioPlayer.stopMusic(SKeys.Theme);
+		AudioPlayer.stopMusic(SKeys.Epic);
 		
 	}
 	
