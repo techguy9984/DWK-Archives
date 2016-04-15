@@ -19,6 +19,7 @@ import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.PauseState;
+import com.cpjd.stayfrosty.players.Daniel;
 import com.cpjd.stayfrosty.shop.Consumables;
 import com.cpjd.stayfrosty.shop.Shop;
 import com.cpjd.stayfrosty.shop.Upgrades;
@@ -31,13 +32,8 @@ public class Lv1_2 extends GameState {
 	
 	private TileMap tileMap; 
 	private Background bg;
-	private Player player;
+	private Daniel player;
 
-	private HUD hud;
-
-	private ArrayList<Enemy> trollers;
-	private ArrayList<Explosion> explosions;
-	
 	Minimap m;
 	
 	public Lv1_2(GameStateManager gsm, Load load, Save save) {
@@ -60,19 +56,15 @@ public class Lv1_2 extends GameState {
 		
 		bg = new Background("/Backgrounds/wood.png",0.1); // The background image location and it's movespeed
 
-		player = new Player(tileMap, gsm, load);
+		player = new Daniel(tileMap, gsm);
 		
 		player.setPosition(160, 1670); // Player location on tilemap
 		
 		m = new Minimap("/Minimaps/Lv1_2.png",1 ,1);
 		
-		populateEnemies(); // Adds all the enemies
-		
-		hud = new HUD(player); // The heads up display
+		//hud = new HUD(player); // The heads up display
 
 		if(gsm.getState() == GameStateManager.entry) save();
-		
-		explosions = new ArrayList<Explosion>();
 		
 	}
 
@@ -159,27 +151,8 @@ public class Lv1_2 extends GameState {
 		load.reload();
 	}
 	
-	private void populateEnemies() {
-		trollers = new ArrayList<Enemy>();
-
-		Troller troll;
-		troll = new Troller(tileMap);
-		troll.setPosition(1640, 1680);
-		trollers.add(troll);
-		
-		Troller troll2;
-		troll2 = new Troller(tileMap);
-		troll2.setPosition(1640, 700);
-		trollers.add(troll2);
-		
-	}
-	
 	public void update() {
 		player.update();
-		
-		hud.update();		
-		
-		checkMelee();
 		
 		// Set the location of the background
 		bg.setPosition(tileMap.getx(),tileMap.gety());
@@ -192,47 +165,7 @@ public class Lv1_2 extends GameState {
 			player.setPosition((int)Math.abs(tileMap.getx()) + (Mouse2.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse2.y / 2));
 		}
 		
-		checkBullets();
-		
-		removeEnemies();
-		
-		checkAttack();
-		
-		// Update explosions
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).update();
-			if(explosions.get(i).shouldRemove()) {
-				explosions.remove(i);
-			}
-		}
-		
 
-	}
-	
-	private void checkBullets() {}
-	
-	private void checkAttack() {
-		player.checkAttack(trollers);
-	}
-	
-	private void checkMelee() {
-		for(int i = 0; i < trollers.size(); i++) {
-			if(trollers.get(i).getCollisionBox().intersects(player.getCollisionBox())) {
-				player.hit(trollers.get(i).getDamage());
-			}
-		}
-	}
-
-	private void removeEnemies() {
-		for (int i = 0; i < trollers.size(); i++) {
-			Enemy e = trollers.get(i);
-			e.update();
-			if (e.isDead()) {
-				trollers.remove(i);
-				i--;
-				explosions.add(new Explosion(e.getx(), e.gety())); 
-			}
-		}
 	}
 	
 	public void draw(Graphics2D g) {
@@ -245,25 +178,9 @@ public class Lv1_2 extends GameState {
 		
 		// draw player
 		player.draw(g);
-		
-		drawEnemies(g);
-		
-		// draw hud
-		hud.draw(g);
-		
+
 		m.draw(g);
 		
-	}
-	
-	private void drawEnemies(Graphics2D g) {
-		for (int i = 0; i < trollers.size(); i++) {
-			trollers.get(i).draw(g);
-		}
-		// draw explosion
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).setMapPosition((int)tileMap.getx(),(int) tileMap.gety());
-			explosions.get(i).draw(g);
-		}
 	}
 	
 	public void keyPressed(int k) {
@@ -311,8 +228,6 @@ public class Lv1_2 extends GameState {
 			Player.freecam = false;
 		}
 		
-		if(k == KeyEvent.VK_SHIFT) player.setSprinting(true);
-		if(k == KeyEvent.VK_S) player.setSmoking();
 		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) gsm.setPaused(true);
 			
 	}
@@ -327,7 +242,6 @@ public class Lv1_2 extends GameState {
 		if(k == KeyEvent.VK_DOWN) player.setDown(false);
 		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
 		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
-		if(k == KeyEvent.VK_SHIFT) player.setSprinting(false);
 		
 	}
 	
