@@ -24,23 +24,19 @@ import javax.swing.JLabel;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.main.Game;
 
-//////////INFORMATION //////////
-/* Stayfrosty 2D Game Engine by Cats Pajamas Developers
-* 	A 2D platformer engine, for easily creating in-depth 2D platformers, duh.
-*  @author Will Davies
-*/
-//////////INFORMATION //////////
-
+@SuppressWarnings("serial")
 public class Launcher extends JFrame implements ActionListener, MouseMotionListener, MouseListener {
 	
-	private static final long serialVersionUID = 1172607370518445177L;
-
-	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	// Game parameters
-	public static String title = "The DWK Archives";
-	private static String version = "Alpha 1.0";
-	private static int versionCode  = 31;
+	public static String title = "DWK Archives";
+	private static String version = "Alpha 2.0";
+	private static int versionCode  = 4;
+	
+	/*
+	 * Technical paramaters
+	 */
 	
 	// Mouse tracking
 	private boolean foundStart;
@@ -53,16 +49,13 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	
 	// Game settings
 	private JButton reset;
-	private JCheckBox joe;
 	private JCheckBox quality;
-	private JCheckBox cursor;
 	private JLabel resInfo;
 	private JLabel options;
 	private JComboBox<String> resolution;
 	private JButton controls;
 	private JButton bug;
 	private JButton cpjdLogo;
-	private JButton change;
 	private JCheckBox noSound;
 	
 	// Scaling options available
@@ -104,15 +97,12 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		apply = new JButton("Play");
 		quit = new JButton("Quit");
 		reset = new JButton("Delete all game data");
-		joe = new JCheckBox("Joe mode");
 		quality = new JCheckBox("High quality");
-		cursor = new JCheckBox("Hide cursor");
 		resInfo = new JLabel("Resolution: ");
 		resolution = new JComboBox<>(resDisplay);
 		options = new JLabel("Options: ");
 		controls = new JButton("Controls...");
 		bug = new JButton("Report a bug...");
-		change = new JButton("View changelog...");
 		noSound = new JCheckBox("-nosound");
 		
 		// Set unique attributes
@@ -124,16 +114,6 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		bug.setForeground(Color.WHITE);
 		bug.addActionListener(this);
 		add(bug);
-		
-		change.setSize(140,40);
-		change.setLocation(245,220);
-		change.setFocusable(false);
-		change.setBorderPainted(false);
-		change.setBackground(Color.DARK_GRAY);
-		change.setForeground(Color.WHITE);
-		change.addActionListener(this);
-		//add(change);
-		
 		
 		reset.setSize(180,40);
 		reset.setLocation(5,270);
@@ -182,7 +162,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		add(quality);
 		
 		noSound.setSize(90,20);
-		noSound.setLocation(215, 160);
+		noSound.setLocation(110, 160);
 		noSound.setFocusable(false);
 		noSound.setBorderPainted(false);
 		noSound.setForeground(Color.DARK_GRAY);
@@ -191,17 +171,6 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		noSound.addActionListener(this);
 		noSound.setToolTipText("Disables all music and SFX effects. Can be reenabled in game");
 		add(noSound);
-		
-		cursor.setSize(100,20);
-		cursor.setLocation(110, 160);
-		cursor.setFocusable(false);
-		cursor.setBorderPainted(false);
-		cursor.setForeground(Color.DARK_GRAY);
-		boolean temp2 = true;
-		cursor.setSelected(temp2);
-		cursor.addActionListener(this);
-		cursor.setToolTipText("Hides the cursor");
-		add(cursor);
 		
 		apply.setForeground(Color.GREEN);
 		quit.setForeground(Color.RED);
@@ -282,13 +251,11 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			return;
 		}
 		if(e.getSource() == apply) {
-			// Acquire data for saving
+			/* Acquire data for saving
 			int q = 0, c = 0, s = 0, j = 0;
 			if(quality.isSelected()) q = 1;
-			if(cursor.isSelected()) c = 1;
 			if(noSound.isSelected()) s = 1;
-			if(joe.isSelected()) j = 1;
-			int[] data = {resolution.getSelectedIndex(),q,c,s,j,0};
+			int[] data = {resolution.getSelectedIndex(),q,c,s,j,0};*/
 			
 			dispose();
 			AudioPlayer.mute = noSound.isSelected();
@@ -337,7 +304,5 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	public void mouseReleased(MouseEvent e) {
 		foundStart = false;
 	}
-
-	
 }
 
