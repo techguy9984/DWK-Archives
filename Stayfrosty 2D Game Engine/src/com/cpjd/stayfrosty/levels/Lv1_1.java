@@ -48,7 +48,7 @@ public class Lv1_1 extends GameState {// intro
 		super(gsm, load, save);
 		
 		if(gsm.getState() != GameStateManager.entry) save();
-		
+		finishedTyping = false;
 		init();
 	}
 	
@@ -72,6 +72,8 @@ public class Lv1_1 extends GameState {// intro
 		
 		AudioPlayer.loopMusic(SKeys.Epic);
 
+		AudioPlayer.loopSound(SKeys.Type);
+		
 		if(gsm.getState() == GameStateManager.entry) save();
 		
 		
@@ -173,12 +175,17 @@ public class Lv1_1 extends GameState {// intro
 			}
 			if(counter == Narration[storyLevel].length()*2){
 				finishedTyping = true;
+				
         	}
 		}else if (storyLevel == 10){
 			if(counter>90){
 				counter = 90;
+				finishedTyping  = true;
 			}
     	}
+		if(finishedTyping){
+			AudioPlayer.stopSound(SKeys.Type);
+		}
 
 	}
 	
@@ -256,6 +263,7 @@ public class Lv1_1 extends GameState {// intro
 				if (selected == -1){
 					selected = 2;
 				}
+				AudioPlayer.playSound(SKeys.Change);
 			}
 		}
 		if(k == KeyEvent.VK_S){
@@ -264,6 +272,7 @@ public class Lv1_1 extends GameState {// intro
 				if (selected == 3){
 					selected = 0;
 				}
+				AudioPlayer.playSound(SKeys.Change);
 			}
 		}
 		if(k == KeyEvent.VK_UP){
@@ -272,6 +281,7 @@ public class Lv1_1 extends GameState {// intro
 				if (selected == -1){
 					selected = 2;
 				}
+				AudioPlayer.playSound(SKeys.Change);
 			}
 		}
 		if(k == KeyEvent.VK_DOWN){
@@ -280,6 +290,7 @@ public class Lv1_1 extends GameState {// intro
 				if (selected == 3){
 					selected = 0;
 				}
+				AudioPlayer.playSound(SKeys.Change);
 			}
 		}
 		
@@ -294,7 +305,9 @@ public class Lv1_1 extends GameState {// intro
 			storyLevel++;
 			counter = 0;
 			finishedTyping = false;
-			AudioPlayer.playSound(SKeys.Type);
+			AudioPlayer.stopSound(SKeys.Type);
+			AudioPlayer.loopSound(SKeys.Type);
+			
 		}
 		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) {
 			gsm.setPaused(true);
