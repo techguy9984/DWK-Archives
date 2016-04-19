@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Error;
+import com.cpjd.tools.Log;
 
 /* Description
  *  Loading screen on application startup
@@ -64,7 +64,7 @@ public class Intro extends GameState {
 			enginey = (GamePanel.HEIGHT / 2) - (engineheight / 2);
 			
 		} catch(Exception e) {
-			Error.error(e,Error.IO_IMAGE_ERROR);
+			Log.logError(e, Log.RES_LOAD_ERROR);
 		}
 		
 	}
@@ -79,7 +79,7 @@ public class Intro extends GameState {
 					// Pause when the image is fully non-transparent
 					Thread.sleep(700);
 				} catch(Exception e) {
-					Error.error(e, Error.THREAD_ERROR);
+					Log.logError(e, Log.RES_LOAD_ERROR);
 				}
 				state++;
 			}
@@ -91,7 +91,7 @@ public class Intro extends GameState {
 					// Pause when the image is fully non-transparent
 					Thread.sleep(700);
 				} catch(Exception e) {
-					Error.error(e, Error.THREAD_ERROR);
+					Log.logError(e, Log.RES_LOAD_ERROR);
 				}
 				state++;
 			}

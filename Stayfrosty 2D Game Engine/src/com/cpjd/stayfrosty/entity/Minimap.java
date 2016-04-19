@@ -1,16 +1,10 @@
 package com.cpjd.stayfrosty.entity;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
-
-import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.util.Center;
 
 public class Minimap {
 
@@ -39,7 +33,7 @@ public class Minimap {
 	}
 	
 	public void draw(Graphics2D g) {
-		if(enabled) {
+		/*if(enabled) {
 			g.setColor(Color.BLACK);
 			g.fillRect(Center.centeri(image.getWidth()), Center.centerh(image.getHeight()), image.getWidth(), image.getHeight());
 			g.drawImage(image, Center.centeri(image.getWidth()), Center.centerh(image.getHeight()), image.getWidth() / descalex, image.getHeight() / descaley, null );
@@ -55,7 +49,7 @@ public class Minimap {
 			g.setColor(Color.WHITE);
 			g.drawString(formatState(),Center.centeri(image.getWidth()), Center.centerh(image.getHeight() + 15));
 			
-		}
+		}*/
 	}
 	
 	private String formatState() {

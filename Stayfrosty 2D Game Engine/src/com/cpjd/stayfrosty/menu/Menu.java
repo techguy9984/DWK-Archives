@@ -20,9 +20,8 @@ import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.Background;
-import com.cpjd.stayfrosty.util.Center;
-import com.cpjd.stayfrosty.util.Error;
 import com.cpjd.tools.Layout;
+import com.cpjd.tools.Log;
 /* Description
  *  The menu for accessing all our game stuff
  *  Runs under the the startup thread
@@ -71,7 +70,7 @@ public class Menu extends GameState {
 			font = rawFont.deriveFont(20.0f);
 			
 		} catch(Exception e) {
-			Error.error(e,Error.IO_IMAGE_ERROR);
+			Log.logError(e, Log.RES_LOAD_ERROR);
 		}
 		
 	}
@@ -99,7 +98,7 @@ public class Menu extends GameState {
 		background.draw(g);
 
 		// Draw the title
-		g.drawImage(titleImage, Center.centeri(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
+		g.drawImage(titleImage, (int)Layout.centerw(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
 		
 		// Illuminati
 		if(display) g.drawImage(ilum, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
@@ -110,7 +109,8 @@ public class Menu extends GameState {
 			if(currentSelection == i) {
 				g.setColor(Color.BLACK);
 			}
-			g.drawString(options[i], (int)Layout.centerw(fm.stringWidth(options[i]), GamePanel.WIDTH), (int)Layout.aligny((i + 4) * 10, GamePanel.HEIGHT));
+			g.drawString(options[i], Layout.centerw(fm.stringWidth(options[i])), Layout.aligny((i + 4) * 10));
+			//
 			
 		}
 

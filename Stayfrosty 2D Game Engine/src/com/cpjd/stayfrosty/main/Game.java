@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import org.lwjgl.openal.AL;
 
+import com.cpjd.tools.Layout;
 import com.cpjd.tools.Log;
 
 @SuppressWarnings("serial")
@@ -28,9 +29,12 @@ public class Game extends JFrame implements WindowListener {
 				+" (Title) "+title
 				+" (Version Code) "+versionCode, 2);
 		
+		// Configure the layout class
 		// Set screen size
 		GamePanel.WIDTH = (int)screen.getWidth() / GamePanel.SCALE;
 		GamePanel.HEIGHT = (int)screen.getHeight() / GamePanel.SCALE;
+		Layout.HEIGHT = GamePanel.HEIGHT;
+		Layout.WIDTH = GamePanel.WIDTH;
 		
 		// Other attributes
 		GamePanel.QUALITY = quality;

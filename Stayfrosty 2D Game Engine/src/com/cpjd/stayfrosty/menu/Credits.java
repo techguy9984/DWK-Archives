@@ -15,7 +15,7 @@ import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Center;
+import com.cpjd.tools.Layout;
 
 public class Credits extends GameState {
 	
@@ -95,13 +95,13 @@ public class Credits extends GameState {
 		g.setColor(Color.BLACK);
 		g.setFont(font);
 		
-		g.drawImage(cpjd, Center.centeri(cpjd.getWidth()), y - cpjd.getHeight(), null);
+		g.drawImage(cpjd, (int)Layout.centerw(cpjd.getWidth()), y - cpjd.getHeight(), null);
 		
 		g.drawString("Press ESC to exit", escX, 15);
 		
 		for(int i = 0, j = 1; i < items.length; i++) {
 			if(i == items.length - 1) g.setColor(Color.MAGENTA);
-			g.drawString(items[i], Center.center(g, items[i]), y + (30 * j));
+			g.drawString(items[i], (int)Layout.getStringCenter(0, GamePanel.WIDTH, items[i], g), y + (30 * j));
 			j++;
 		}
 		

@@ -15,7 +15,7 @@ import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Center;
+import com.cpjd.tools.Layout;
 
 public class PauseState extends GameState {
 	
@@ -54,7 +54,7 @@ public class PauseState extends GameState {
 		// fonts
 		font = new Font("Century Gothic", Font.PLAIN, 15);
 
-		vertStart = Center.aligny(35);
+		vertStart = (int)Layout.aligny(35);
 		pad = 10; // In percent
 		
 		keyLock = false;
@@ -74,13 +74,13 @@ public class PauseState extends GameState {
 			g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 			g.setColor(Color.WHITE);
 			g.setFont(font);
-			g.drawString("Restarting the level...", Center.center(g, "Reloading Level..."), Center.centerv(g));
+			g.drawString("Restarting the level...", Layout.centerw(10), Layout.centerh(10));
 			return;
-		}
+		}	
 		
 		g.setColor(Color.WHITE);
 		g.setFont(font);
-		g.drawString("Game Paused", Center.center(g, "Game Paused"), Center.aligny(20));
+		g.drawString("Game Paused", Layout.centerString("Game Paused", g), Layout.aligny(20));
 
 		// Draw the options
 		for(int i = 0, j = 1; i < options.length; i++) {
@@ -91,12 +91,12 @@ public class PauseState extends GameState {
 			else {
 				g.setColor(Color.MAGENTA);
 			}
-			g.fillRect(Center.center(g, options[i]) - 2, vertStart + Center.aligny(j * pad) - 14, Center.getSWidth(g, options[i]) + 4, 20);
+			g.fillRect(Layout.centerString(options[i], g) - 2, vertStart + Layout.aligny(j * pad) - 14, Layout.getStringWidth(g, options[i]) + 4, 20);
 			
 			g.setFont(optionsFont);
 
 			g.setColor(Color.WHITE);
-			g.drawString(options[i], Center.center(g, options[i]), vertStart + Center.aligny(j * pad));
+			g.drawString(options[i], Layout.centerString(options[i], g), vertStart + Layout.aligny(j * pad));
 			j++;
 		}
 	}

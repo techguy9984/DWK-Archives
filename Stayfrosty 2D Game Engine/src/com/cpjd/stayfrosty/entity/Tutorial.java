@@ -1,9 +1,6 @@
 package com.cpjd.stayfrosty.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-
-import com.cpjd.stayfrosty.util.Center;
 
 public class Tutorial {
 	
@@ -67,14 +64,7 @@ public class Tutorial {
 	
 	public void draw(Graphics2D g) {
 		if(!active) return;
-		// Draw the bounding box
-		g.setColor(Color.WHITE);
-		g.fillRect(drawx, drawy, Center.getSWidth(g, display) + 5, Center.getSHeight(g) * 3);
-		
-		// Draw the text
-		g.setColor(Color.BLACK);
-		g.drawString("Tip: ", drawx + 3, drawy  + Center.getSHeight(g));
-		g.drawString(display, drawx + 3, drawy + Center.getSHeight(g) * 2);
+
 	}
 	
 }

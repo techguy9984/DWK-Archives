@@ -14,13 +14,13 @@ import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.entity.Player;
-import com.cpjd.stayfrosty.levels.Lv1_1;
+import com.cpjd.stayfrosty.levels.Cutscene1;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.Credits;
 import com.cpjd.stayfrosty.menu.Intro;
 import com.cpjd.stayfrosty.menu.Menu;
 import com.cpjd.stayfrosty.menu.PauseState;
-import com.cpjd.stayfrosty.util.Center;
+import com.cpjd.tools.Layout;
 
 /* Description
  *  Stores all of the different levels, menus, screens, etc. of the game
@@ -83,7 +83,7 @@ public class GameStateManager {
 		if (state == CREDITS)
 			gameStates[state] = new Credits(this);
 		if (state == L1_1)
-			gameStates[state] = new Lv1_1(this);
+			gameStates[state] = new Cutscene1(this);
 
 	}
 
@@ -139,14 +139,14 @@ public class GameStateManager {
 			g.setFont(new Font("Arial", Font.BOLD, 15));
 			double percent = AudioLoad.p / AudioLoad.TOTAL_ITEMS * 100;
 
-			g.fillRect(Center.centeri(200), Center.aligny(90), (int) percent * 2, 20);
+			g.fillRect((int)Layout.centerw(200), (int)Layout.aligny(90), (int) percent * 2, 20);
 
 			// Draw total
 			g.setColor(Color.BLACK);
-			g.drawRect(Center.centeri(200) - 1, Center.aligny(90) - 1, 201, 21);
+			g.drawRect((int)Layout.centerw(200) - 1, (int)Layout.aligny(90) - 1, 201, 21);
 
 			// Draw loading
-			g.drawString("Loading... ", Center.center(g, "Loading..."), Center.aligny(80));
+			g.drawString("Loading... ", (int)Layout.getStringCenter(0, GamePanel.WIDTH, "Loading...", g), (int)Layout.aligny(80));
 		}
 
 		if (gameStates[currentState] != null) {

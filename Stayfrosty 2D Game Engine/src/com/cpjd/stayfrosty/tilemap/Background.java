@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Error;
+import com.cpjd.tools.Log;
 
 /* Description
  *  Scrolls the background, supports parallax
@@ -33,7 +33,7 @@ public class Background {
 			width = image.getWidth();
 			moveScale = ms;
 		} catch(Exception e) {
-			Error.error(e,Error.IO_IMAGE_ERROR);
+			Log.logError(e, Log.RES_LOAD_ERROR);
 		}
 		
 	}

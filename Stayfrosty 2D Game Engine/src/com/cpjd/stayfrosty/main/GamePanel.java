@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.tools.Log;
-import com.cpjd.tools.Mouse;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	
@@ -139,16 +138,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public void keyTyped(KeyEvent key) {}
 
 	public void mousePressed(MouseEvent mouse) {
-		Mouse.leftPressed = true;
+
 	}
 
 	public void mouseReleased(MouseEvent mouse) {
-		Mouse.leftPressed = false;
+
 	}
 
 	public void mouseMoved(MouseEvent mouse) {
-		Mouse.x = mouse.getX();
-		Mouse.y = mouse.getY();
+
 	}
 	public void mouseDragged(MouseEvent mouse) {}
 	public void mouseClicked(MouseEvent mouse) {}

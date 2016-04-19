@@ -8,9 +8,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.external.imageprocessing.AnimatedGIF;
-import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Center;
+import com.cpjd.tools.Layout;
 
 public class HUD {
 	
@@ -99,12 +98,12 @@ public class HUD {
 		g.setColor(Color.GREEN);
 		g.setFont(new Font("Arial",Font.PLAIN,12));
 		
-		if(GamePanel.DEBUG) {
-			g.fillRect(5, Center.aligny(89.9), rectLength, 11);
+		/*if(GamePanel.DEBUG) {
+			g.fillRect(5, Layout.aligny(89.9), rectLength, 11);
 			g.setColor(Color.BLACK);
-			g.drawString("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB", 5, Center.aligny(92));
-			rectLength = Center.getSWidth(g, "Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
-		}
+			g.drawString("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB", 5, Layout.aligny(92));
+			rectLength = Layout.getSWidth(g, "Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
+		}*/
 	}
 
 	int memReport; // A timer using for memory reporting

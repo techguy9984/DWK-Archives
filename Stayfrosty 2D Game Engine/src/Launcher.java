@@ -23,7 +23,6 @@ import javax.swing.JLabel;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.main.Game;
-import com.cpjd.stayfrosty.util.Controls;
 
 //////////INFORMATION //////////
 /* Stayfrosty 2D Game Engine by Cats Pajamas Developers
@@ -276,9 +275,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			}
 
 		}
-		if(e.getSource()  == controls) {
-			new Controls();
-		}
+
 		if(e.getSource() == quit) {
 			dispose();
 			System.exit(0);

@@ -15,7 +15,7 @@ import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.PauseState;
 
 // APROVED
-public class Lv1_1 extends GameState {// intro
+public class Cutscene1 extends GameState {// intro
 	
 	//private TileMap tileMap; 
 	//private Background bg;
@@ -27,7 +27,7 @@ public class Lv1_1 extends GameState {// intro
 	private String[] descriptions = new String[3];
 	private String[] Narration = new String[10];
 	
-	public Lv1_1(GameStateManager gsm) {
+	public Cutscene1(GameStateManager gsm) {
 		super(gsm);
 		
 		finishedTyping = false;

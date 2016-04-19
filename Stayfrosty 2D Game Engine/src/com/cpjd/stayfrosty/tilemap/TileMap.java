@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.util.Center;
+import com.cpjd.tools.Layout;
 
 public class TileMap {
 	
@@ -286,7 +286,7 @@ public class TileMap {
 			int tempx = (int)Math.abs(getx()) + (4 / 2);
 			int tempy = (int)Math.abs(gety()) + (4/ 2);
 			g.setColor(Color.GREEN);
-			g.fillRect(5, GamePanel.HEIGHT - 26, Center.getSWidth(g,"XY: "+"(" + tempx + "," + tempy + ")"), 13);
+			g.fillRect(5, GamePanel.HEIGHT - 26, Layout.getStringWidth(g,"XY: "+"(" + tempx + "," + tempy + ")"), 13);
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Arial", Font.PLAIN, 12));
 			g.drawString("XY: " + "(" + tempx + "," + tempy + ")", 5, GamePanel.HEIGHT - 15);
