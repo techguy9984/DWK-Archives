@@ -10,9 +10,7 @@ import javax.imageio.ImageIO;
 import com.cpjd.stayfrosty.external.imageprocessing.AnimatedGIF;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.shop.Inventory;
 import com.cpjd.stayfrosty.util.Center;
-import com.cpjd.stayfrosty.weapons.Weapon;
 
 public class HUD {
 	
@@ -89,26 +87,7 @@ public class HUD {
 		
 		// Draw ammo
 		g.setColor(Color.WHITE);
-		if(Inventory.equip == 0) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" | "+String.valueOf(Weapon.ammo[Inventory.equip]), 25, 84);
-		if(Inventory.equip == 1) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" |"+String.valueOf(Weapon.ammo[Inventory.equip]), 25, 84);
-		if(Inventory.equip == 2) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" | "+String.valueOf(Weapon.ammo[Inventory.equip]), 30, 84);
-		if(Inventory.equip == 3) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" | "+String.valueOf(Weapon.ammo[Inventory.equip]), 25, 84);
-		if(Inventory.equip == 4) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" |"+String.valueOf(Weapon.ammo[Inventory.equip]), 25, 84);
-		if(Inventory.equip == 5) g.drawString(String.valueOf(Weapon.clip[Inventory.equip])+" | "+String.valueOf(Weapon.ammo[Inventory.equip]), 25, 84);
-		if(Inventory.equip == 6) g.drawString("infinite", 30, 84);
-		
-		// Draw doritoes
-		g.setColor(Color.ORANGE);
-		if(GameStateManager.globalState <= 14) {	
-			if(GameStateManager.globalState != GameStateManager.L_TUTORIAL
-				&& GameStateManager.globalState != GameStateManager.L1_BOSS) g.drawString(String.valueOf(Player.currentDoritoes +" / "+(GameStateManager.globalState - 4)), 25, 124);
-		}
-		if(GameStateManager.globalState >= 15 && GameStateManager.globalState != GameStateManager.L2_BOSS && GameStateManager.globalState < 26) {
-			g.drawString(String.valueOf(Player.currentDoritoes +" / "+(GameStateManager.globalState - 15)), 25, 124);
-		}
-		if(GameStateManager.globalState >= 26 && GameStateManager.globalState != GameStateManager.L3_BOSS) {
-			g.drawString(String.valueOf(Player.currentDoritoes +" / "+(GameStateManager.globalState - 26)), 25, 124);
-		}
+
 		
 		// Draw gifs
 		if(player.isSmoking()) {
@@ -120,7 +99,7 @@ public class HUD {
 		g.setColor(Color.GREEN);
 		g.setFont(new Font("Arial",Font.PLAIN,12));
 		
-		if(GamePanel.debug) {
+		if(GamePanel.DEBUG) {
 			g.fillRect(5, Center.aligny(89.9), rectLength, 11);
 			g.setColor(Color.BLACK);
 			g.drawString("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB", 5, Center.aligny(92));
@@ -137,7 +116,7 @@ public class HUD {
 		allocatedMemory = (runtime.maxMemory()) / 1024 / 1024;
 		
 		memReport++;
-		if(memReport % 60 == 0 && GamePanel.debug) {
+		if(memReport % 60 == 0 && GamePanel.DEBUG) {
 			System.out.println("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
 		}
 	}

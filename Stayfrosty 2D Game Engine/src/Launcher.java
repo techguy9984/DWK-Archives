@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
-import com.cpjd.stayfrosty.files.LauncherSave;
 import com.cpjd.stayfrosty.main.Game;
 import com.cpjd.stayfrosty.util.Controls;
 
@@ -88,13 +87,8 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		});
 	}
 
-	LauncherSave ls;
-	
 	public Launcher() {
 		super(title);
-		
-		// File saving
-		ls = new LauncherSave();
 		
 		// JFrame settings
 		setSize(500,320);
@@ -171,7 +165,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		resolution.setFocusable(false);
 		resolution.setBackground(Color.DARK_GRAY);
 		resolution.setForeground(Color.WHITE);
-		resolution.setSelectedIndex(ls.getResolution());
+		resolution.setSelectedIndex(0);
 		resolution.addActionListener(this);
 		resolution.setToolTipText("Sets the resolution off the display. Fullscreen is recommended and fits automically to your screen");
 		add(resolution);
@@ -182,7 +176,6 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		quality.setBorderPainted(false);
 		quality.setForeground(Color.DARK_GRAY);
 		boolean temp = true;
-		if(ls.getQuality() == 0) temp = false;
 		quality.setSelected(temp);
 		quality.setToolTipText("<html> With high-quality enabled, you must have at least 2.5gb of ram allocated to the game.<br>"
 				+ "Disabling high-quality mode will skip cutscenes, which are ram intensive </html>");
@@ -195,7 +188,6 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		noSound.setBorderPainted(false);
 		noSound.setForeground(Color.DARK_GRAY);
 		boolean temp1 = false;
-		if(ls.getSound() == 1) temp1 = true;
 		noSound.setSelected(temp1);
 		noSound.addActionListener(this);
 		noSound.setToolTipText("Disables all music and SFX effects. Can be reenabled in game");
@@ -207,22 +199,10 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		cursor.setBorderPainted(false);
 		cursor.setForeground(Color.DARK_GRAY);
 		boolean temp2 = true;
-		if(ls.getCursor() == 0) temp2 = false;
 		cursor.setSelected(temp2);
 		cursor.addActionListener(this);
 		cursor.setToolTipText("Hides the cursor");
 		add(cursor);
-		
-		joe.setSize(100,20);
-		joe.setLocation(5,190);
-		joe.setFocusable(false);
-		joe.setBorderPainted(false);
-		joe.setForeground(Color.DARK_GRAY);
-		joe.addActionListener(this);
-		boolean temp4 = false;
-		if(ls.getJoe() == 1) temp4 = true;
-		joe.setSelected(temp4);
-		//add(joe);
 		
 		apply.setForeground(Color.GREEN);
 		quit.setForeground(Color.RED);
@@ -312,12 +292,11 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			if(noSound.isSelected()) s = 1;
 			if(joe.isSelected()) j = 1;
 			int[] data = {resolution.getSelectedIndex(),q,c,s,j,0};
-			ls.save(data);
 			
 			dispose();
 			AudioPlayer.mute = noSound.isSelected();
-			new Game(resolutions[resolution.getSelectedIndex()][0],resolutions[resolution.getSelectedIndex()][1],isFullscreen(),
-					quality.isSelected(),joe.isSelected(),cursor.isSelected(),false,Launcher.title,Launcher.version,Launcher.versionCode);
+			Dimension screen = new Dimension(resolutions[resolution.getSelectedIndex()][0],resolutions[resolution.getSelectedIndex()][1]);
+			new Game(title,version,versionCode,screen,isFullscreen(),true);
 			
 			return;
 		}

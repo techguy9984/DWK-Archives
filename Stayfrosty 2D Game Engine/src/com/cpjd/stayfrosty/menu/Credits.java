@@ -12,8 +12,6 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.files.Load;
-import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -51,8 +49,8 @@ public class Credits extends GameState {
 	long startTime;
 	long elapsed;
 	
-	public Credits(GameStateManager gsm, Load load, Save save) {
-		super(gsm,load,save);
+	public Credits(GameStateManager gsm) {
+		super(gsm);
 
 		y = GamePanel.HEIGHT;
 		AudioPlayer.playMusic(SKeys.Credits);

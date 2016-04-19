@@ -16,27 +16,22 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.input.Mouse2;
-import com.cpjd.stayfrosty.util.Error;
-import com.cpjd.stayfrosty.util.Time;
+import com.cpjd.tools.Log;
 import com.cpjd.tools.Mouse;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	
-	////////// GAME SYSTEM VARIABLES //////////
-	public static int WIDTH; // 320 240
+	//////////////////// GAME SYSTEM VARIABLES////////////////////
+	public static int WIDTH;
 	public static int HEIGHT;
-	public static int SCALE = 2; // Scale up the game
+	public static int SCALE = 2;
 	public static String GAME_TITLE;
-	public static String version;
-	public static int versionCode;
-	public static boolean highQuality;
-	public static boolean hideCursor;
-	public static boolean debug; // Turns on all on-screen debugging information
-	public static boolean joe;
-	////////// GAME SYSTEM VARIABLES //////////
+	public static String VERSION;
+	public static int VERSION_CODE;
+	public static boolean QUALITY;
+	public static boolean DEBUG;
+	//////////////////// GAME SYSTEM VARIABLES////////////////////
 	
 	// Thread
 	private Thread thread;
@@ -51,14 +46,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Game State Manager
 	private GameStateManager gsm;  
 	
-	// Timinghttp://applemegan.weebly.com/
-	Time time;
-	
 	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setFocusable(true);
 		requestFocus();
-		
 	}
 	
 	public void addNotify() {
@@ -74,20 +65,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	
 	public void init() {
-		if(!joe) image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-		if(joe) image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_BYTE_GRAY);
+		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		
 		g = (Graphics2D) image.getGraphics();
-		if(GamePanel.highQuality) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		if(QUALITY) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		running = true;
 		
 		gsm = new GameStateManager();
 		
-		time = new Time();
-		
-		// Get rid of the mouse
-		//hideCursor(hideCursor);
+		Log.log("Thread started successfully", 5);
 	}
 	
 	private void hideCursor(boolean b) {
@@ -117,26 +104,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			try {
 				Thread.sleep(wait);
 			} catch(Exception e) {
-				Error.error(e, Error.THREAD_ERROR);
+				Log.logError(e, Log.THREAD_ERROR);
 			}
 		}
 	}
 	
 	private void update() {
 		gsm.update();
-		
-		time.update();
-		
-
-		
-		Mouse2.update();
-
 	}
 	
 	private void draw() { 
 		gsm.draw(g);
 		
-		Toolkit.getDefaultToolkit().sync(); // Refreshes the display on some systems
+		if(QUALITY) Toolkit.getDefaultToolkit().sync(); // Refreshes the display on some systems
 	}
 	
 	private void drawToScreen() {
@@ -151,37 +131,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		
 		// Debugging
 		if(key.getKeyCode() == KeyEvent.VK_F6) {
-			if(debug) {
-				debug = false;
-				Player.freecam = false;
-				hideCursor(hideCursor);
-				return;
-			}
-			if(!debug) {
-				Player.freecam = true;
-				hideCursor(false);
-				debug = true;
-				return;
-			}
+			DEBUG = !DEBUG;
+			hideCursor(!DEBUG);
 		}
 	}
 	public void keyReleased(KeyEvent key) { gsm.keyReleased(key.getKeyCode()); }
 	public void keyTyped(KeyEvent key) {}
 
 	public void mousePressed(MouseEvent mouse) {
-		Mouse2.mouseSet(mouse.getButton(), true);
 		Mouse.leftPressed = true;
 	}
 
 	public void mouseReleased(MouseEvent mouse) {
-		Mouse2.mouseSet(mouse.getButton(), false);
 		Mouse.leftPressed = false;
 	}
 
 	public void mouseMoved(MouseEvent mouse) {
-		Mouse2.setMousePos(mouse.getX(), mouse.getY());
-		Mouse.x = (int)(mouse.getX() * 0.5);
-		Mouse.y = (int)(mouse.getY() * 0.5);
+		Mouse.x = mouse.getX();
+		Mouse.y = mouse.getY();
 	}
 	public void mouseDragged(MouseEvent mouse) {}
 	public void mouseClicked(MouseEvent mouse) {}

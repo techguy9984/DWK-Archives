@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.shop.Stats;
 import com.cpjd.stayfrosty.tilemap.Tile;
 import com.cpjd.stayfrosty.tilemap.TileMap;
-import com.cpjd.stayfrosty.weapons.MultiBullet;
 
 public class Enemy extends Sprite {
 
@@ -45,9 +43,7 @@ public class Enemy extends Sprite {
 	private int sMemes;
 	private int sDoritoes;
 	private int sHealth;
-	
-	protected ArrayList<MultiBullet> mbullets;
-	
+
 	// Firing
 	protected boolean notFire; // Set to true if the enemy does not fire
 	
@@ -62,12 +58,7 @@ public class Enemy extends Sprite {
 	}
 	
 	public boolean isDead() {
-		if(dead == true) Stats.enemiesKilled++;
 		return dead;
-	}
-	
-	public ArrayList<MultiBullet> getBulletArray() {
-		return mbullets;
 	}
 	
 	protected double calculateDifference(double x1, double y1, double x2, double y2) {
@@ -104,7 +95,6 @@ public class Enemy extends Sprite {
 	/* enemy gets hit with x damage */
 	public void hit(double damage) {
 		if(dead) return;
-		Stats.hit++;
 		if(flinching) return;
 		
 		health -= damage;
@@ -190,14 +180,8 @@ public class Enemy extends Sprite {
 
 		// Buffered image automatically handles not on screen
 		setMapPosition();
-
-		if(!notFire) {
-			for (int i = 0; i < mbullets.size(); i++) {
-				mbullets.get(i).draw(g);
-			}
-		}
-			
-		if (GamePanel.debug) {
+	
+		if (GamePanel.DEBUG) {
 			g.setColor(Color.RED);
 			g.drawLine((int) (getx() + xmap), (int) (gety() + ymap), (int) (Player.globalX + xmap),
 					(int) (Player.globalY + ymap));

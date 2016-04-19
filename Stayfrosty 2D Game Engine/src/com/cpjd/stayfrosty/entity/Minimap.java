@@ -59,31 +59,8 @@ public class Minimap {
 	}
 	
 	private String formatState() {
-		String temp = "";
-		if(GameStateManager.globalState == GameStateManager.L_TUTORIAL) {
-			return "Tutorial";
-		}
-		if(GameStateManager.globalState == GameStateManager.L1_BOSS) {
-			return "Level 1-Boss";
-		}
-		if(GameStateManager.globalState == GameStateManager.L2_BOSS) {
-			return "Level 2-Boss";
-		}
-		if(GameStateManager.globalState == GameStateManager.L3_BOSS) {
-			return "Level 3-Boss";
-		}
-		if(GameStateManager.globalState <= 14) {
-			temp += "Level 1-"+String.valueOf(GameStateManager.globalState - 4);
-			return temp;
-		} else if(GameStateManager.globalState > 14 && GameStateManager.globalState <= 25) {
-			temp += "Level 2-"+String.valueOf(GameStateManager.globalState - 15);
-			return temp;
-		} else if(GameStateManager.globalState > 25) {
-			temp += "Level 3-"+String.valueOf(GameStateManager.globalState - 26);
-			return temp;
-		} else {
-			return "";
-		}
+		String temp = "Error";
+		return temp;
 	}
 	
 	public void keyPressed(int k) {

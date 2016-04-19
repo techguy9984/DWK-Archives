@@ -1,7 +1,5 @@
 package com.cpjd.stayfrosty.util;
 
-import com.cpjd.stayfrosty.files.StatsSave;
-
 // Keeps track of how long we've played
 public class Time {
 	
@@ -26,7 +24,7 @@ public class Time {
 	public void update() {
 		elapsed = System.currentTimeMillis() - startTime;
 	
-		rawSeconds = (elapsed / 1000) + StatsSave.time;
+		rawSeconds = (elapsed / 1000);
 		
 		unit = 1;
 		time = rawSeconds;

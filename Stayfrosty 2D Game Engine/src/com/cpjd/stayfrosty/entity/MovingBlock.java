@@ -119,7 +119,7 @@ public class MovingBlock extends Sprite {
 		g.drawImage(block, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
 		
 		// Super method isn't called, so we use this
-		if(GamePanel.debug) {
+		if(GamePanel.DEBUG) {
 			g.setColor(Color.RED);
 			g.drawRect(getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
 			

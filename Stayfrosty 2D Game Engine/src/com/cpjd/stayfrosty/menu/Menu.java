@@ -16,8 +16,6 @@ import org.lwjgl.openal.AL;
 import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.files.Load;
-import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -47,8 +45,8 @@ public class Menu extends GameState {
 	
 	private int currentSelection;
 	
-	public Menu(GameStateManager gsm, Load load, Save save) {
-		super(gsm, load, save);
+	public Menu(GameStateManager gsm) {
+		super(gsm);
 		
 		if(!AudioLoad.finished) AudioLoad.Start();
 		

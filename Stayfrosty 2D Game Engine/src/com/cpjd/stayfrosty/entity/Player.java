@@ -14,22 +14,9 @@ import javax.swing.JOptionPane;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.files.Load;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.shop.Inventory;
-import com.cpjd.stayfrosty.shop.Stats;
-import com.cpjd.stayfrosty.shop.Upgrades;
 import com.cpjd.stayfrosty.tilemap.TileMap;
-import com.cpjd.stayfrosty.weapons.Ak47;
-import com.cpjd.stayfrosty.weapons.Bullet;
-import com.cpjd.stayfrosty.weapons.Laser;
-import com.cpjd.stayfrosty.weapons.M4A1;
-import com.cpjd.stayfrosty.weapons.Pistol;
-import com.cpjd.stayfrosty.weapons.Shotgun;
-import com.cpjd.stayfrosty.weapons.Sniper;
-import com.cpjd.stayfrosty.weapons.Uzi;
-import com.cpjd.stayfrosty.weapons.Weapon;
 
 @SuppressWarnings("unused")
 public class Player extends Sprite {
@@ -131,27 +118,20 @@ public class Player extends Sprite {
 	// Game State
 	private GameStateManager gsm;
 
-	// Weapons
-	ArrayList<Weapon> weapons;
-
 	// Loading screen
 	BufferedImage loading;
 
 	// Fancy pickup animations
 	ArrayList<Zoom> zooms;
 
-	Load load;
-
-	SkeletonKey sk;
-
-	public Player(TileMap tm, GameStateManager gsm, Load load) {
+	public Player(TileMap tm, GameStateManager gsm) {
 
 		super(tm);
 
 		this.gsm = gsm;
-		this.load = load;
 
-		currentMemes = load.getMemes();
+
+		currentMemes = 0;
 
 		width = 64;
 		height = 64;
@@ -182,24 +162,9 @@ public class Player extends Sprite {
 
 		facingRight = true;
 
-		// Check for the player's max health upgrade
-		int tempHealth = 5;
-		if (Upgrades.bought[8][0])
-			tempHealth = 8;
-		if (Upgrades.bought[8][1])
-			tempHealth = 10;
-		if (Upgrades.bought[8][2])
-			tempHealth = 12;
-		if (Upgrades.bought[8][3])
-			tempHealth = 14;
-		if (Upgrades.bought[8][4])
-			tempHealth = 16;
-
-		health = maxHealth = tempHealth;
+		health = maxHealth = 100;
 
 		jumps = new ArrayList<Point>();
-
-		weapons = new ArrayList<Weapon>();
 
 		cCrouching = false;
 
@@ -208,17 +173,7 @@ public class Player extends Sprite {
 		shieldMax = 10;
 		shieldDecay = 0.007;
 
-		weapons.add(new Pistol(tm, load));
-		weapons.add(new Uzi(tm, load));
-		weapons.add(new Shotgun(tm, load));
-		weapons.add(new Ak47(tm, load));
-		weapons.add(new M4A1(tm, load));
-		weapons.add(new Sniper(tm, load));
-		weapons.add(new Laser(tm, load));
-
 		zooms = new ArrayList<Zoom>();
-
-		sk = new SkeletonKey(tileMap);
 
 		// load sprites
 		try {
@@ -321,10 +276,6 @@ public class Player extends Sprite {
 
 	public void setSmoking() {
 		if (currentPowerup >= powerupRequired) {
-			Stats.powerupTimes++;
-
-			tempEquip = Inventory.equip;
-			Inventory.equip = 6;
 			health = 420;
 			currentEndurance = 420;
 			powerupActivated = true;
@@ -360,23 +311,11 @@ public class Player extends Sprite {
 
 	// Checks for our attacks on enemies
 	public void checkAttack(ArrayList<Enemy> enemies) {
-		for (int i = 0; i < enemies.size(); i++) {
-			Enemy e = enemies.get(i);
-			ArrayList<Bullet> bullets;
-			for (int j = 0; j < weapons.size(); j++) {
-				bullets = weapons.get(j).getBullets();
-				for (int k = 0; k < bullets.size(); k++) {
-					if (bullets.get(k).getCollisionBox().intersects(e.getCollisionBox())) {
-						e.hit(weapons.get(j).getDamage());
-						bullets.remove(k);
-					}
-				}
-			}
-		}
+
 	}
 
 	public void hit(int damage) {
-		if (GamePanel.debug) {
+		if (GamePanel.DEBUG) {
 			return;
 		}
 		if (shield) {
@@ -419,8 +358,6 @@ public class Player extends Sprite {
 		if (gsm.getState() >= 25)
 			AudioPlayer.loopMusic(SKeys.Set_3);
 		powerupActivated = false;
-		if (Inventory.equip != -1)
-			Inventory.equip = tempEquip;
 		currentEndurance = maxEndurance;
 		health = maxHealth;
 		jumpStart = -7;
@@ -489,11 +426,6 @@ public class Player extends Sprite {
 
 	public void setMovementLock(boolean b) {
 		this.lockMovement = b;
-	}
-
-	// Activates the skeleton key
-	private void activeSkelly() {
-		sk.setKey(true);
 	}
 
 	// All obtainable collisions
@@ -565,31 +497,6 @@ public class Player extends Sprite {
 
 		}
 
-		// skeleton keys
-		if (tileMap.getID(topTile, leftTile) == 100) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, leftTile, 0);
-			activeSkelly();
-			return;
-		} else if (tileMap.getID(topTile, rightTile) == 100) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, rightTile, 0);
-			activeSkelly();
-			return;
-
-		} else if (tileMap.getID(bottomTile, leftTile) == 100) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, leftTile, 0);
-			activeSkelly();
-			return;
-
-		} else if (tileMap.getID(bottomTile, rightTile) == 100) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, rightTile, 0);
-			activeSkelly();
-			return;
-
-		}
 		// Checks for police station
 		if (tileMap.getID(topTile, leftTile) == 4 || tileMap.getID(topTile, leftTile) == 5) {
 			AudioPlayer.playSound(SKeys.Collect);
@@ -626,139 +533,6 @@ public class Player extends Sprite {
 			nextLevel();
 			return;
 		}
-
-		// Check for ammo collision
-		if (tileMap.getID(topTile, leftTile) == 91 && Inventory.equip != -1) {
-			tileMap.setMap(topTile, leftTile, 0);
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).ammoBox(topTile, leftTile);
-			return;
-		} else if (tileMap.getID(topTile, rightTile) == 91 && Inventory.equip != -1) {
-			tileMap.setMap(topTile, rightTile, 0);
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).ammoBox(topTile, rightTile);
-			return;
-
-		} else if (tileMap.getID(bottomTile, leftTile) == 91 && Inventory.equip != -1) {
-			tileMap.setMap(bottomTile, leftTile, 0);
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).ammoBox(bottomTile, leftTile);
-			return;
-
-		} else if (tileMap.getID(bottomTile, rightTile) == 91 && Inventory.equip != -1) {
-			tileMap.setMap(bottomTile, rightTile, 0);
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).ammoBox(bottomTile, rightTile);
-			return;
-
-		}
-		// Check for  powerup collision
-		if (tileMap.getID(topTile, leftTile) == 92) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, leftTile, 0);
-			pendingPowerupTiles++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		} else if (tileMap.getID(topTile, rightTile) == 92) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, rightTile, 0);
-			pendingPowerupTiles++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			;
-			return;
-		} else if (tileMap.getID(bottomTile, leftTile) == 92) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, leftTile, 0);
-			pendingPowerupTiles++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		} else if (tileMap.getID(bottomTile, rightTile) == 92) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, rightTile, 0);
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			pendingPowerupTiles++;
-			return;
-
-		}
-
-		// Check for ladder collision
-		if (tileMap.getID(topTile, leftTile) == 98) {
-			jumping = false;
-			if (!verticalEnabled)
-				dy = 0;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			falling = false;
-			verticalEnabled = true;
-			return;
-		} else if (tileMap.getID(topTile, rightTile) == 98) {
-			jumping = false;
-			if (!verticalEnabled)
-				dy = 0;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			;
-			falling = false;
-			verticalEnabled = true;
-			return;
-		} else if (tileMap.getID(bottomTile, leftTile) == 98) {
-			jumping = false;
-			if (!verticalEnabled)
-				dy = 0;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			verticalEnabled = true;
-			falling = false;
-			return;
-		} else if (tileMap.getID(bottomTile, rightTile) == 98) {
-			if (!verticalEnabled)
-				dy = 0;
-			jumping = false;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			falling = false;
-			verticalEnabled = true;
-			return;
-
-		} else {
-			verticalEnabled = false;
-		}
-
-		// Dank memes
-		if (tileMap.getID(topTile, leftTile) == 93) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, leftTile, 0);
-			pendingDankMemes++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		} else if (tileMap.getID(topTile, rightTile) == 93) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(topTile, rightTile, 0);
-			pendingDankMemes++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		} else if (tileMap.getID(bottomTile, leftTile) == 93) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, leftTile, 0);
-			pendingDankMemes++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		} else if (tileMap.getID(bottomTile, rightTile) == 93) {
-			AudioPlayer.playSound(SKeys.Collect);
-			tileMap.setMap(bottomTile, rightTile, 0);
-			pendingDankMemes++;
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
-			return;
-		}
-
 		if (munlocked)
 			return;
 		// Mystery box
@@ -815,7 +589,6 @@ public class Player extends Sprite {
 	}
 
 	private void nextLevel() {
-		sk.setKey(false);
 		if (currentDoritoes >= gsm.getState() - 4
 				|| gsm.getState() == GameStateManager.L_TUTORIAL && gsm.getState() <= 14) {
 			currentDoritoes = 0;
@@ -841,35 +614,6 @@ public class Player extends Sprite {
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
-		if (refill && Inventory.equip != -1) {
-			weapons.get(Inventory.equip).refill();
-			refill = false;
-		}
-
-		// Manage the upgrades
-		// Check for the player's armor upgrade
-		if (Upgrades.bought[10][0])
-			Player.maxArmor = 4;
-		if (Upgrades.bought[10][1])
-			Player.maxArmor = 7;
-		if (Upgrades.bought[10][2])
-			Player.maxArmor = 9;
-		if (Upgrades.bought[10][3])
-			Player.maxArmor = 11;
-		if (Upgrades.bought[10][4])
-			Player.maxArmor = 13;
-
-		// Check for the player's max health upgrade
-		if (Upgrades.bought[8][0])
-			Player.maxHealth = 8;
-		if (Upgrades.bought[8][1])
-			Player.maxHealth = 10;
-		if (Upgrades.bought[8][2])
-			Player.maxHealth = 12;
-		if (Upgrades.bought[8][3])
-			Player.maxHealth = 14;
-		if (Upgrades.bought[8][4])
-			Player.maxHealth = 16;
 
 		// Calculate shield orbital position
 		degree += 0.09;
@@ -900,42 +644,12 @@ public class Player extends Sprite {
 			}
 		}
 
-		// Check for the player's endurance lost rate upgrade
-		if (Upgrades.bought[7][0])
-			enduranceLost = 0.022;
-		if (Upgrades.bought[7][1])
-			enduranceLost = 0.017;
-		if (Upgrades.bought[7][2])
-			enduranceLost = 0.012;
-		if (Upgrades.bought[7][3])
-			enduranceLost = 0.007;
-		if (Upgrades.bought[7][4])
-			enduranceLost = 0.002;
-
-		// Check for the player's powerup lost rate upgrade
-		if (Upgrades.bought[9][0])
-			powerupLost = 0.009;
-		if (Upgrades.bought[9][1])
-			powerupLost = 0.008;
-		if (Upgrades.bought[9][2])
-			powerupLost = 0.007;
-		if (Upgrades.bought[9][3])
-			powerupLost = 0.006;
-		if (Upgrades.bought[9][4])
-			powerupLost = 0.004;
-
 		// Update armor
 		if (maxArmor > 0) {
 			armor += armorRegen;
 			if (armor > maxArmor)
 				armor = maxArmor;
 		}
-
-		// Update the player's gun
-		if (Inventory.equip != -1)
-			weapons.get(Inventory.equip).update();
-		if (Inventory.equip != -1)
-			weapons.get(Inventory.equip).setPos((int) x, (int) y, (int) xmap, (int) ymap, facingRight);
 
 		// animations for pickups
 		if (pendingPowerupTiles > 0) {
@@ -956,11 +670,6 @@ public class Player extends Sprite {
 				zooms.add(new Zoom("/Icons/dorito.png", (int) (x + xmap - width / 2), (int) (y + ymap - height / 2)));
 			}
 		}
-
-		if (dx != 0 || dy != 0) {
-			Stats.distanceTraveled++;
-		}
-
 		currentDoritoes += (pendingDoritoes * 1);
 		pendingDoritoes = 0;
 
@@ -972,13 +681,11 @@ public class Player extends Sprite {
 		}
 
 		currentMemes += pendingDankMemes;
-		Stats.memesGathered += pendingDankMemes;
 		pendingDankMemes = 0;
 
 		// check if player is dead
 		if (dead) {
 			dead = false;
-			Stats.deaths++;
 			Player.currentDoritoes = 0;
 			gsm.setState(gsm.getState());
 		}
@@ -995,7 +702,7 @@ public class Player extends Sprite {
 			// Endurance lost
 			if (currentEndurance > 0) { // Only sprint if there is enough
 										// endurance
-				if (!GamePanel.debug)
+				if (!GamePanel.DEBUG)
 					currentEndurance -= enduranceLost;
 			}
 		}
@@ -1017,8 +724,6 @@ public class Player extends Sprite {
 
 		// Deadly block
 		if (hitingFatalBlock) {
-			if (Inventory.equip != -1)
-				weapons.get(Inventory.equip).setFiring(false);
 			hit(1);
 		}
 
@@ -1114,10 +819,6 @@ public class Player extends Sprite {
 			g.setStroke(tempStroke);
 		}
 
-		// draw the weapons
-		if (Inventory.equip != -1)
-			weapons.get(Inventory.equip).draw(g);
-
 		if (powerupActivated) { // Draw glasses
 
 			if (counter > 0) {
@@ -1136,15 +837,13 @@ public class Player extends Sprite {
 	}
 
 	public void keyPressed(int k) {
-		sk.keyPressed(k);
+
 		if (k == KeyEvent.VK_UP && verticalEnabled) {
 			dy = -moveSpeed;
 		}
 		if (k == KeyEvent.VK_DOWN && verticalEnabled) {
 			dy = moveSpeed;
 		}
-		if (Inventory.equip != -1)
-			weapons.get(Inventory.equip).keyPressed(k);
 	}
 
 	public void keyReleased(int k) {
@@ -1156,8 +855,6 @@ public class Player extends Sprite {
 			dy = 0;
 
 		}
-		if (Inventory.equip != -1)
-			weapons.get(Inventory.equip).keyReleased(k);
 	}
 
 }

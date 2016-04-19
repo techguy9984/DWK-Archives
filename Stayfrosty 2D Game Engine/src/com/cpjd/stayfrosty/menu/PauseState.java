@@ -11,19 +11,10 @@ import org.lwjgl.openal.AL;
 import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.consume.Health;
-import com.cpjd.stayfrosty.consume.Shield;
-import com.cpjd.stayfrosty.consume.Skip;
-import com.cpjd.stayfrosty.consume.Powerup;
 import com.cpjd.stayfrosty.entity.Player;
-import com.cpjd.stayfrosty.files.Load;
-import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.shop.Consumables;
-import com.cpjd.stayfrosty.shop.Inventory;
-import com.cpjd.stayfrosty.shop.Upgrades;
 import com.cpjd.stayfrosty.util.Center;
 
 public class PauseState extends GameState {
@@ -45,9 +36,9 @@ public class PauseState extends GameState {
 	private int currentChoice = 0; // The option that is currently selected
 	private boolean restarting;
 	
-	public PauseState(GameStateManager gsm, Load load, Save save) {
+	public PauseState(GameStateManager gsm) {
 		
-		super(gsm, load, save);
+		super(gsm);
 		
 		restarting = false;
 		
@@ -110,94 +101,6 @@ public class PauseState extends GameState {
 		}
 	}
 
-	// Resets all save data that was earned during the level,
-	// as well as some other things
-	public void reset() {
-		AudioPlayer.playSound(SKeys.Select);
-		Inventory.equip = -1;
-		//AudioPlayer.stopAll();
-		restarting = true;
-		Save.restart = true;
-		Player.currentDoritoes = 0;
-		gsm.setState(gsm.getState());
-		gsm.setPaused(false);
-		
-		// Reset the consumables
-		Consumables.healths.clear();
-		Consumables.shields.clear();
-		Consumables.skips.clear();
-		Consumables.powerups.clear();
-		
-		for(int i = 0; i < load.getHealthPacks(); i++) {
-			Consumables.healths.add(new Health());
-		}
-		
-		for(int i = 0; i < load.getShieldPacks(); i++) {
-			Consumables.shields.add(new Shield());
-		}
-		
-		for(int i = 0; i < load.getSkipPacks(); i++) {
-			Consumables.skips.add(new Skip());
-		}
-		
-		for(int i = 0; i < load.getPowerupPacks(); i++) {
-			Consumables.powerups.add(new Powerup());
-		}
-		
-		// Reset the upgrades that aren't in the save file
-		for(int i = 0; i < 13; i++) {
-			for(int j = 0; j < 5; j++) {
-				Upgrades.bought[i][j] = false;
-			}
-		}
-		
-		for(int i = 0; i < load.getPistolUpgrades(); i++) {
-			Upgrades.bought[0][i] = true;
-		}
-		
-		for(int i = 0; i < load.getUziUpgrades(); i++) {
-			Upgrades.bought[1][i] = true;
-		}
-		
-		for(int i = 0; i < load.getShotgunUpgrades(); i++) {
-			Upgrades.bought[2][i] = true;
-		}
-		
-		for(int i = 0; i < load.getAkUpgrades(); i++) {
-			Upgrades.bought[3][i] = true;
-		}
-		
-		for(int i = 0; i < load.getM4Upgrades(); i++) {
-			Upgrades.bought[4][i] = true;
-		}
-		
-		for(int i = 0; i < load.getSniperUpgrades(); i++) {
-			Upgrades.bought[5][i] = true;
-		}
-		
-		// non weapons
-		for(int i = 0; i < load.getEnduranceUpgrades(); i++) {
-			Upgrades.bought[7][i] = true;
-		}
-		
-		for(int i = 0; i < load.getHealthUpgrades(); i++) {
-			Upgrades.bought[8][i] = true;
-		}
-		
-		for(int i = 0; i < load.getPowerupUpgrades(); i++) {
-			Upgrades.bought[9][i] = true;
-		}
-		
-		for(int i = 0; i < load.getArmorUpgrades(); i++) {
-			Upgrades.bought[10][i] = true;
-		}
-		
-		for(int i = 0; i < load.getMixtapeUpgrades(); i++) {
-			Upgrades.bought[12][i] = true;
-		}
-		
-	}
-	
 	private void select() {
 		if(currentChoice == 0) { // Resume
 			gsm.setPaused(false);
@@ -209,9 +112,6 @@ public class PauseState extends GameState {
 				AudioLoad.stopAll();
 			} else options[1] = "Sound (ON)";
 			AudioPlayer.mute = !AudioPlayer.mute;
-		}
-		if(currentChoice == 2) { // Restart Level
-			reset();
 		}
 		if(currentChoice == 3) { // Exit to Menu
 			AudioPlayer.playSound(SKeys.Select);

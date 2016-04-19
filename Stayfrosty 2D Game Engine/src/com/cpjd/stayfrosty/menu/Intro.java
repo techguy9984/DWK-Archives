@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.stayfrosty.files.Load;
-import com.cpjd.stayfrosty.files.Save;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -40,8 +38,8 @@ public class Intro extends GameState {
 	
 	public static final boolean SKIP_ALLOWED = true;
 	
-	public Intro(GameStateManager gsm, Load load, Save save) {
-		super(gsm, load, save);
+	public Intro(GameStateManager gsm) {
+		super(gsm);
 		
 		state = 0;
 

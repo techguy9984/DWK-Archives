@@ -287,7 +287,7 @@ public abstract class Sprite {
 					-width, height, null);
 		}
 		
-		if(GamePanel.debug) {
+		if(GamePanel.DEBUG) {
 			g.setColor(Color.RED);
 			g.drawRect(getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
 		}

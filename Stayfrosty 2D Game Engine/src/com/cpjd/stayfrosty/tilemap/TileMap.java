@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.stayfrosty.input.Mouse2;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.util.Center;
 
@@ -283,9 +282,9 @@ public class TileMap {
 			}
 		}
 		// Draw coordinates
-		if (GamePanel.debug) {
-			int tempx = (int)Math.abs(getx()) + (Mouse2.x / 2);
-			int tempy = (int)Math.abs(gety()) + (Mouse2.y / 2);
+		if (GamePanel.DEBUG) {
+			int tempx = (int)Math.abs(getx()) + (4 / 2);
+			int tempy = (int)Math.abs(gety()) + (4/ 2);
 			g.setColor(Color.GREEN);
 			g.fillRect(5, GamePanel.HEIGHT - 26, Center.getSWidth(g,"XY: "+"(" + tempx + "," + tempy + ")"), 13);
 			g.setColor(Color.BLACK);

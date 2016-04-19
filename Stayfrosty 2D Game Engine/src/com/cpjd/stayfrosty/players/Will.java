@@ -110,7 +110,7 @@ public class Will extends Sprite {
 		return maxHealth;
 	}
 	public void hit(int damage) {
-		if(GamePanel.debug) return;
+		if(GamePanel.DEBUG) return;
 		if(flinching) return;
 		
 		AudioPlayer.playSound(SKeys.Damage);

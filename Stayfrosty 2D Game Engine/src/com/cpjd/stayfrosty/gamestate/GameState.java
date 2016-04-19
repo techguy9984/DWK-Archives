@@ -1,10 +1,6 @@
 package com.cpjd.stayfrosty.gamestate;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import com.cpjd.stayfrosty.files.Load;
-import com.cpjd.stayfrosty.files.Save;
 
 /* Description
  *  Stores all required methods for each state (see GameStateManager)
@@ -17,16 +13,9 @@ import com.cpjd.stayfrosty.files.Save;
 public abstract class GameState {
 
 	protected GameStateManager gsm;
-	protected Load load;
-	protected Save save;
-	
-	protected BufferedImage loading;
-	
-	
-	public GameState(GameStateManager gsm, Load load, Save save) {
+
+	public GameState(GameStateManager gsm) {
 		this.gsm = gsm;
-		this.load = load;
-		this.save = save;
 	}
 	
 	public abstract void update();

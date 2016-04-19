@@ -1,5 +1,6 @@
 package com.cpjd.stayfrosty.main;
 
+import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -8,32 +9,34 @@ import javax.swing.JFrame;
 
 import org.lwjgl.openal.AL;
 
+import com.cpjd.tools.Log;
+
+@SuppressWarnings("serial")
 public class Game extends JFrame implements WindowListener {
 
-	private static final long serialVersionUID = -1139087955463380188L;
-
 	// Call this to start the game, specify game start parameters
-	public Game(int width, int height, boolean fullscreen, boolean highQuality, boolean joe, boolean hideCursor, boolean qxx1, String title, String version, int versionCode) {
+	public Game(String title, String version, int versionCode, Dimension screen, boolean fullscreen, boolean quality) {
 		super(title);
 		
+		// Configure the logging
+		Log.setLogDir(title);
+		Log.log("Game initialized with attributes: "
+				+ "(Resolution) "+screen.getWidth()+" x "+screen.getHeight()+
+				" (Fullscreen) "+fullscreen
+				+" (High Quality) "+quality
+				+" (Version) "+version
+				+" (Title) "+title
+				+" (Version Code) "+versionCode, 2);
+		
 		// Set screen size
-		GamePanel.WIDTH = width / GamePanel.SCALE;
-		GamePanel.HEIGHT = height / GamePanel.SCALE;
+		GamePanel.WIDTH = (int)screen.getWidth() / GamePanel.SCALE;
+		GamePanel.HEIGHT = (int)screen.getHeight() / GamePanel.SCALE;
 		
 		// Other attributes
-		GamePanel.highQuality = highQuality;
+		GamePanel.QUALITY = quality;
 		GamePanel.GAME_TITLE = title;
-		GamePanel.version = version;
-		GamePanel.versionCode = versionCode;
-		
-		GamePanel.joe = joe;
-		
-		// FPS
-		if(joe) GamePanel.FPS = 10;
-		if(!joe) GamePanel.FPS = 150;
-		
-		// Cursor
-		if(hideCursor) GamePanel.hideCursor = true;
+		GamePanel.VERSION = version;
+		GamePanel.VERSION_CODE = versionCode;
 		
 		// Fullscreen
 		if(fullscreen) setUndecorated(true);
@@ -43,7 +46,6 @@ public class Game extends JFrame implements WindowListener {
 		setIconImage(icon.getImage());
 		
 		addWindowListener(this);
-		
 		setLayout(null);
 		setContentPane(new GamePanel());
 		pack();

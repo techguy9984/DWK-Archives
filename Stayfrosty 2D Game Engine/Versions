@@ -17,4 +17,12 @@ TODO:
 -New credits music (check out freesound.org)
 -Remove shop and inventory classes - they need to be redone
 -Remove unused sounds
+
+-Rewrite loading & saving functions
+-Rewrite saving animations
+-Clean up code
+-Add in more logs
+-Shop and inventory?
+-Quests
+
 Alpha 3.0
