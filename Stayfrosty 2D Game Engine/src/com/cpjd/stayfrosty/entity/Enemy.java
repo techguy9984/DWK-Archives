@@ -117,13 +117,6 @@ public class Enemy extends Sprite {
 		return babySpoders;
 	}
 	
-	// Run probabilites
-	public void runProbs() {
-		if(r.nextInt(100) < memeProb) addMemes(memeAmount);
-		if(r.nextInt(100) < doritoeProb) addDoritoes(doritoeAmount);
-		if(r.nextInt(100) < healthProb) addHealth(healthAmount);
-	}
-	
 	// To steal from player
 	public int getStolenHealth() {
 		int temp = sHealth;
@@ -143,39 +136,6 @@ public class Enemy extends Sprite {
 		return temp;
 	}
 	
-	
-	
-	// Stealing
-	public void addMemes(int amount) {
-		if(Player.currentMemes <= 0) return;
-		totalMemes += amount;
-		sMemes = amount;
-		memes += amount;
-	}
-	
-	public int getMemes() {
-		return memes;
-	}
-	
-	public int getTotalMemes() {
-		return totalMemes;
-	}
-	
-	public int getTotalDoritoes() {
-		return totalDoritoes;
-	}
-	
-	public void addDoritoes(int amount) {
-		if(Player.currentDoritoes <= 0) return;
-		totalDoritoes += amount;
-		sDoritoes = amount;
-		doritoes += amount;
-	}
-	
-	public int getDoritoes() {
-		return doritoes;
-	}
-	
 	public void draw(Graphics2D g) {
 
 		// Buffered image automatically handles not on screen
@@ -183,8 +143,8 @@ public class Enemy extends Sprite {
 	
 		if (GamePanel.DEBUG) {
 			g.setColor(Color.RED);
-			g.drawLine((int) (getx() + xmap), (int) (gety() + ymap), (int) (Player.globalX + xmap),
-					(int) (Player.globalY + ymap));
+			//g.drawLine((int) (getx() + xmap), (int) (gety() + ymap), (int) (Player.globalX + xmap),
+				//	(int) (Player.globalY + ymap));
 		}
 		if (flinching) {
 			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;

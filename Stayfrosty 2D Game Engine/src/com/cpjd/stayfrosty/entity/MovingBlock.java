@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.main.GamePanel;
+import com.cpjd.stayfrosty.players.Daniel;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 @SuppressWarnings("unused")
@@ -65,7 +66,7 @@ public class MovingBlock extends Sprite {
 		this.moveSpeed = ms;
 	}
 	
-	public void checkPlayerCollision(Player player) {
+	public void checkPlayerCollision(Daniel player) {
 		Rectangle mPlayer = new Rectangle(player.getCollisionBox().x,player.getCollisionBox().y  + player.getCollisionBox().height ,player.getCollisionBox().width,10);
 		Rectangle mBlock = new Rectangle(getCollisionBox().x, getCollisionBox().y + 10, getCollisionBox().width, 1);
 		if(mPlayer.intersects(mBlock)) {

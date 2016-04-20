@@ -9,11 +9,11 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.external.imageprocessing.AnimatedGIF;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.tools.Layout;
+import com.cpjd.stayfrosty.players.Daniel;
 
 public class HUD {
 	
-	private Player player; // All the player stuff is important
+	private Daniel player; // All the player stuff is important
 	private BufferedImage image;
 	private Font font;
 
@@ -28,7 +28,7 @@ public class HUD {
 	private double allocatedMemory; // The total amount of memory that can be used
 	private int rectLength;
 	
-	public HUD(Player p) {
+	public HUD(Daniel p) {
 		player = p;
 		
 		runtime = Runtime.getRuntime();
@@ -62,38 +62,10 @@ public class HUD {
 		// Represent the total health
 		g.setColor(Color.BLACK);
 		g.drawLine(20 + player.getMaxHealth() * 3, 14, 20 + player.getMaxHealth() * 3, 23);
-		
-		// Draw armor
-		int armor = (int)Player.armor;
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(20, 14, armor * 3, 10);
-		g.setColor(Color.BLACK);
-		
-		// Draw endurance
-		double endurance = player.getEndurance();
-		if(endurance > player.getMaxEndurance()) endurance = player.getMaxEndurance();
-		g.setColor(Color.YELLOW);
-		g.fillRect(20, 34, (int)endurance * 5, 10);
-		
-		// Draw powerups
-		double powerup = player.getCurrentPowerups();
-		g.setColor(Color.MAGENTA);
-		g.fillRect(20, 54 , (int)(powerup * 5), 10);
-		
-		// Draw dank memes
-		g.setColor(Color.BLACK);
-		g.drawString(String.valueOf((int)player.getMemes()),25, 104);
-		
+
 		// Draw ammo
 		g.setColor(Color.WHITE);
 
-		
-		// Draw gifs
-		if(player.isSmoking()) {
-			wow.draw(g);
-			toad.draw(g);
-		}	
-		
 		// Set fonts
 		g.setColor(Color.GREEN);
 		g.setFont(new Font("Arial",Font.PLAIN,12));

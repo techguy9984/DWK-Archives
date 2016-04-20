@@ -46,7 +46,7 @@ public class Tutorial {
 	}
 	
 	public void update() {
-		// Set active if the player is in range
+		/* Set active if the player is in range
 		if(Player.globalX > x && Player.globalX < x + xrange && Player.globalY > y && Player.globalY < y + yrange) {
 			active = true;
 			
@@ -59,7 +59,7 @@ public class Tutorial {
 			}
 		} else {
 			active = false;
-		}
+		}*/
 	}
 	
 	public void draw(Graphics2D g) {

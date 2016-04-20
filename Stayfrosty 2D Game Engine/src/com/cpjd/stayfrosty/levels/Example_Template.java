@@ -1,21 +1,7 @@
 package com.cpjd.stayfrosty.levels;
 
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-
-import com.cpjd.stayfrosty.entity.Explosion;
-import com.cpjd.stayfrosty.entity.HUD;
-import com.cpjd.stayfrosty.entity.Player;
-import com.cpjd.stayfrosty.gamestate.GameState;
-import com.cpjd.stayfrosty.gamestate.GameStateManager;
-import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.menu.PauseState;
-import com.cpjd.stayfrosty.tilemap.Background;
-import com.cpjd.stayfrosty.tilemap.TileMap;
-
-public class Example_Template extends GameState {
-	
+public class Example_Template {
+/*	
 	private TileMap tileMap; 
 	private Background bg;
 	private Player player;
@@ -151,5 +137,5 @@ public class Example_Template extends GameState {
 		if(k == KeyEvent.VK_SHIFT) player.setSprinting(false);
 		
 	}
-	
+	*/
 }

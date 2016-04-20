@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.input.Keymap;
+import com.cpjd.input.Keys;
+import com.cpjd.input.Mouse;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.entity.Animation;
@@ -183,11 +186,20 @@ public class Daniel extends Sprite {
 	}
 	
 	public void update() {
+		handleInput();
+		
 		// update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		checkTileCollision();
+
+		// Check for debug placement (mouse click)
+		if(GamePanel.DEBUG) {
+			if(Mouse.leftPressed) {
+				setPosition((int)Math.abs(tileMap.getx()) + (Mouse.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse.y / 2));
+			}
+		}
 		
 		// check done flinching
 		if (flinching) {
@@ -233,6 +245,18 @@ public class Daniel extends Sprite {
 		if (right) facingRight = true;
 		if (left) facingRight = false;
 	}
+	private void handleInput() {
+		if(Keys.isPressed(Keymap.right)) setRight(true);
+		if(Keys.isPressed(Keymap.left)) setLeft(true);
+		if(Keys.isPressed(Keymap.back)) setDown(true);
+		if(Keys.isPressed(Keymap.jump)) setJumping(true);
+
+		if(!Keys.isPressed(Keymap.right)) setRight(false);
+		if(!Keys.isPressed(Keymap.left)) setLeft(false);
+		if(!Keys.isPressed(Keymap.back)) setDown(false);
+		if(!Keys.isPressed(Keymap.jump)) setJumping(false);
+	}
+	
 	public void draw(Graphics2D g) {
 
 		setMapPosition();

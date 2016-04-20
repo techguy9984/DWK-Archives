@@ -11,7 +11,6 @@ import org.lwjgl.openal.AL;
 import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -62,11 +61,6 @@ public class PauseState extends GameState {
 	}
 	
 	public void update() {}
-	
-	public void setRestarting(boolean b) {
-		if(b) Player.currentDoritoes = 0;
-		restarting = b;
-	}
 	
 	public void draw(Graphics2D g) {
 		if(restarting) {

@@ -11,10 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import com.cpjd.stayfrosty.audio.AudioLoad;
-import com.cpjd.stayfrosty.audio.AudioPlayer;
-import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.levels.Cutscene1;
+import com.cpjd.stayfrosty.levels.Lv1_1;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.menu.Credits;
 import com.cpjd.stayfrosty.menu.Intro;
@@ -37,7 +35,7 @@ public class GameStateManager {
 	private int currentState;
 
 	// Game States Codes
-	public static final int NUMGAMESTATES = 5;
+	public static final int NUMGAMESTATES = 6;
 	// Menu stuff
 	public static final int INTRO = 0;
 	public static final int MENU = 1;
@@ -45,6 +43,7 @@ public class GameStateManager {
 	// Levels
 	public static final int L_TUTORIAL = 3;
 	public static final int L1_1 = 4;
+	public static final int L1_2 = 5;
 
 	// Pause
 	private PauseState pauseState;
@@ -72,7 +71,6 @@ public class GameStateManager {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
-		pauseState.setRestarting(false);
 	}
 
 	private void loadState(int state) {
@@ -84,6 +82,7 @@ public class GameStateManager {
 			gameStates[state] = new Credits(this);
 		if (state == L1_1)
 			gameStates[state] = new Cutscene1(this);
+		if (state == L1_2) gameStates[state] = new Lv1_1(this);
 
 	}
 
@@ -103,14 +102,6 @@ public class GameStateManager {
 		if (paused) {
 			pauseState.update();
 			return;
-		}
-		if (Player.completedLevel) {
-			AudioLoad.stopAll();
-			AudioPlayer.playSound(SKeys.Level_Complete);
-			int temp = getState();
-			temp++;
-			setState(temp);
-			Player.completedLevel = false;
 		}
 
 		if (gameStates[currentState] != null)
@@ -168,21 +159,6 @@ public class GameStateManager {
 			pauseState.keyPressed(k);
 			return;
 		}
-		// If in debug mode and freecaming, pressing this keys will turn it off
-		if (k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_DOWN || k == KeyEvent.VK_UP
-				|| k == KeyEvent.VK_SPACE) {
-			Player.freecam = false;
-		}
-
-		if (GamePanel.DEBUG && k == KeyEvent.VK_U) {
-			try {
-				Player.currentMemes = Integer.parseInt(JOptionPane.showInputDialog("Enter the memes: "));
-
-			} catch (Exception e) {
-
-			}
-		}
-
 		if (GamePanel.DEBUG && k == KeyEvent.VK_L) {
 			// AudioPlayer.stopAll();
 			try {
