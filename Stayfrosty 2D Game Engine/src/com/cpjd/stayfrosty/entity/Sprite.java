@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.Tile;
 import com.cpjd.stayfrosty.tilemap.TileMap;
+import com.cpjd.tools.Animation;
 
 /* Everything that's going to be in the class */
 public abstract class Sprite {

@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.tools.Animation;
+
 public class Explosion {
 	
 	private int x;

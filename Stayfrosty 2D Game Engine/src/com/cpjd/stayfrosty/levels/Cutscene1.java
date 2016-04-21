@@ -196,7 +196,7 @@ public class Cutscene1 extends GameState {// intro
 		//if(k == KeyEvent.VK_S) player.setSmoking();
 		if(k == KeyEvent.VK_ENTER){
 			if (storyLevel == 10) {
-				gsm.setState(GameStateManager.L1_2);
+				gsm.setState(GameStateManager.L1_1);
 				AudioPlayer.stopSound(SKeys.Type);
 				AudioPlayer.stopMusic(SKeys.Epic);
 				return;

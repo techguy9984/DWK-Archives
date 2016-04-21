@@ -19,7 +19,6 @@ public class Game extends JFrame implements WindowListener {
 	public Game(String title, String version, int versionCode, Dimension screen, boolean fullscreen, boolean quality) {
 		super(title);
 		
-		// Configure the logging
 		Log.log("Game initialized with attributes: "
 				+ "(Resolution) "+screen.getWidth()+" x "+screen.getHeight()+
 				" (Fullscreen) "+fullscreen
@@ -28,7 +27,6 @@ public class Game extends JFrame implements WindowListener {
 				+" (Title) "+title
 				+" (Version Code) "+versionCode, 2);
 		
-		// Configure the layout class
 		// Set screen size
 		GamePanel.WIDTH = (int)screen.getWidth() / GamePanel.SCALE;
 		GamePanel.HEIGHT = (int)screen.getHeight() / GamePanel.SCALE;

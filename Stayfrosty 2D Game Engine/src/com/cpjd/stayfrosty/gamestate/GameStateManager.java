@@ -32,26 +32,23 @@ import com.cpjd.tools.Usage;
  *   3) Add new <state> statement to loadState();
  *   4) Create the new state in com.cpjd.stayfrosty.states
  */
-/**
- * @author Will Davies
- *
- */
 public class GameStateManager {
 
-	private GameState[] gameStates;
-	private int currentState;
-
-	// Game States Codes
+	/* LEVEL CODES */
 	public static final int NUMGAMESTATES = 6;
 	// Menu stuff
-	public static final int INTRO = 0; // CPJD logo intro
+	public static final int INTRO = 0;
 	public static final int MENU = 1;
 	public static final int CREDITS = 2;
 	// Levels
 	public static final int L_TUTORIAL = 3;
 	public static final int CUTSCENE_1 = 4;
-	public static final int L1_2 = 5;
+	public static final int L1_1 = 5;
 
+	// States
+	private GameState[] gameStates;
+	private int currentState;
+	
 	// Pause
 	private Pause pause;
 	
@@ -84,8 +81,7 @@ public class GameStateManager {
 		if (state == MENU) gameStates[state] = new Menu(this);
 		if (state == CREDITS) gameStates[state] = new Credits(this);
 		if (state == CUTSCENE_1) gameStates[state] = new Cutscene1(this);
-		if (state == L1_2) gameStates[state] = new Lv1_1(this);
-
+		if (state == L1_1) gameStates[state] = new Lv1_1(this);
 	}
 
 	private void unloadState(int state) {
@@ -148,7 +144,7 @@ public class GameStateManager {
 		if(pause.isPaused()) pause.draw(g);
 		
 		// Draw memory consumption
-		if(GamePanel.DEBUG && getState() >= GameStateManager.L1_2) {
+		if(GamePanel.DEBUG && getState() >= GameStateManager.L1_1) {
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect(5, Layout.aligny(90), Layout.getStringWidth(g, Usage.calcMemory()), 15);
 			g.setColor(Color.WHITE);
@@ -167,24 +163,16 @@ public class GameStateManager {
 			System.gc();
 		}
 		if (GamePanel.DEBUG && k == KeyEvent.VK_L) {
-			// AudioPlayer.stopAll();
 			try {
 				setState(Integer.parseInt(JOptionPane.showInputDialog("Enter the level code (lv + 4): ")));
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				AudioLoad.stopAll();
+			} catch (Exception e) {}
 		}
 
-		if (gameStates[currentState] != null) {
-			gameStates[currentState].keyPressed(k);
-		}
+		if (gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
 
 	public void keyReleased(int k) {
-		if (gameStates[currentState] != null)
-			gameStates[currentState].keyReleased(k);
-
+		if (gameStates[currentState] != null) gameStates[currentState].keyReleased(k);
 	}
-
 }

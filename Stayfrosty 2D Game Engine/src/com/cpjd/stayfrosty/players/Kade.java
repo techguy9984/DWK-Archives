@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
-import com.cpjd.stayfrosty.entity.Animation;
 import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.TileMap;
+import com.cpjd.tools.Animation;
 
 /* Daniel
  * -flawless

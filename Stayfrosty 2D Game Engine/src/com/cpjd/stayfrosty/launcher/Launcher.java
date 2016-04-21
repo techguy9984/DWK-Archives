@@ -34,7 +34,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	// Game parameters
+	/* MODIFY THIS PARAMTERS, NOT ANY OTHERS */
 	public static String TITLE = "DWK Archives";
 	private static String version = "Alpha 2.0";
 	private static int versionCode  = 4;

@@ -76,7 +76,7 @@ public class Pause extends GameState {
 	
 	public void requestChange() {
 		// Only acknowledge the request if a certain time period has passed (prevents spamming)
-		if(System.currentTimeMillis() - elapsed > 175 && gsm.getState() >= GameStateManager.L1_2) {
+		if(System.currentTimeMillis() - elapsed > 175 && gsm.getState() >= GameStateManager.L1_1) {
 			elapsed = System.currentTimeMillis();
 			this.paused = !this.paused;
 			// Reset everything

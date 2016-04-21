@@ -2,7 +2,6 @@ package com.cpjd.stayfrosty.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.Random;
 
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -11,8 +10,6 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
 
 public class Enemy extends Sprite {
 
-	protected ArrayList<Enemy> babySpoders;
-	
 	protected double health;
 	protected int maxHealth;
 	protected boolean dead;
@@ -25,27 +22,8 @@ public class Enemy extends Sprite {
 	
 	protected Random r;
 	
-	// Probs
-	protected int memeProb;
-	protected int doritoeProb;
-	protected int healthProb;
-	
-	// How much is stolen at once
-	protected int memeAmount = 1;
-	protected int doritoeAmount = 1;
-	protected int healthAmount = 1;
-	
-	// Temp values for removing player stuff
-	private int sMemes;
-	private int sDoritoes;
-	private int sHealth;
-
 	// Firing
 	protected boolean notFire; // Set to true if the enemy does not fire
-	
-	// Enemy inventories
-	protected int memes;
-	protected int doritoes;
 	
 	public Enemy(TileMap tm) {
 		super(tm);
@@ -101,37 +79,12 @@ public class Enemy extends Sprite {
 	}
 	
 	public void addHealth(int amount) {
-		sHealth = amount;
 		health += amount;
 		if(health > maxHealth) health = maxHealth;
 	}
 	
 	public void update() {}
-	
-	// For baby spoders
-	public ArrayList<Enemy> getBabies() {
-		return babySpoders;
-	}
-	
-	// To steal from player
-	public int getStolenHealth() {
-		int temp = sHealth;
-		sHealth = 0;
-		return temp;
-	}
-	
-	public int getStolenMemes() {
-		int temp = sMemes;
-		sMemes = 0;
-		return temp;
-	}
-	
-	public int getStolenDoritoes() {
-		int temp = sDoritoes;
-		sDoritoes = 0;
-		return temp;
-	}
-	
+
 	public void draw(Graphics2D g) {
 
 		// Buffered image automatically handles not on screen

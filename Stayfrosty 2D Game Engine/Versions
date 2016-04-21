@@ -7,6 +7,7 @@ Alpha 2.0
 -Added new menu
 -Added new custom font
 -Updated credits
+-New credits music
 
 TODO:
 -Art for all 3 characters (+ animations)
@@ -14,7 +15,7 @@ TODO:
 -Sound for beginning intro - cry for help from the last of the illuminati (saved as .ogg)
 -Design "tutorial level" or first level
 -New dialog system (show captions at correct time, on-screen location)
--New credits music (check out freesound.org)
+
 -Remove shop and inventory classes - they need to be redone
 -Remove unused sounds
 
