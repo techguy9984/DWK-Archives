@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
 
-import com.cpjd.stayfrosty.main.GamePanel;
+import com.cpjd.stayfrosty.launcher.Launcher;
 import com.cpjd.tools.Hardware;
 import com.cpjd.tools.Log;
 
@@ -19,7 +19,8 @@ public class Head {
 	public static int NUM_CONTROLS_ITEMS = 20;
 	
 	// File names
-	public static String foldername = GamePanel.GAME_TITLE;
+	public static String foldername = Launcher.TITLE;
+	public static String launchername = "launcher.save";
 	public static String savename = "save.save";
 	public static String statsname = "stats.save";
 	public static String controlsname = "controls.save";
@@ -29,11 +30,15 @@ public class Head {
 	private static File directory;
 	
 	// Files
-	private static File save;
-	private static File stats;
-	private static File controls;
+	public static File save;
+	public static File stats;
+	public static File controls;
+	public static File launcher;
 	
 	public static void init() {
+		// Log
+		Log.log("Intializing file loading", 5);
+		
 		// Find the appdata location based of operating system
 		String[] base = Hardware.osName.split("\\s+");
 		if(base[0].equalsIgnoreCase("Windows")) {
@@ -44,16 +49,19 @@ public class Head {
 		
 		// Set all the file locations
 		directory = new File(appdata + File.separator + foldername);
-		save = new File(appdata + File.separator + savename);
-		stats = new File(appdata + File.separator + statsname);
-		controls = new File(appdata + File.separator + controlsname);
+		save = new File(appdata + File.separator + foldername + File.separator + savename);
+		stats = new File(appdata + File.separator + foldername + File.separator + statsname);
+		controls = new File(appdata + File.separator + foldername + File.separator + controlsname);
+		launcher = new File(appdata + File.separator + foldername + File.separator + launchername);
 		
 		// Check to see if the files exist, if not, create new ones
 		if(!directory.exists()) {
+			Log.log("Creating save directory", 1);
 			directory.mkdir();
 		}
 		if(!save.exists()) {
 			try {
+				Log.log("Creating save file", 1);
 				save.createNewFile();
 			} catch(Exception e) {
 				Log.logError(e, Log.SAVE_ERROR);
@@ -61,6 +69,7 @@ public class Head {
 		}
 		if(!stats.exists()) {
 			try {
+				Log.log("Creating stats file", 1);
 				stats.createNewFile();
 			} catch(Exception e) {
 				Log.logError(e, Log.SAVE_ERROR);
@@ -68,21 +77,29 @@ public class Head {
 		}
 		if(!controls.exists()) {
 			try {
+				Log.log("Creating controls file", 1);
 				controls.createNewFile();
+			} catch(Exception e) {
+				Log.logError(e, Log.SAVE_ERROR);
+			}
+		}
+		if(!launcher.exists()) {
+			try {
+				Log.log("Creating launcher file", 1);
+				launcher.createNewFile();
+				SaveDefaults.putLaunchDefaults();
 			} catch(Exception e) {
 				Log.logError(e, Log.SAVE_ERROR);
 			}
 		}
 	}
 
-	public static void write(File file, int line, int data) {
+	public static void writeAppend(File file, String line) {
 		try {
 			FileOutputStream os = new FileOutputStream(file, true);
 			PrintWriter out = new PrintWriter(os);
 			
-			for(int i = 0; i < line; i++) {
-				out.println();
-			}
+			out.println(line);
 			
 			out.close();
 		} catch(Exception e) {

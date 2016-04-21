@@ -1,3 +1,4 @@
+package com.cpjd.stayfrosty.launcher;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -23,6 +24,9 @@ import javax.swing.JLabel;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.main.Game;
+import com.cpjd.stayfrosty.save.Head;
+import com.cpjd.stayfrosty.save.Load;
+import com.cpjd.tools.Log;
 
 @SuppressWarnings("serial")
 public class Launcher extends JFrame implements ActionListener, MouseMotionListener, MouseListener {
@@ -30,7 +34,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	// Game parameters
-	public static String title = "DWK Archives";
+	public static String TITLE = "DWK Archives";
 	private static String version = "Alpha 2.0";
 	private static int versionCode  = 4;
 	
@@ -79,9 +83,11 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		});
 	}
 
+	Load load;
+	
 	public Launcher() {
-		super(title);
-		
+		super(TITLE);
+
 		// JFrame settings
 		setSize(500,320);
 		setUndecorated(true);
@@ -92,6 +98,11 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		setVisible(true);
 		addMouseMotionListener(this);
 		addMouseListener(this);
+		
+		// Initialize file loading
+		Log.setLogDir(TITLE);
+		Head.init();
+		load = new Load();
 		
 		// Initialize components
 		apply = new JButton("Play");
@@ -144,7 +155,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		resolution.setFocusable(false);
 		resolution.setBackground(Color.DARK_GRAY);
 		resolution.setForeground(Color.WHITE);
-		resolution.setSelectedIndex(0);
+		resolution.setSelectedIndex(load.getResolution());
 		resolution.addActionListener(this);
 		resolution.setToolTipText("Sets the resolution off the display. Fullscreen is recommended and fits automically to your screen");
 		add(resolution);
@@ -154,10 +165,9 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		quality.setFocusable(false);
 		quality.setBorderPainted(false);
 		quality.setForeground(Color.DARK_GRAY);
-		boolean temp = true;
-		quality.setSelected(temp);
-		quality.setToolTipText("<html> With high-quality enabled, you must have at least 2.5gb of ram allocated to the game.<br>"
-				+ "Disabling high-quality mode will skip cutscenes, which are ram intensive </html>");
+		quality.setSelected(load.getQuality());
+		quality.setToolTipText("<html> Enable high-quality for deeper calculations <br>"
+				+ "and rendering procedures</html>");
 		quality.addActionListener(this);
 		add(quality);
 		
@@ -166,8 +176,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		noSound.setFocusable(false);
 		noSound.setBorderPainted(false);
 		noSound.setForeground(Color.DARK_GRAY);
-		boolean temp1 = false;
-		noSound.setSelected(temp1);
+		noSound.setSelected(load.getSound());
 		noSound.addActionListener(this);
 		noSound.setToolTipText("Disables all music and SFX effects. Can be reenabled in game");
 		add(noSound);
@@ -238,7 +247,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == reset) {
 			try {
-				Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//" + title + "//"));
+				Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//" + TITLE + "//"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -260,7 +269,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			dispose();
 			AudioPlayer.mute = noSound.isSelected();
 			Dimension screen = new Dimension(resolutions[resolution.getSelectedIndex()][0],resolutions[resolution.getSelectedIndex()][1]);
-			new Game(title,version,versionCode,screen,isFullscreen(),true);
+			new Game(TITLE,version,versionCode,screen,isFullscreen(),true);
 			
 			return;
 		}

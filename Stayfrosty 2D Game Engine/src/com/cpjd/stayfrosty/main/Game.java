@@ -20,7 +20,6 @@ public class Game extends JFrame implements WindowListener {
 		super(title);
 		
 		// Configure the logging
-		Log.setLogDir(title);
 		Log.log("Game initialized with attributes: "
 				+ "(Resolution) "+screen.getWidth()+" x "+screen.getHeight()+
 				" (Fullscreen) "+fullscreen
