@@ -21,6 +21,7 @@ import com.cpjd.stayfrosty.menu.Intro;
 import com.cpjd.stayfrosty.menu.Menu;
 import com.cpjd.stayfrosty.menu.Pause;
 import com.cpjd.tools.Layout;
+import com.cpjd.tools.Usage;
 
 /* Description
  *  Stores all of the different levels, menus, screens, etc. of the game
@@ -98,6 +99,11 @@ public class GameStateManager {
 	public void update() {
 		if(Keys.isPressed(Keymap.pause)) pause.requestChange();
 		
+		if(Keys.isPressed(Keymap.reload) && GamePanel.DEBUG) {
+			setState(currentState);
+			GamePanel.DEBUG = false;
+		}
+		
 		if(pause.isPaused()) {
 			pause.update();
 			return;
@@ -140,6 +146,14 @@ public class GameStateManager {
 
 		// Draw paused
 		if(pause.isPaused()) pause.draw(g);
+		
+		// Draw memory consumption
+		if(GamePanel.DEBUG && getState() >= GameStateManager.L1_2) {
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(5, Layout.aligny(90), Layout.getStringWidth(g, Usage.calcMemory()), 15);
+			g.setColor(Color.WHITE);
+			g.drawString(Usage.calcMemory(), 5, Layout.aligny(90) + Layout.getStringHeight(g) - 4);
+		}
 		
 	}
 
