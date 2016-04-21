@@ -28,7 +28,7 @@ public class Lv1_1 extends GameState {
 		bg = new Background("/Backgrounds/wood.png",0.1);
 		
 		daniel = new Daniel(tileMap, gsm);
-		daniel.setPosition(300, 1700);
+		daniel.setPosition(190, 1150);
 	}
 
 	public void update() {
@@ -46,7 +46,7 @@ public class Lv1_1 extends GameState {
 	}
 
 	public void keyPressed(int k) {
-		daniel.keyPressed(k);
+		
 	}
 
 	public void keyReleased(int k) {

@@ -130,7 +130,7 @@ public class Menu extends GameState {
 			}
 		}
 		if(k == KeyEvent.VK_ENTER) {
-			if(currentSelection == 0) gsm.setState(GameStateManager.L1_1);
+			if(currentSelection == 0) gsm.setState(GameStateManager.CUTSCENE_1);
 			if(currentSelection == 1) gsm.setState(GameStateManager.CREDITS);
 			if(currentSelection == 2) {
 				AL.destroy();
@@ -143,6 +143,5 @@ public class Menu extends GameState {
 		}
 	}
 	public void keyReleased(int k) {
-		PauseState.keyLock = false;
 	}
 }

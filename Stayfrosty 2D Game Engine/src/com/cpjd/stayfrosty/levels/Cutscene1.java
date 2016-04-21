@@ -12,7 +12,6 @@ import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.menu.PauseState;
 
 // APROVED
 public class Cutscene1 extends GameState {// intro
@@ -204,17 +203,11 @@ public class Cutscene1 extends GameState {// intro
 			AudioPlayer.loopSound(SKeys.Type);
 			
 		}
-		if(k == KeyEvent.VK_ESCAPE && !PauseState.keyLock) {
-			gsm.setPaused(true);
-		}
-			
 	}
 	
 	public void keyReleased(int k) {
 		//player.keyReleased(k);
 
-		PauseState.keyLock = false;
-		
 		//if(k == KeyEvent.VK_SPACE) player.setUp(false);
 		//if(k == KeyEvent.VK_LEFT) player.setLeft(false);
 		//if(k == KeyEvent.VK_DOWN) player.setDown(false);

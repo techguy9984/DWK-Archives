@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.entity.Animation;
-import com.cpjd.stayfrosty.entity.Sprite;
+import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.TileMap;
@@ -22,7 +22,7 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
  * -has an awp and can use it to snipe targets - low ammo however
  * 
  */
-public class Will extends Sprite {
+public class Will extends Player {
 	
 	// Life
 	private int health;
@@ -124,62 +124,6 @@ public class Will extends Sprite {
 		flinching = true;
 		flinchTimer = System.nanoTime();
 	}
-	private void getNextPosition() {
-		// movement
-		if (left) {
-			dx -= moveSpeed;
-			if (dx < -maxSpeed) {
-				dx = -maxSpeed;
-			}
-		} else if (right) {
-			dx += moveSpeed;
-			if (dx > maxSpeed) {
-				dx = maxSpeed;
-			}
-		} else {
-			if (dx > 0) {
-				dx -= stopSpeed;
-				if (dx < 0) {
-					dx = 0;
-				}
-			} else if (dx < 0) {
-				dx += stopSpeed;
-				if (dx > 0) {
-					dx = 0;
-				}
-			}
-		}
-
-		// jumping
-		if (jumping && !falling) {
-			dy = jumpStart;
-			falling = true;
-		}
-
-		// falling
-		if (falling) {
-			dy += fallSpeed;
-
-			if (dy > 0)
-				jumping = false;
-			if (dy < 0 && !jumping) dy += stopJumpSpeed;
-
-			if (dy > maxFallSpeed) dy = maxFallSpeed;
-		}
-	}
-	private void checkTileCollision() {
-		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
-		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
-
-		if (topTile < 0 || bottomTile >= tileMap.getNumRows() || leftTile < 0 || rightTile >= tileMap.getNumCols()) {
-			topLeft = topRight = bottomLeft = bottomRight = false;
-			hit(100);
-			return;
-		}
-	}
-	
 	public void update() {
 		// update position
 		getNextPosition();
