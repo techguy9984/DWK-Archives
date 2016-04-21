@@ -9,6 +9,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.stayfrosty.audio.AudioPlayer;
+import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.tools.Layout;
@@ -102,10 +104,16 @@ public class Pause extends GameState {
 		}
 		
 		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S) {
-			if(currentSelection < options.length - 1) currentSelection ++;
+			if(currentSelection < options.length - 1) {
+				AudioPlayer.playSound(SKeys.Change);
+				currentSelection ++;
+			}
 		}
 		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W) {
-			if(currentSelection > 0) currentSelection--;
+			if(currentSelection > 0) {
+				AudioPlayer.playSound(SKeys.Change);
+				currentSelection--;
+			}
 		}
 	}
 	public void keyReleased(int k) {}

@@ -21,7 +21,7 @@ public class Credits extends GameState {
 	
 	// Display
 	String[] items = {
-			"Bryan Simulator",
+			"The DWK Archives",
 			"by Cats Pajamas Developers",
 			"",
 			"Team",
