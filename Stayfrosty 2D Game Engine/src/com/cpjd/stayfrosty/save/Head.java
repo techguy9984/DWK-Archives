@@ -107,7 +107,7 @@ public class Head {
 		}
 	}
 	
-	public static void writeAll(File file, int[] data) {
+	public static void writeAll(File file, String[] data) {
 		try {
 			FileOutputStream os = new FileOutputStream(file);
 			PrintWriter out = new PrintWriter(os);

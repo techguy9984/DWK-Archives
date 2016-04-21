@@ -26,6 +26,7 @@ import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.main.Game;
 import com.cpjd.stayfrosty.save.Head;
 import com.cpjd.stayfrosty.save.Load;
+import com.cpjd.stayfrosty.save.Save;
 import com.cpjd.tools.Log;
 
 @SuppressWarnings("serial")
@@ -260,11 +261,16 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			return;
 		}
 		if(e.getSource() == apply) {
-			/* Acquire data for saving
-			int q = 0, c = 0, s = 0, j = 0;
-			if(quality.isSelected()) q = 1;
-			if(noSound.isSelected()) s = 1;
-			int[] data = {resolution.getSelectedIndex(),q,c,s,j,0};*/
+			String[] saveTokens = {
+					"//Resolution",
+					String.valueOf(resolution.getSelectedIndex()),
+					"//Quality",
+					String.valueOf(quality.isSelected()),
+					"//Sound",
+					String.valueOf(noSound.isSelected())
+			};
+			
+			new Save().saveLauncher(saveTokens);
 			
 			dispose();
 			AudioPlayer.mute = noSound.isSelected();
