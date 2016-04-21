@@ -101,10 +101,10 @@ public class Pause extends GameState {
 			}
 		}
 		
-		if(k == KeyEvent.VK_DOWN) {
+		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S) {
 			if(currentSelection < options.length - 1) currentSelection ++;
 		}
-		if(k == KeyEvent.VK_UP) {
+		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W) {
 			if(currentSelection > 0) currentSelection--;
 		}
 	}
