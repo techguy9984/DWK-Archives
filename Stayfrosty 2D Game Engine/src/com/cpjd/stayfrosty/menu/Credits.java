@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
@@ -28,12 +29,11 @@ public class Credits extends GameState {
 			"Will (techguy9984)",
 			"Daniel (boblop)",
 			"",
+			"The story, all names, characters, and incidents portrayed in this production",
+			"are fictitious. No identification with actual persons, places, buildings",
+			"and products is intended or should be inferred.",
 			"",
 			"This program is not intended for commerical distribution",
-			"",
-			"All logos shown or represented in this game",
-			"are copyright and or trademark of their respective",
-			"corporations",
 			"",
 	};
 	
@@ -53,7 +53,8 @@ public class Credits extends GameState {
 		super(gsm);
 
 		y = GamePanel.HEIGHT;
-		AudioPlayer.playMusic(SKeys.Credits);
+		AudioLoad.stopAll();
+		AudioPlayer.loopMusic(SKeys.Credits);
 		
 		try {
 			cpjd = ImageIO.read(getClass().getResourceAsStream("/CPJD/cpjdlogosmall.png"));
