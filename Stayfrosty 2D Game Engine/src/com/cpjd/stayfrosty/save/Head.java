@@ -10,13 +10,15 @@ import com.cpjd.stayfrosty.launcher.Launcher;
 import com.cpjd.tools.Hardware;
 import com.cpjd.tools.Log;
 
-// Manages reading and writing of files
+/*
+ * -Head.init(); must be called for any file operations to happen
+ * It will check if files exist, and attempt to create them.
+ * All files will be stored in APPDATA in a folder named after the
+ * application name. 
+ * 
+ * Head also contains the base-level reading and writing methods
+ */
 public class Head {
-	
-	// Number of lines (or items)
-	public static int NUM_SAVE_ITEMS = 41;
-	public static int NUM_STATS_ITEMS = 1;
-	public static int NUM_CONTROLS_ITEMS = 20;
 	
 	// File names
 	public static String foldername = Launcher.TITLE;

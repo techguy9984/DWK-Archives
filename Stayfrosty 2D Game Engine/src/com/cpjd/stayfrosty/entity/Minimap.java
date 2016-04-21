@@ -10,15 +10,15 @@ public class Minimap {
 
 	BufferedImage image;
 
-	private int descalex;
-	private int descaley;
+//	private int descalex;
+//	private int descaley;
 	
 	private boolean enabled;
 	
 	public Minimap(String path, int x, int y) {
 
-		descalex = x;
-		descaley = y;
+//		descalex = x;
+//		descaley = y;
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(path));
@@ -52,11 +52,11 @@ public class Minimap {
 		}*/
 	}
 	
-	private String formatState() {
-		String temp = "Error";
-		return temp;
-	}
-	
+//	private String formatState() {
+//		String temp = "Error";
+//		return temp;
+//	}
+//	
 	public void keyPressed(int k) {
 		if(k == KeyEvent.VK_M) {
 			toggle();

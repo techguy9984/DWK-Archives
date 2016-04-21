@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.stayfrosty.external.imageprocessing.AnimatedGIF;
-import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.players.Daniel;
 
 public class HUD {
@@ -17,34 +15,12 @@ public class HUD {
 	private BufferedImage image;
 	private Font font;
 
-	// GIFs
-	private AnimatedGIF wow;
-	private AnimatedGIF toad;
-
-	// Memory
-	Runtime runtime;
-	private double usedMemory; // The memory currently being used
-	private double totalMemory; // The total amount of memory that can be used, JVM can change this
-	private double allocatedMemory; // The total amount of memory that can be used
-	private int rectLength;
-	
 	public HUD(Daniel p) {
 		player = p;
 		
-		runtime = Runtime.getRuntime();
-
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/HUD/hud.png"));
 			font = new Font("arial",Font.PLAIN,14);
-			
-			wow = new AnimatedGIF(0,GamePanel.HEIGHT - (225 / 2));
-			wow.read("/MLG/wow.gif");
-			wow.setAdjust(true);
-			wow.setDescale(4);
-			
-			toad = new AnimatedGIF(220,GamePanel.HEIGHT - 103);
-			toad.setAdjust(true);
-			toad.read("/MLG/toad.gif");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -70,36 +46,9 @@ public class HUD {
 		g.setColor(Color.GREEN);
 		g.setFont(new Font("Arial",Font.PLAIN,12));
 		
-		/*if(GamePanel.DEBUG) {
-			g.fillRect(5, Layout.aligny(89.9), rectLength, 11);
-			g.setColor(Color.BLACK);
-			g.drawString("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB", 5, Layout.aligny(92));
-			rectLength = Layout.getSWidth(g, "Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
-		}*/
 	}
 
-	int memReport; // A timer using for memory reporting
-	
-	private void calcMemory() {
-		// Calculate how much memory is being used
-		usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024;
-		totalMemory = (runtime.totalMemory()) / 1024 / 1024;
-		allocatedMemory = (runtime.maxMemory()) / 1024 / 1024;
-		
-		memReport++;
-		if(memReport % 60 == 0 && GamePanel.DEBUG) {
-			System.out.println("Memory usage: "+usedMemory+ " MB / "+ totalMemory+" MB" + " / "+allocatedMemory+" MB");
-		}
-	}
-	
-	int count = 1;
 	public void update() {
-		calcMemory();
-		
-		if(count % 3 == 0) {
-			wow.nextFrame();
-			toad.nextFrame();
-		}
-		count++;
+
 	}
 }

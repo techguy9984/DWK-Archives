@@ -22,6 +22,8 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
  * -has an awp and can use it to snipe targets - low ammo however
  * 
  */
+
+@SuppressWarnings("unused")
 public class Will extends Player {
 	
 	// Life

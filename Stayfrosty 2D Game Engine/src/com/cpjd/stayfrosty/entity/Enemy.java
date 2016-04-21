@@ -35,10 +35,6 @@ public class Enemy extends Sprite {
 	protected int doritoeAmount = 1;
 	protected int healthAmount = 1;
 	
-	// Total inventory
-	public int totalMemes;
-	private int totalDoritoes;
-	
 	// Temp values for removing player stuff
 	private int sMemes;
 	private int sDoritoes;

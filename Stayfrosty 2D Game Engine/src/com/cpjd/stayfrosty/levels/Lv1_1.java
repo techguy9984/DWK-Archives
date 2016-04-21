@@ -1,7 +1,6 @@
 package com.cpjd.stayfrosty.levels;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;

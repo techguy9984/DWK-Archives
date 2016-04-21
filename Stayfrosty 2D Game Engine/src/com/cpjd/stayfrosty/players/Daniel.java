@@ -24,6 +24,8 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
  * -Projectile attack
  * 
  */
+// REMOVE THIS WHEN DONE
+@SuppressWarnings("unused")
 public class Daniel extends Player {
 	
 	private final int[] NUM_FRAMES = {2,8,1,2,2};
@@ -33,8 +35,6 @@ public class Daniel extends Player {
 	private static final int WALKING = 1;
 	private static final int JUMPING = 2;
 	private static final int FALLING = 3;
-	private static final int RUBIKS = 4;
-	private static final int JUGGLE = 5;
 	
 	// Technical
 	private GameStateManager gsm;

@@ -20,7 +20,6 @@ import com.cpjd.stayfrosty.menu.Credits;
 import com.cpjd.stayfrosty.menu.Intro;
 import com.cpjd.stayfrosty.menu.Menu;
 import com.cpjd.stayfrosty.menu.Pause;
-import com.cpjd.stayfrosty.save.Head;
 import com.cpjd.tools.Layout;
 
 /* Description

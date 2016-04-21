@@ -22,6 +22,8 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
  * -can take advantage of other people with his charm
  * 
  */
+
+@SuppressWarnings("unused")
 public class Kade extends Player {
 	
 	// Life
