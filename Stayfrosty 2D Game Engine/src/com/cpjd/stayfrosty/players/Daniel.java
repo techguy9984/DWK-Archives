@@ -159,11 +159,11 @@ public class Daniel extends Player {
 		if(Keys.isPressed(Keymap.right)) setRight(true);
 		if(Keys.isPressed(Keymap.left)) setLeft(true);
 		if(Keys.isPressed(Keymap.back)) setDown(true);
-		if(Keys.isPressed(Keymap.jump)) setJumping(true);
+		if(Keys.isPressed(Keymap.forward)) setJumping(true);
 
 		if(!Keys.isPressed(Keymap.right)) setRight(false);
 		if(!Keys.isPressed(Keymap.left)) setLeft(false);
 		if(!Keys.isPressed(Keymap.back)) setDown(false);
-		if(!Keys.isPressed(Keymap.jump)) setJumping(false);
+		if(!Keys.isPressed(Keymap.forward)) setJumping(false);
 	}
 }
