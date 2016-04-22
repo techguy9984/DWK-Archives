@@ -32,7 +32,6 @@ public class MovingBlock extends Sprite {
 	Rectangle upb;
 	Rectangle downb;
 	
-	
 	public MovingBlock(TileMap tm, int startx, int starty, int motionRange) {
 		super(tm);
 		

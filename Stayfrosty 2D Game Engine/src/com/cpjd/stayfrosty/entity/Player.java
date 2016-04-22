@@ -76,7 +76,6 @@ public class Player extends Sprite {
 				}
 			}
 		}
-
 		// jumping
 		if (jumping && !falling) {
 			dy = jumpStart;
