@@ -21,7 +21,6 @@ public class Intro extends GameState {
 	// CPJD Logo
 	private BufferedImage logo;
 
-	
 	// Stayfrosty Engine Logo
 	private BufferedImage engine;
 
@@ -57,8 +56,10 @@ public class Intro extends GameState {
 		// Clear screen
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		g.drawImage(logo, Layout.getObjectCenter(0, GamePanel.WIDTH / 2, logo.getWidth() / 2), Layout.centerh(logo.getHeight() / 2), logo.getWidth() / 2, logo.getHeight() / 2, null);
-		g.drawImage(engine, Layout.getObjectCenter(GamePanel.WIDTH / 2, GamePanel.WIDTH, engine.getWidth()), Layout.centerh(engine.getHeight()), null);
+		g.drawImage(logo, Layout.getObjectCenter(0, GamePanel.WIDTH / 2, logo.getWidth() / 2), Layout.centerh(logo.getHeight() / 2),
+				logo.getWidth() / 2, logo.getHeight() / 2, null);
+		g.drawImage(engine, Layout.getObjectCenter(GamePanel.WIDTH / 2, GamePanel.WIDTH, engine.getWidth()), Layout.centerh(engine.getHeight()),
+				null);
 
 		// Draw loading
 		if (gsm.getState() <= GameStateManager.MENU) {
@@ -66,18 +67,16 @@ public class Intro extends GameState {
 			double percent = AudioLoad.p / AudioLoad.TOTAL_ITEMS * 100;
 
 			g.setColor(Color.DARK_GRAY);
-			g.fillRect((int)Layout.centerw(200), (int)Layout.aligny(90), (int) percent * 2, 20);
+			g.fillRect((int) Layout.centerw(200), (int) Layout.aligny(90), (int) percent * 2, 20);
 
 			// Draw total
 			g.setColor(Color.BLACK);
-			g.drawRect((int)Layout.centerw(200) - 1, (int)Layout.aligny(90) - 1, 201, 21);
+			g.drawRect((int) Layout.centerw(200) - 1, (int) Layout.aligny(90) - 1, 201, 21);
 
 		}
 
-		
 	}
 	
-	public void keyPressed(int k) {
-	}
+	public void keyPressed(int k) {}
 	public void keyReleased(int k) {}
 }

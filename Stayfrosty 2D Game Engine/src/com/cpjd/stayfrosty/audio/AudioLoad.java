@@ -6,17 +6,17 @@ import com.cpjd.tools.Log;
  * 
  */
 
-
 public class AudioLoad implements Runnable {
+	
+	public static final int TOTAL_ITEMS = 16; // For a percentage calculation
 	
 	public static double p = 0; // The current amount of loaded items
 	
 	public static boolean finished = false;
-	
-	public static final int TOTAL_ITEMS = 16;
 
 	private Thread thread;
 	
+	// Stops all playing music
 	public static void stopAll() {
 
 		AudioPlayer.stopMusic(SKeys.Main);
@@ -60,9 +60,11 @@ public class AudioLoad implements Runnable {
 		Log.log("It took: "+elapsed+" ms to load all the sound", 1);
 		finished = true;
 		
+		// Stop the thread
 		try{
 			thread.join();
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			Log.logError(e, Log.THREAD_ERROR);
+		}
 	}
-	
 }

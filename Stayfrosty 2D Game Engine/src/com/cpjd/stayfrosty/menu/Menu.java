@@ -47,8 +47,7 @@ public class Menu extends GameState {
 		super(gsm);
 		
 		AudioPlayer.loopMusic(SKeys.Theme);
-
-
+		
 		currentSelection = 0;
 		
 		display = false;
@@ -96,7 +95,7 @@ public class Menu extends GameState {
 		background.draw(g);
 
 		// Draw the title
-		g.drawImage(titleImage, (int)Layout.centerw(titleImage.getWidth() / 4), 30, titleImage.getWidth() / 4, titleImage.getHeight() / 4, null);
+		g.drawImage(titleImage, (int)Layout.centerw(titleImage.getWidth() / 2), 30, titleImage.getWidth() / 2, titleImage.getHeight() / 2, null);
 		
 		// Illuminati
 		if(display) g.drawImage(ilum, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
@@ -107,9 +106,7 @@ public class Menu extends GameState {
 			if(currentSelection == i) {
 				g.setColor(Color.BLACK);
 			}
-			g.drawString(options[i], Layout.centerw(fm.stringWidth(options[i])), Layout.aligny((i + 4) * 10));
-			//
-			
+			g.drawString(options[i], Layout.centerw(fm.stringWidth(options[i])), Layout.aligny((i + 5) * 10));
 		}
 
 	}
