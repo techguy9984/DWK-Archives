@@ -49,7 +49,7 @@ public class Daniel extends Player {
 		cwidth = 32;
 		cheight = 64;
 		
-		walkSpeed = 3.3;
+		walkSpeed = 2;//was 3.3
 		maxSpeed = 3.3;
 		moveSpeed = walkSpeed;
 		stopSpeed = 0.4;
@@ -137,14 +137,14 @@ public class Daniel extends Player {
 			if (currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(40);
+				animation.setDelay(120);
 				width = 64;
 			}
 		} else {
 			if (currentAction != IDLE) {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
-				animation.setDelay(400);
+				animation.setDelay(800);
 				width = 64;
 			}
 		}
