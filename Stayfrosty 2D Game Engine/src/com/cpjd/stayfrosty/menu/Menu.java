@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.openal.AL;
 
+import com.cpjd.input.Keymap;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
@@ -124,7 +125,7 @@ public class Menu extends GameState {
 				currentSelection++;
 			}
 		}
-		if(k == KeyEvent.VK_ENTER) {
+		if(k == Keymap.keymap[Keymap.select]) {
 			if(currentSelection == 0) gsm.setState(GameStateManager.CUTSCENE_1);
 			if(currentSelection == 1) gsm.setState(GameStateManager.CREDITS);
 			if(currentSelection == 2) {
@@ -132,7 +133,7 @@ public class Menu extends GameState {
 				System.exit(0);
 			}
 		}
-		if(display && k == KeyEvent.VK_SPACE) {
+		if(display && k == Keymap.keymap[Keymap.select]) {
 			display = false;
 			AudioPlayer.stopSound(SKeys.Creepy);
 		}

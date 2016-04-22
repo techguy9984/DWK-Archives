@@ -120,7 +120,7 @@ public class GameStateManager {
 		// Draw debug
 		g.setColor(Color.RED);
 		if (GamePanel.DEBUG)
-			g.drawString("*", 5, 20);
+			g.drawString("*", 5, 30);
 
 		// Draw paused
 		if(pause.isPaused()) pause.draw(g);

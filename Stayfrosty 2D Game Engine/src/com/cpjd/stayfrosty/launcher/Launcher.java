@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.cpjd.input.Keymap;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.main.Game;
 import com.cpjd.stayfrosty.save.Head;
@@ -101,6 +102,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		addMouseListener(this);
 		
 		// Initialize file loading
+		Keymap.setDefaults();
 		Log.setLogDir(TITLE);
 		Head.init();
 		load = new Load();

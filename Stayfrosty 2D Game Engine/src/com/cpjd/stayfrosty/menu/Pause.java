@@ -9,6 +9,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.input.Keymap;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
@@ -32,6 +33,9 @@ public class Pause extends GameState {
 	private String[] options = {"Resume","Options","Restart","Exit to menu"};
 	private int currentSelection;
 	
+	Options opts;
+	private boolean options_on;
+	
 	public Pause(GameStateManager gsm) {
 		super(gsm);
 		
@@ -48,10 +52,12 @@ public class Pause extends GameState {
 		}
 		
 		paused = false;
+		opts = new Options();
+		options_on = false;
 	}
 	
 	public void update() {
-
+		if(options_on) opts.update();
 	}
 
 	
@@ -72,6 +78,10 @@ public class Pause extends GameState {
 			
 			g.drawString(options[i], 5, Layout.aligny(25+(j * 10)));
 		}
+		
+		// Draw options
+		if(options_on) opts.draw(g);
+
 	}
 	
 	public void requestChange() {
@@ -81,6 +91,8 @@ public class Pause extends GameState {
 			this.paused = !this.paused;
 			// Reset everything
 			if(this.paused == false) {
+				options_on = false;
+				opts.reset();
 				width = 0;
 			}
 		}
@@ -91,8 +103,15 @@ public class Pause extends GameState {
 	}
 	
 	public void keyPressed(int k) {
-		if(k == KeyEvent.VK_ENTER) {
+		if(options_on) opts.keyPressed(k);
+		if(k == Keymap.keymap[Keymap.select]) {
+			if(!options_on) options_on = true;
 			if(currentSelection == 0) requestChange();
+			if(currentSelection == 1) {
+				if(!options_on) {
+					opts.reset();
+				}
+			}
 			if(currentSelection == 2) {
 				requestChange();
 				gsm.setState(gsm.getState());
@@ -104,13 +123,13 @@ public class Pause extends GameState {
 		}
 		
 		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S) {
-			if(currentSelection < options.length - 1) {
+			if(currentSelection < options.length - 1 && !options_on) {
 				AudioPlayer.playSound(SKeys.Change);
 				currentSelection ++;
 			}
 		}
 		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W) {
-			if(currentSelection > 0) {
+			if(currentSelection > 0 && !options_on) {
 				AudioPlayer.playSound(SKeys.Change);
 				currentSelection--;
 			}

@@ -17,7 +17,7 @@ import com.cpjd.tools.Log;
  *  Loading screen on application startup
  */
 public class Intro extends GameState {
-	
+
 	// CPJD Logo
 	private BufferedImage logo;
 
@@ -25,33 +25,32 @@ public class Intro extends GameState {
 	private BufferedImage engine;
 
 	public static final boolean SKIP_ALLOWED = true;
-	
+
 	public Intro(GameStateManager gsm) {
 		super(gsm);
-		
-		if(!AudioLoad.finished) new AudioLoad();
-		
+
+		if (!AudioLoad.finished) new AudioLoad();
+
 		try {
 			// Cats PJ logo
 			logo = ImageIO.read(getClass().getResourceAsStream("/CPJD/cpjdlogo.png"));
-			
+
 			// Game engine logo
 			engine = ImageIO.read(getClass().getResourceAsStream("/CPJD/engine.png"));
-			
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			Log.logError(e, Log.RES_LOAD_ERROR);
 		}
-		
+
 	}
 
 	public void update() {
-		if(AudioLoad.finished) {
+		if (AudioLoad.finished) {
 			gsm.setState(GameStateManager.MENU);
 		}
+
 	}
 
-	
 	public void draw(Graphics2D g) {
 		// Clear screen
 		g.setColor(Color.WHITE);
@@ -74,9 +73,12 @@ public class Intro extends GameState {
 			g.drawRect((int) Layout.centerw(200) - 1, (int) Layout.aligny(90) - 1, 201, 21);
 
 		}
+	}
+
+	public void keyPressed(int k) {
 
 	}
-	
-	public void keyPressed(int k) {}
-	public void keyReleased(int k) {}
+
+	public void keyReleased(int k) {
+	}
 }

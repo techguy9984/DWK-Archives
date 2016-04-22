@@ -78,8 +78,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		
 		Mouse.hideCursor(this, true);
 		
-		Keymap.setDefaults();
-		
 		Log.log("Thread started successfully", 5);
 	}
 	
