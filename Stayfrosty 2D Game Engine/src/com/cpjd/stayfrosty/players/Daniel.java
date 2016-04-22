@@ -28,7 +28,7 @@ import com.cpjd.tools.Animation;
 @SuppressWarnings("unused")
 public class Daniel extends Player {
 	
-	private final int[] NUM_FRAMES = {2,8,1,2,2};
+	private final int[] NUM_FRAMES = {2,10,10,2,2};
 	
 	// Animation action ids
 	private static final int IDLE = 0;
@@ -63,7 +63,7 @@ public class Daniel extends Player {
 		
 		// load sprites
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/bryan.gif"));
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/daniel.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
 			for (int i = 0; i < 5; i++) {
@@ -93,7 +93,6 @@ public class Daniel extends Player {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
 	}
-
 
 	public void update() {
 		handleInput();
@@ -159,11 +158,11 @@ public class Daniel extends Player {
 		if(Keys.isPressed(Keymap.right)) setRight(true);
 		if(Keys.isPressed(Keymap.left)) setLeft(true);
 		if(Keys.isPressed(Keymap.back)) setDown(true);
-		if(Keys.isPressed(Keymap.forward)) setJumping(true);
+		if(Keys.isPressed(Keymap.jump) || Keys.isPressed(Keymap.forward)) setJumping(true);
 
 		if(!Keys.isPressed(Keymap.right)) setRight(false);
 		if(!Keys.isPressed(Keymap.left)) setLeft(false);
 		if(!Keys.isPressed(Keymap.back)) setDown(false);
-		if(!Keys.isPressed(Keymap.forward)) setJumping(false);
+		if(!Keys.isPressed(Keymap.jump) && !Keys.isPressed(Keymap.forward)) setJumping(false);
 	}
 }

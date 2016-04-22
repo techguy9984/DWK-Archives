@@ -68,5 +68,13 @@ public class Background {
 		BufferedImage sub = image.getSubimage(x, y, width, height);
 		return sub;
 	}
-
+	public BufferedImage getImage() {
+		return image;
+	}
+	public int getX() {
+		return (int)x;
+	}
+	public int getY() {
+		return (int)y;
+	}
 }

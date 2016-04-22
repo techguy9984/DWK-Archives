@@ -108,7 +108,7 @@ public class Menu extends GameState {
 			}
 			g.drawString(options[i], Layout.centerw(fm.stringWidth(options[i])), Layout.aligny((i + 5) * 10));
 		}
-
+		
 	}
 	
 	public void keyPressed(int k) {

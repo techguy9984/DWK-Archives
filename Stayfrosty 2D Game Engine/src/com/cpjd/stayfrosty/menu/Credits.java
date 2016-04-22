@@ -86,7 +86,7 @@ public class Credits extends GameState {
 
 		g.drawImage(cpjd, (int) Layout.centerw(cpjd.getWidth()), y - cpjd.getHeight(), null);
 
-		g.drawString("Press ESC to exit", escX, 15);
+		g.drawString("Press ESC to exit", escX, 30);
 
 		for (int i = 0, j = 1; i < items.length; i++) {
 			if (i == items.length - 1) g.setColor(Color.MAGENTA);
