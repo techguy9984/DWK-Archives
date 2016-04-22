@@ -7,15 +7,34 @@ import com.cpjd.tools.Log;
  */
 
 
-public class AudioLoad {
+public class AudioLoad implements Runnable {
 	
 	public static double p = 0; // The current amount of loaded items
 	
 	public static boolean finished = false;
 	
-	public static final int TOTAL_ITEMS = 20;
+	public static final int TOTAL_ITEMS = 16;
+
+	private Thread thread;
 	
-	public static void Start() {
+	public static void stopAll() {
+
+		AudioPlayer.stopMusic(SKeys.Main);
+		AudioPlayer.stopMusic(SKeys.MLG_Epic);
+		AudioPlayer.stopMusic(SKeys.Credits);
+		AudioPlayer.stopMusic(SKeys.Menu_Music);
+		AudioPlayer.stopMusic(SKeys.Set_3);
+		AudioPlayer.stopMusic(SKeys.Theme);
+		AudioPlayer.stopMusic(SKeys.Epic);
+		
+	}
+	
+	public AudioLoad() {
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	public void run() {
 		// Load SFX
 		System.out.println("Loading audio, please wait....");
 		long start = System.nanoTime();
@@ -40,18 +59,10 @@ public class AudioLoad {
 		long elapsed = (System.nanoTime() - start) / 1000000;
 		Log.log("It took: "+elapsed+" ms to load all the sound", 1);
 		finished = true;
-	}
-	
-	public static void stopAll() {
-
-		AudioPlayer.stopMusic(SKeys.Main);
-		AudioPlayer.stopMusic(SKeys.MLG_Epic);
-		AudioPlayer.stopMusic(SKeys.Credits);
-		AudioPlayer.stopMusic(SKeys.Menu_Music);
-		AudioPlayer.stopMusic(SKeys.Set_3);
-		AudioPlayer.stopMusic(SKeys.Theme);
-		AudioPlayer.stopMusic(SKeys.Epic);
 		
+		try{
+			thread.join();
+		} catch(Exception e) {}
 	}
 	
 }

@@ -1,7 +1,6 @@
 package com.cpjd.stayfrosty.gamestate;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -112,23 +111,6 @@ public class GameStateManager {
 
 		if (currentState != INTRO) {
 			g.drawImage(background, 0, 0, null);
-		}
-
-		// Draw loading
-		if (getState() <= GameStateManager.MENU) {
-
-			g.setColor(Color.BLUE);
-			g.setFont(new Font("Arial", Font.BOLD, 15));
-			double percent = AudioLoad.p / AudioLoad.TOTAL_ITEMS * 100;
-
-			g.fillRect((int)Layout.centerw(200), (int)Layout.aligny(90), (int) percent * 2, 20);
-
-			// Draw total
-			g.setColor(Color.BLACK);
-			g.drawRect((int)Layout.centerw(200) - 1, (int)Layout.aligny(90) - 1, 201, 21);
-
-			// Draw loading
-			g.drawString("Loading... ", (int)Layout.getStringCenter(0, GamePanel.WIDTH, "Loading...", g), (int)Layout.aligny(80));
 		}
 
 		if (gameStates[currentState] != null) {

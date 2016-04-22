@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.openal.AL;
 
-import com.cpjd.stayfrosty.audio.AudioLoad;
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.gamestate.GameState;
@@ -47,9 +46,8 @@ public class Menu extends GameState {
 	public Menu(GameStateManager gsm) {
 		super(gsm);
 		
-		if(!AudioLoad.finished) AudioLoad.Start();
-		
 		AudioPlayer.loopMusic(SKeys.Theme);
+
 
 		currentSelection = 0;
 		
