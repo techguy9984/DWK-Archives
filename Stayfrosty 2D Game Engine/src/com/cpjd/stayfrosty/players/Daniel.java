@@ -91,7 +91,7 @@ public class Daniel extends Player {
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
-		animation.setDelay(400);
+		animation.setDelay(200);
 	}
 
 	public void update() {
