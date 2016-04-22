@@ -53,9 +53,9 @@ public class Daniel extends Player {
 		maxSpeed = 3.3;
 		moveSpeed = walkSpeed;
 		stopSpeed = 0.4;
-		fallSpeed = 0.15;
+		fallSpeed = 0.45;
 		maxFallSpeed = 7.0;
-		jumpStart = -7;
+		jumpStart = -13;
 		stopJumpSpeed = 0.3;
 		facingRight = true;
 		
