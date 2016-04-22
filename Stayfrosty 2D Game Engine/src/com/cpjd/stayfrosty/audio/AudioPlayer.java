@@ -10,7 +10,8 @@ import org.newdawn.slick.Sound;
 // Alpha 0.13 Sound Rework
 public class AudioPlayer {
 	
-	public static boolean mute = false;
+	public static boolean muteSFX = false;
+	public static boolean muteMusic = false;
 	
 	private static Map<String, Sound> soundMap = new HashMap<String, Sound>();
 	private static Map<String, Music> musicMap = new HashMap<String, Music>();
@@ -59,11 +60,11 @@ public class AudioPlayer {
 	}
 	
 	public static void playSound(String key) {
-		if(!mute) soundMap.get(key).play(1f, SFXVol);
+		if(!muteSFX) soundMap.get(key).play(1f, SFXVol);
 	}
 	
 	public static void playMusic(String key) {
-		if(!mute) musicMap.get(key).play(1f, MusicVol);;
+		if(!muteMusic) musicMap.get(key).play(1f, MusicVol);;
 	}
 	public static boolean isSoundRunning(String key) {
 		return soundMap.get(key).playing();
@@ -84,9 +85,9 @@ public class AudioPlayer {
 		musicMap.get(key).resume();
 	}
 	public static void loopMusic(String key) {
-		if(!mute) musicMap.get(key).loop(1f, MusicVol);
+		if(!muteMusic) musicMap.get(key).loop(1f, MusicVol);
 	}
 	public static void loopSound(String key) {
-		if(!mute) soundMap.get(key).loop(1f, SFXVol);
+		if(!muteSFX) soundMap.get(key).loop(1f, SFXVol);
 	}
 }

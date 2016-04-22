@@ -8,7 +8,7 @@ import com.cpjd.tools.Log;
 
 public class AudioLoad implements Runnable {
 	
-	public static final int TOTAL_ITEMS = 16; // For a percentage calculation
+	public static final int TOTAL_ITEMS = 17; // For a percentage calculation
 	
 	public static double p = 0; // The current amount of loaded items
 	
@@ -26,6 +26,7 @@ public class AudioLoad implements Runnable {
 		AudioPlayer.stopMusic(SKeys.Set_3);
 		AudioPlayer.stopMusic(SKeys.Theme);
 		AudioPlayer.stopMusic(SKeys.Epic);
+		AudioPlayer.stopMusic(SKeys.Baby);
 		
 	}
 	
@@ -48,6 +49,7 @@ public class AudioLoad implements Runnable {
 		AudioPlayer.addSound(SKeys.Creepy, "/Audio/SFX/creepy.ogg");
 		AudioPlayer.addSound(SKeys.Type, "/Audio/SFX/type.ogg");
 		
+		AudioPlayer.addMusic(SKeys.Baby, "/Audio/Music/Boss/baby.ogg");
 		AudioPlayer.addMusic(SKeys.Main, "/Audio/Music/main.ogg");
 		AudioPlayer.addMusic(SKeys.MLG_Epic, "/Audio/Music/mlg_epic.ogg");
 		AudioPlayer.addMusic(SKeys.Credits, "/Audio/Music/Menu/credits.ogg");

@@ -85,14 +85,17 @@ public class Pause extends GameState {
 	}
 	
 	public void requestChange() {
+		if(options_on) {
+			opts.reset();
+			options_on = false;
+			elapsed = System.currentTimeMillis();
+			return;
+		}
 		// Only acknowledge the request if a certain time period has passed (prevents spamming)
-		if(System.currentTimeMillis() - elapsed > 175 && gsm.getState() >= GameStateManager.L1_1) {
+		else if(System.currentTimeMillis() - elapsed > 175 && gsm.getState() >= GameStateManager.L1_1) {
 			elapsed = System.currentTimeMillis();
 			this.paused = !this.paused;
-			// Reset everything
-			if(this.paused == false) {
-				options_on = false;
-				opts.reset();
+			if(!this.paused) {
 				width = 0;
 			}
 		}
@@ -105,11 +108,10 @@ public class Pause extends GameState {
 	public void keyPressed(int k) {
 		if(options_on) opts.keyPressed(k);
 		if(k == Keymap.keymap[Keymap.select]) {
-			if(!options_on) options_on = true;
 			if(currentSelection == 0) requestChange();
 			if(currentSelection == 1) {
 				if(!options_on) {
-					opts.reset();
+					options_on = true;
 				}
 			}
 			if(currentSelection == 2) {

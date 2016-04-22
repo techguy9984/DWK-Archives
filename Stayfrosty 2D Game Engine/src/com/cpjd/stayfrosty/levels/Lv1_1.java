@@ -2,6 +2,8 @@ package com.cpjd.stayfrosty.levels;
 
 import java.awt.Graphics2D;
 
+import com.cpjd.stayfrosty.audio.AudioPlayer;
+import com.cpjd.stayfrosty.audio.SKeys;
 import com.cpjd.stayfrosty.entity.HUD;
 import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
@@ -32,6 +34,8 @@ public class Lv1_1 extends GameState {
 		
 		daniel = new Daniel(tileMap, gsm);
 		daniel.setPosition(190, 1150);
+		
+		AudioPlayer.loopMusic(SKeys.Baby);
 	}
 
 	public void update() {

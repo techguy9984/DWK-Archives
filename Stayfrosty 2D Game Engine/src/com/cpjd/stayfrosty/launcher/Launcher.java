@@ -275,7 +275,8 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			new Save().saveLauncher(saveTokens);
 			
 			dispose();
-			AudioPlayer.mute = noSound.isSelected();
+			AudioPlayer.muteSFX = noSound.isSelected();
+			AudioPlayer.muteMusic = noSound.isSelected();
 			Dimension screen = new Dimension(resolutions[resolution.getSelectedIndex()][0],resolutions[resolution.getSelectedIndex()][1]);
 			new Game(TITLE,version,versionCode,screen,isFullscreen(),true);
 			
