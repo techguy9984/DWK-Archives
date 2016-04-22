@@ -1,3 +1,4 @@
+
 package com.cpjd.stayfrosty.players;
 
 import java.awt.image.BufferedImage;
@@ -49,13 +50,13 @@ public class Daniel extends Player {
 		cwidth = 32;
 		cheight = 64;
 		
-		walkSpeed = 2;
+		walkSpeed = 2;//was 3.3
 		maxSpeed = 3.3;
 		moveSpeed = walkSpeed;
 		stopSpeed = 0.4;
-		fallSpeed = 0.15;
+		fallSpeed = 0.45;
 		maxFallSpeed = 7.0;
-		jumpStart = -7;
+		jumpStart = -13;
 		stopJumpSpeed = 0.3;
 		facingRight = true;
 		
@@ -91,7 +92,7 @@ public class Daniel extends Player {
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
-		animation.setDelay(400);
+		animation.setDelay(200);
 	}
 
 	public void update() {
@@ -137,14 +138,14 @@ public class Daniel extends Player {
 			if (currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(40);
+				animation.setDelay(120);
 				width = 64;
 			}
 		} else {
 			if (currentAction != IDLE) {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
-				animation.setDelay(400);
+				animation.setDelay(800);
 				width = 64;
 			}
 		}
@@ -166,4 +167,3 @@ public class Daniel extends Player {
 		if(!Keys.isPressed(Keymap.jump) && !Keys.isPressed(Keymap.forward)) setJumping(false);
 	}
 }
-
