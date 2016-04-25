@@ -1,11 +1,6 @@
 package com.cpjd.stayfrosty.attacks;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,33 +10,37 @@ import com.cpjd.stayfrosty.entity.Sprite;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 public class Cube extends Sprite {
+	// Identity
 	BufferedImage cube;
-	
-	private boolean hit;
 	private boolean remove;
-	
 	private boolean facingRight;
 	
-	// Time for the falling bodies equation
+	// Constants
+	private double GRAVITY =  0.3; // px 
+	private final double POWER = -9;
+	
+	// Variables
 	private long startTime;
-	private long elapsed;
+	private double elapsedTicks;
+	private double distance; // Distance between player and target
+	private double time; // Precalculated time for cube to reach ty (while falling)
+	private double initial;
 	
-	// Ranges
-	private int xdist;
-	private int ydist;
-	private int degrees;
-	private int degInc;
-	private int pulse;
-	private int pulseInc;
-	
-	public Cube(TileMap tm, boolean right) {
+	public Cube(TileMap tm, boolean right, double px, double py, double tx, double ty) {
 		super(tm);
 		
-		facingRight = right;
-		
+		setPosition(px, py);
 		startTime = System.nanoTime();
-		pulseInc = 3;
-		moveSpeed = 5.0;
+		
+		initial = py;
+		
+		// 1 - calc distance between player and target, in pixels
+		distance = calculateDifference(px,py,tx,ty);
+		
+		// 2 - solve for t using the quadratic formula
+		//time = (-POWER + Math.sqrt(Math.pow(-POWER, 2) - (4 * (-0.5 * GRAVITY) * py))) / (2 * -0.5 * GRAVITY);
+		System.out.println("GRAVITY: "+GRAVITY);
+		facingRight = right;
 		
 		if(right) dx = moveSpeed;
 		else dx =- moveSpeed;
@@ -70,71 +69,32 @@ public class Cube extends Sprite {
 		super.setPosition(x, y);
 	}
 	
-	// If the bullet hits something
-	public void setHit() {
-		if(hit) return;
-		hit = true;
-		dx = 0;
-	}
-	
 	public void update() {
-		checkTileMapCollision();
-		setPosition(xtemp,ytemp);
+
+		elapsedTicks++;
 		
-		// v = initial velocity + g x t
-		elapsed = (System.nanoTime() - startTime) / 1000000000;
+		xtemp = 300;
+		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (initial);
+
+		//System.out.println(ytemp);
+		setPosition(xtemp, ytemp);
 		
-		// Calculate the falling bodies approximation
-		dy += 1.8 * (-0.04+(0.1*elapsed));
-		
-		xdist += dx;
-		ydist += dy;
-		
-		// Range
-		if(xdist > 400) dx = 0;
-		
-		// How far it will hover of the ground - signifiyes throw completion
-		if(ydist > 50) {
-			dy = 0;
-			
-			// Image rotation 
-			degInc++;
-			if(degInc > 30) degInc = 2;
-			degrees+=degInc;
-			if(degrees > 360) degrees = 0;
-			
-			// Pulse for the orbitals
-			pulse+=pulseInc;
-			if(pulse > 200 || pulse < 0) pulseInc = -pulseInc;
-			
-		}
-		
-		if(hit) {
-			remove = true;
-		}
+		//System.out.println(getx()+":"+gety());
 	}
 	public void draw(Graphics2D g) {
-		AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(degrees), cube.getWidth() / 2, cube.getHeight() / 2);
-		AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_BILINEAR);
 		setMapPosition();
-		
-		// Enable antialiasing for this - oval effects
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.GREEN);
-		g.setStroke(new BasicStroke(8));
-		if(dy == 0) {
-			g.drawOval((int) (x + xmap - width / 2) - pulse / 2 + 12, (int) (y + ymap - height / 2) - pulse / 2 + 11, pulse, pulse);
-		}
-		g.setStroke(new BasicStroke(1));
-		
+
 		// Draw the cube
 		if (facingRight) {
-			g.drawImage(op.filter(cube, null), (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
+			g.drawImage(cube, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
 		} else {
-			g.drawImage(op.filter(cube, null), (int) (x + xmap - width / 2 + width), (int) (y + ymap - height / 2),
-					-op.filter(cube, null).getWidth(), op.filter(cube, null).getHeight(), null);
+			g.drawImage(cube, (int) (x + xmap - width / 2 + width), (int) (y + ymap - height / 2),
+					-cube.getWidth(), cube.getHeight(), null);
 		}
 
 	}
-	
+	// Calculates the distance between two points
+	protected double calculateDifference(double x1, double y1, double x2, double y2) {
+		return Math.hypot(Math.abs(x2 - x1), Math.abs(y2 - y1));
+	}
 }
