@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,7 +15,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.cpjd.input.Keymap;
 import com.cpjd.input.Keys;
 import com.cpjd.input.Mouse;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
@@ -70,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		
 		g = (Graphics2D) image.getGraphics();
-		if(QUALITY) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		//if(QUALITY) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		running = true;
 		

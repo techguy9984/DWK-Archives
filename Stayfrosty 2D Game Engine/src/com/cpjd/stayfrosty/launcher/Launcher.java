@@ -110,7 +110,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		// Initialize components
 		apply = new JButton("Play");
 		quit = new JButton("Quit");
-		reset = new JButton("Delete all game data");
+		reset = new JButton("Open game folder");
 		quality = new JCheckBox("High quality");
 		resInfo = new JLabel("Resolution: ");
 		resolution = new JComboBox<>(resDisplay);
@@ -134,7 +134,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		reset.setFocusable(false);
 		reset.setBorderPainted(false);
 		reset.setBackground(Color.DARK_GRAY);
-		reset.setForeground(Color.RED);
+		reset.setForeground(Color.WHITE);
 		reset.addActionListener(this);
 		add(reset);
 		
@@ -278,7 +278,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 			AudioPlayer.muteSFX = noSound.isSelected();
 			AudioPlayer.muteMusic = noSound.isSelected();
 			Dimension screen = new Dimension(resolutions[resolution.getSelectedIndex()][0],resolutions[resolution.getSelectedIndex()][1]);
-			new Game(TITLE,version,versionCode,screen,isFullscreen(),true);
+			new Game(TITLE,version,versionCode,screen,false,true);
 			
 			return;
 		}

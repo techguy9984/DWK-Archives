@@ -1,6 +1,7 @@
 
 package com.cpjd.stayfrosty.players;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import javax.imageio.ImageIO;
 import com.cpjd.input.Keymap;
 import com.cpjd.input.Keys;
 import com.cpjd.input.Mouse;
+import com.cpjd.stayfrosty.attacks.Cube;
 import com.cpjd.stayfrosty.entity.Player;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
@@ -40,6 +42,13 @@ public class Daniel extends Player {
 	// Technical
 	private GameStateManager gsm;
 	
+	// Rubik's cube attack
+	ArrayList<Cube> cubes;
+	private BufferedImage cube;
+	private boolean active;
+	private long startTime;
+	private long elapsedTime;
+	
 	public Daniel(TileMap tm, GameStateManager gsm) {
 		super(tm);
 		
@@ -64,6 +73,8 @@ public class Daniel extends Player {
 		
 		// load sprites
 		try {
+			cube = ImageIO.read(getClass().getResourceAsStream("/Weapons/rubiks.png"));
+			
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/daniel.png"));
 
 			sprites = new ArrayList<BufferedImage[]>();
@@ -89,6 +100,9 @@ public class Daniel extends Player {
 			e.printStackTrace();
 		}
 		
+		// rubik's attack
+		cubes = new ArrayList<Cube>();
+		
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
@@ -110,6 +124,19 @@ public class Daniel extends Player {
 				setPosition((int)Math.abs(tileMap.getx()) + (Mouse.x / 2), (int)Math.abs(tileMap.gety()) + (Mouse.y / 2));
 			}
 		}
+		
+		// update rubik's attack
+		elapsedTime = (System.nanoTime() - startTime) / 1_000_000_000;
+
+		for(int i = 0; i < cubes.size(); i++) {
+			cubes.get(i).update();
+			
+			if(cubes.get(i).shouldRemove()) {
+				cubes.remove(i);
+				i--;
+			}
+		}
+		
 		
 		// check done flinching
 		if (flinching) {
@@ -156,6 +183,15 @@ public class Daniel extends Player {
 		if (left) facingRight = false;
 	}
 	private void handleInput() {
+		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 2) {
+			startTime = System.nanoTime();
+			
+			Cube cube = new Cube(tileMap, facingRight);
+			cube.setPosition(x - 20, y);
+			cubes.add(cube);
+			
+		}
+		
 		if(Keys.isPressed(Keymap.right)) setRight(true);
 		if(Keys.isPressed(Keymap.left)) setLeft(true);
 		if(Keys.isPressed(Keymap.back)) setDown(true);
@@ -165,5 +201,13 @@ public class Daniel extends Player {
 		if(!Keys.isPressed(Keymap.left)) setLeft(false);
 		if(!Keys.isPressed(Keymap.back)) setDown(false);
 		if(!Keys.isPressed(Keymap.jump) && !Keys.isPressed(Keymap.forward)) setJumping(false);
+	}
+	public void draw(Graphics2D g) {
+		super.draw(g);
+		
+		// Draw rubik's cubes
+		for(int i = 0; i < cubes.size(); i++) {
+			cubes.get(i).draw(g);
+		}
 	}
 }
