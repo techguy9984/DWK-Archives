@@ -80,8 +80,8 @@ public class Cube extends Sprite {
 	public void update() {
 
 		elapsedTicks++;
-		if(right) px += 10;
-		if(!right) px -= 10;
+		if(right) px += 6;
+		if(!right) px -= 6;
 		xtemp = px;
 		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
 
