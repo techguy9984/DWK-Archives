@@ -70,7 +70,7 @@ public class Bullet extends Sprite {
 	
 	public void update() {
 		checkTileMapCollision();
-		setPosition(xtemp,ytemp + accuracy);
+		setPosition(xtemp,ytemp);
 		
 		if(dx == 0 && !hit) {
 			setHit();

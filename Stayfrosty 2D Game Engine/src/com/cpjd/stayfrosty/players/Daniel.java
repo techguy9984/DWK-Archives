@@ -187,7 +187,7 @@ public class Daniel extends Player {
 		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 2) {
 			startTime = System.nanoTime();
 			
-			Cube cube = new Cube(tileMap, facingRight, 900, 1000, 200, 200);
+			Cube cube = new Cube(tileMap, facingRight, x, y, 200, 200);
 			cubes.add(cube);
 			
 		}

@@ -24,7 +24,8 @@ public class Cube extends Sprite {
 	private double elapsedTicks;
 	private double distance; // Distance between player and target
 	private double time; // Precalculated time for cube to reach ty (while falling)
-	private double initial;
+	private double py;
+	private double px;
 	
 	public Cube(TileMap tm, boolean right, double px, double py, double tx, double ty) {
 		super(tm);
@@ -32,14 +33,13 @@ public class Cube extends Sprite {
 		setPosition(px, py);
 		startTime = System.nanoTime();
 		
-		initial = py;
+		this.py = py; this.px = px;
 		
 		// 1 - calc distance between player and target, in pixels
 		distance = calculateDifference(px,py,tx,ty);
 		
 		// 2 - solve for t using the quadratic formula
 		//time = (-POWER + Math.sqrt(Math.pow(-POWER, 2) - (4 * (-0.5 * GRAVITY) * py))) / (2 * -0.5 * GRAVITY);
-		System.out.println("GRAVITY: "+GRAVITY);
 		facingRight = right;
 		
 		if(right) dx = moveSpeed;
@@ -73,8 +73,8 @@ public class Cube extends Sprite {
 
 		elapsedTicks++;
 		
-		xtemp = 300;
-		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (initial);
+		xtemp = px;
+		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
 
 		//System.out.println(ytemp);
 		setPosition(xtemp, ytemp);
