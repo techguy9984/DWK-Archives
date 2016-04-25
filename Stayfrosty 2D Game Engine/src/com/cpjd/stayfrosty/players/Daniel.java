@@ -183,6 +183,7 @@ public class Daniel extends Player {
 		if (left) facingRight = false;
 	}
 	private void handleInput() {
+		// >= 2 is the minimum time between fires
 		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 2) {
 			startTime = System.nanoTime();
 			

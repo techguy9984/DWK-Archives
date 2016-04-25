@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -23,6 +22,7 @@ public class Cube extends Sprite {
 	
 	private boolean facingRight;
 	
+	// Time for the falling bodies equation
 	private long startTime;
 	private long elapsed;
 	
@@ -42,6 +42,7 @@ public class Cube extends Sprite {
 		startTime = System.nanoTime();
 		pulseInc = 3;
 		moveSpeed = 5.0;
+		
 		if(right) dx = moveSpeed;
 		else dx =- moveSpeed;
 		
@@ -83,19 +84,26 @@ public class Cube extends Sprite {
 		// v = initial velocity + g x t
 		elapsed = (System.nanoTime() - startTime) / 1000000000;
 		
+		// Calculate the falling bodies approximation
 		dy += 1.8 * (-0.04+(0.1*elapsed));
 		
 		xdist += dx;
 		ydist += dy;
 		
+		// Range
 		if(xdist > 400) dx = 0;
+		
+		// How far it will hover of the ground - signifiyes throw completion
 		if(ydist > 50) {
 			dy = 0;
+			
+			// Image rotation 
 			degInc++;
 			if(degInc > 30) degInc = 2;
 			degrees+=degInc;
 			if(degrees > 360) degrees = 0;
 			
+			// Pulse for the orbitals
 			pulse+=pulseInc;
 			if(pulse > 200 || pulse < 0) pulseInc = -pulseInc;
 			
@@ -119,6 +127,7 @@ public class Cube extends Sprite {
 		}
 		g.setStroke(new BasicStroke(1));
 		
+		// Draw the cube
 		if (facingRight) {
 			g.drawImage(op.filter(cube, null), (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
 		} else {
