@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.entity.Sprite;
+import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 public class Cube extends Sprite {
@@ -16,7 +17,7 @@ public class Cube extends Sprite {
 	private boolean facingRight;
 	
 	// Constants
-	private double GRAVITY =  0.3; // px 
+	private double GRAVITY = 0.3; // px negative is up computer, life = ngative is down
 	private final double POWER = -9;
 	
 	// Variables
@@ -30,6 +31,8 @@ public class Cube extends Sprite {
 	public Cube(TileMap tm, boolean right, double px, double py, double tx, double ty) {
 		super(tm);
 		
+		this.right = right;
+		
 		setPosition(px, py);
 		startTime = System.nanoTime();
 		
@@ -39,12 +42,17 @@ public class Cube extends Sprite {
 		distance = calculateDifference(px,py,tx,ty);
 		
 		// 2 - solve for t using the quadratic formula
-		//time = (-POWER + Math.sqrt(Math.pow(-POWER, 2) - (4 * (-0.5 * GRAVITY) * py))) / (2 * -0.5 * GRAVITY);
+		// a = -GRAVITY
+		double a = 0.5 * GRAVITY;
+		double b = POWER;
+		double c = py - ty;
+		time = (-b + Math.sqrt((b * b) + (- 4 * a * c))) / (2 * a);
+		
+		dx = distance / (time * GamePanel.FPS);
+		System.out.println(dx+"yes");
 		facingRight = right;
 		
-		if(right) dx = moveSpeed;
-		else dx =- moveSpeed;
-		
+
 		// Drawing
 		width = 25;
 		height = 25;
@@ -72,11 +80,13 @@ public class Cube extends Sprite {
 	public void update() {
 
 		elapsedTicks++;
-		
+		if(right) px += 10;
+		if(!right) px -= 10;
 		xtemp = px;
 		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
 
 		//System.out.println(ytemp);
+		//xxdcheckTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
 		//System.out.println(getx()+":"+gety());

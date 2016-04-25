@@ -184,10 +184,10 @@ public class Daniel extends Player {
 	}
 	private void handleInput() {
 		// >= 2 is the minimum time between fires
-		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 2) {
+		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 1) {
 			startTime = System.nanoTime();
 			
-			Cube cube = new Cube(tileMap, facingRight, x, y, 200, 200);
+			Cube cube = new Cube(tileMap, facingRight, x, y, x + 100, y + 100);
 			cubes.add(cube);
 			
 		}
