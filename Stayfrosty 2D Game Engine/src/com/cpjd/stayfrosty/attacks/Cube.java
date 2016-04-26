@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.entity.Sprite;
+import com.cpjd.stayfrosty.main.GamePanel;
+import com.cpjd.stayfrosty.tilemap.Tile;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 /*
@@ -35,6 +37,18 @@ public class Cube extends Sprite {
 	private double time; // Precalculated time for cube to reach ty (while falling)
 	private double py; // Player x and y
 	private double px;
+	private boolean falling;
+	
+	// Collision
+	private boolean complete; // Stop all falling bodies effects
+
+	// Bouncing
+	private double maxBounce; // The max bounce height
+	private double numBounces; // The current amount of bounces
+	private double maxNumBounces; // The max amount of bounces
+	private double bounceSpeed; // The current bounce velocity
+	private double inity; // The initial y of when the cube hit the floor
+	private boolean bounceFalling; // If the bounce is up or down
 	
 	/*
 	 * @param px & py - player x and y
@@ -47,6 +61,10 @@ public class Cube extends Sprite {
 		setPosition(px, py);
 		this.py = py; this.px = px;
 		
+		// Bounce variables
+		maxBounce = 20;
+		maxNumBounces = 4;
+		
 		// Calculate which side of the player the target is on
 		if(actualx < px) right = false;
 		else right = true;
@@ -57,7 +75,7 @@ public class Cube extends Sprite {
 		
 		// A rough power calculation for how hard the player will throw the cube upwards
 		POWER = -(Math.abs(distance) / 20);
-		
+
 		// Using the quadratic formula, calculated the estimated time until the cube will hit the required y value while falling
 		double a = 0.5*GRAVITY;
 		double b = POWER;
@@ -73,7 +91,7 @@ public class Cube extends Sprite {
 		
 		// Collision
 		cwidth = 25;
-		cheight = 25;
+		cheight = 20;
 		
 		// sprites
 		try {
@@ -93,6 +111,9 @@ public class Cube extends Sprite {
 	
 	public void update() {
 
+		// Remove all if debugging
+		if(GamePanel.DEBUG) remove = true;
+		
 		// Update the total ticks
 		elapsedTicks++;
 		
@@ -102,10 +123,52 @@ public class Cube extends Sprite {
 		xtemp = px;
 		
 		// Calculate the y position based of the falling bodies equation, the only changing value here is elapsedTicks
-		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
+		if(!complete) ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
 
-		// Set the position
-		setPosition(xtemp, ytemp);
+		// Check if the cube is falling
+		if(!complete) {
+			if(gety() < ytemp) {
+				falling = true;
+			} else if(gety() > ytemp) {
+				falling = false;
+			}
+		}
+		
+		// Check collisions
+		calculateCorners(xtemp, ytemp);
+		
+		// Check if the cube hit the ground
+		if(bottomRight || bottomLeft) {
+			if(falling) {
+				if(!complete) {
+					dx *= 0.4;
+					inity = ytemp;
+				}
+				bounceSpeed = -2;
+				bounceFalling = false;
+				complete = true;
+				numBounces++;
+			}
+		}
+		// Calculate bounces
+		if(complete) {
+			if(inity - gety() > maxBounce) {
+				bounceFalling = true;
+				maxBounce *= 0.55;
+			}
+			
+			if(bounceFalling) {
+				bounceSpeed += 0.1;
+				ytemp += bounceSpeed;
+			}
+			if(!bounceFalling) {
+				bounceSpeed -= 0.3;
+				ytemp += bounceSpeed;
+			}	
+		}
+		
+		// Set position
+		if(numBounces < maxNumBounces) setPosition(xtemp, ytemp);
 	}
 	public void draw(Graphics2D g) {
 		setMapPosition();

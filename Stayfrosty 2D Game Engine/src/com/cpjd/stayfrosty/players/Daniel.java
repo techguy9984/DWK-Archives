@@ -186,7 +186,7 @@ public class Daniel extends Player {
 	}
 	private Point target = new Point(180,-100);
 	private void handleInput() {
-		if(Mouse.leftPressed) {
+		if(Mouse.leftPressed && elapsedTime >= 1) {
 			startTime = System.nanoTime();
 
 			int tempx = (int)Math.abs(tileMap.getx()) + (Mouse.x / 2);
