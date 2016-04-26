@@ -3,12 +3,12 @@ package com.cpjd.stayfrosty.attacks;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.entity.Sprite;
 import com.cpjd.stayfrosty.main.GamePanel;
-import com.cpjd.stayfrosty.tilemap.Tile;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 /*
@@ -23,7 +23,7 @@ import com.cpjd.stayfrosty.tilemap.TileMap;
  */
 public class Cube extends Sprite {
 	// Identity
-	BufferedImage cube;
+	private BufferedImage cube;
 	private boolean remove; // If the cube is ready to be removed from memory
 	private boolean facingRight;
 	
@@ -49,6 +49,10 @@ public class Cube extends Sprite {
 	private double bounceSpeed; // The current bounce velocity
 	private double inity; // The initial y of when the cube hit the floor
 	private boolean bounceFalling; // If the bounce is up or down
+	
+	// Explosion
+	private ArrayList<MassiveExplosion> explosions;
+	private boolean exploding;
 	
 	/*
 	 * @param px & py - player x and y
@@ -99,14 +103,13 @@ public class Cube extends Sprite {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		
+		// Explosion
+		explosions = new ArrayList<MassiveExplosion>();
 	}
 	
 	public boolean shouldRemove() {
 		return remove;
-	}
-	
-	public void setPosition(double x, double y) {
-		super.setPosition(x, y);
 	}
 	
 	public void update() {
@@ -169,21 +172,43 @@ public class Cube extends Sprite {
 		
 		// Set position
 		if(numBounces < maxNumBounces) setPosition(xtemp, ytemp);
+		
+		// Update explosions
+		for(int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).update();
+			if(explosions.get(i).shouldRemove()) {
+				remove = true;
+				explosions.remove(i);
+			}
+		}
+		
+		// Add new explosion
+		if(numBounces >= maxNumBounces && !exploding) {
+			exploding = true;
+			explosions.add(new MassiveExplosion(getx() - 110, gety() - 110)); 
+		}
+		
 	}
 	public void draw(Graphics2D g) {
 		setMapPosition();
 
 		// Draw the cube
-		if (facingRight) {
+		if (facingRight && !exploding) {
 			g.drawImage(cube, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
-		} else {
+		} else if(!exploding){
 			g.drawImage(cube, (int) (x + xmap - width / 2 + width), (int) (y + ymap - height / 2),
 					-cube.getWidth(), cube.getHeight(), null);
 		}
-
+		
+		// Draw explosion
+		for(int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).setMapPosition((int)tileMap.getx(),(int) tileMap.gety());
+			explosions.get(i).draw(g);
+		}
+		
 	}
 	// Calculates the distance between two points in a cartesian plane
-	protected double calculateDifference(double x1, double y1, double x2, double y2) {
+	private double calculateDifference(double x1, double y1, double x2, double y2) {
 		return Math.hypot(Math.abs(x2 - x1), Math.abs(y2 - y1));
 	}
 }
