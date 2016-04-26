@@ -186,7 +186,6 @@ public class Daniel extends Player {
 	}
 	private Point target = new Point(180,-100);
 	private void handleInput() {
-		// >= 2 is the minimum time between fires
 		if(Mouse.leftPressed) {
 			startTime = System.nanoTime();
 
