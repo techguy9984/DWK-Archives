@@ -1,5 +1,6 @@
 package com.cpjd.stayfrosty.audio;
 
+import com.cpjd.stayfrosty.attacks.MassiveExplosion;
 import com.cpjd.tools.Log;
 
 /* This class will load required audio at the beginning of the game
@@ -57,6 +58,9 @@ public class AudioLoad implements Runnable {
 		AudioPlayer.addMusic(SKeys.Set_3, "/Audio/Music/set3.ogg");
 		AudioPlayer.addMusic(SKeys.Theme, "/Audio/Music/theme.ogg");
 		AudioPlayer.addMusic(SKeys.Epic, "/Audio/Music/epic.ogg");
+		
+		// Sneak in the massive explosion loading
+		MassiveExplosion.init();
 		
 		long elapsed = (System.nanoTime() - start) / 1000000;
 		Log.log("It took: "+elapsed+" ms to load all the sound", 1);

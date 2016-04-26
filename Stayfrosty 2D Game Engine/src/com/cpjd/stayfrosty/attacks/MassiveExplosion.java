@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import com.cpjd.tools.Animation;
-import com.cpjd.tools.Log;
 
 /*
  * For the cube attack
@@ -22,7 +21,7 @@ public class MassiveExplosion {
 	private int height;
 	
 	private Animation animation;
-	private BufferedImage[] sprites;
+	private static BufferedImage[] sprites;
 	
 	private boolean remove;
 	
@@ -32,20 +31,23 @@ public class MassiveExplosion {
 		width = 32;
 		height = 32;
 		
+		animation = new Animation();
+		animation.setFrames(sprites);
+		animation.setDelay(20);
+	}
+	
+	// Preload so it's faster
+	public static void init() {
 		try {
 			sprites = new BufferedImage[91];
 			
 			for(int i = 1; i < 91; i++) {
-				if(i < 10) sprites[i] = ImageIO.read(getClass().getResourceAsStream("/MassiveExplosion/explosion_1000"+i+".png"));
-				if(i >= 10) sprites[i] = ImageIO.read(getClass().getResourceAsStream("/MassiveExplosion/explosion_100"+i+".png"));
+				if(i < 10) sprites[i] = ImageIO.read(com.cpjd.stayfrosty.attacks.MassiveExplosion.class.getResourceAsStream("/MassiveExplosion/explosion_1000"+i+".png"));
+				if(i >= 10) sprites[i] = ImageIO.read(com.cpjd.stayfrosty.attacks.MassiveExplosion.class.getResourceAsStream("/MassiveExplosion/explosion_100"+i+".png"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		animation = new Animation();
-		animation.setFrames(sprites);
-		animation.setDelay(20);
 	}
 	
 	public void update() {
