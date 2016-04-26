@@ -74,16 +74,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		
 		gsm = new GameStateManager();
 		
-		Mouse.hideCursor(this, true);
-		
 		Log.log("Thread started successfully", 5);
-	}
-	
-	private void hideCursor(boolean b) {
-		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0,0), "blank cursor");
-		if(b) setCursor(blankCursor);
-		if(!b) setCursor(Cursor.getDefaultCursor());
 	}
 	
 	public void run() {
@@ -136,7 +127,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		// Debugging
 		if (key.getKeyCode() == KeyEvent.VK_F6) {
 			DEBUG = !DEBUG;
-			hideCursor(!DEBUG);
 		}
 	}
 

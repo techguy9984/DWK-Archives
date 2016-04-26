@@ -187,12 +187,17 @@ public class Daniel extends Player {
 	private Point target = new Point(180,-100);
 	private void handleInput() {
 		// >= 2 is the minimum time between fires
-		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 1) {
+		if(Mouse.leftPressed) {
 			startTime = System.nanoTime();
+
+			int tempx = (int)Math.abs(tileMap.getx()) + (Mouse.x / 2);
+			int tempy = (int)Math.abs(tileMap.gety()) + (Mouse.y / 2);
 			
-			Cube cube = new Cube(tileMap, facingRight, x, y, x + target.x, y + target.y);
+			int diff1 = Math.abs(tempx - getx());
+			int diff2 = Math.abs(tempy - gety());
+			
+			Cube cube = new Cube(tileMap, getx(), gety(),getx() + diff1, gety() + diff2, tempx);
 			cubes.add(cube);
-			
 		}
 		
 		if(Keys.isPressed(Keymap.right)) setRight(true);
@@ -207,9 +212,6 @@ public class Daniel extends Player {
 	}
 	public void draw(Graphics2D g) {
 		super.draw(g);
-		
-		g.setColor(Color.YELLOW);
-		g.fillOval((int) (x + xmap - width / 2) + target.x, (int) (y + ymap - height / 2) + target.y, 25, 25);
 		
 		// Draw rubik's cubes
 		for(int i = 0; i < cubes.size(); i++) {
