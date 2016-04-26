@@ -18,7 +18,7 @@ public class Cube extends Sprite {
 	
 	// Constants
 	private double GRAVITY = 0.3; // px negative is up computer, life = ngative is down
-	private final double POWER = -9;
+	private double POWER = -9;
 	
 	// Variables
 	private long startTime;
@@ -41,15 +41,19 @@ public class Cube extends Sprite {
 		// 1 - calc distance between player and target, in pixels
 		distance = calculateDifference(px,py,tx,ty);
 		
-		// 2 - solve for t using the quadratic formula
-		// a = -GRAVITY
-		double a = 0.5 * GRAVITY;
+		POWER = -(Math.abs(distance) / 23);
+		
+		System.out.println(distance);
+		
+		// Calculate what the time is until the rubik's cube will hit the target
+		double a = 0.5*GRAVITY;
 		double b = POWER;
 		double c = py - ty;
-		time = (-b + Math.sqrt((b * b) + (- 4 * a * c))) / (2 * a);
 		
-		dx = distance / (time * GamePanel.FPS);
-		System.out.println(dx+"yes");
+		time = (-b + Math.sqrt((b * b) + (-4 * a *c))) / (2 * a);
+		
+		dx = distance / time;
+		
 		facingRight = right;
 		
 
@@ -80,8 +84,8 @@ public class Cube extends Sprite {
 	public void update() {
 
 		elapsedTicks++;
-		if(right) px += 6;
-		if(!right) px -= 6;
+		if(right) px += dx;
+		if(!right) px -= dx;
 		xtemp = px;
 		ytemp = -(-0.5 * GRAVITY * (elapsedTicks * elapsedTicks)) + (POWER * elapsedTicks) + (py);
 

@@ -1,7 +1,9 @@
 
 package com.cpjd.stayfrosty.players;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -182,12 +184,13 @@ public class Daniel extends Player {
 		if (right) facingRight = true;
 		if (left) facingRight = false;
 	}
+	private Point target = new Point(180,-100);
 	private void handleInput() {
 		// >= 2 is the minimum time between fires
 		if(Keys.isPressed(Keymap.fire) && elapsedTime >= 1) {
 			startTime = System.nanoTime();
 			
-			Cube cube = new Cube(tileMap, facingRight, x, y, x + 100, y + 100);
+			Cube cube = new Cube(tileMap, facingRight, x, y, x + target.x, y + target.y);
 			cubes.add(cube);
 			
 		}
@@ -204,6 +207,9 @@ public class Daniel extends Player {
 	}
 	public void draw(Graphics2D g) {
 		super.draw(g);
+		
+		g.setColor(Color.YELLOW);
+		g.fillOval((int) (x + xmap - width / 2) + target.x, (int) (y + ymap - height / 2) + target.y, 25, 25);
 		
 		// Draw rubik's cubes
 		for(int i = 0; i < cubes.size(); i++) {
