@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.cpjd.stayfrosty.entity.Sprite;
-import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
 /*
@@ -114,9 +113,6 @@ public class Cube extends Sprite {
 	
 	public void update() {
 
-		// Remove all if debugging
-		if(GamePanel.DEBUG) remove = true;
-		
 		// Update the total ticks
 		elapsedTicks++;
 		
