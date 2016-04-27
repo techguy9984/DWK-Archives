@@ -32,7 +32,10 @@ import com.cpjd.tools.Usage;
  *   4) Create the new state in com.cpjd.stayfrosty.states
  */
 public class GameStateManager {
-
+	
+	// HUD Color
+	public static Color hud = Color.DARK_GRAY;
+	
 	/* LEVEL CODES */
 	public static final int NUMGAMESTATES = 6;
 	// Menu stuff
@@ -71,10 +74,12 @@ public class GameStateManager {
 
 	public void setState(int state) {
 		unloadState(currentState);
+		AudioLoad.stopAll();
 		currentState = state;
 		loadState(currentState);
+		gameStates[currentState].startMusic();
 	}
-
+	
 	private void loadState(int state) {
 		if (state == INTRO) gameStates[state] = new Intro(this);
 		if (state == MENU) gameStates[state] = new Menu(this);
@@ -90,7 +95,9 @@ public class GameStateManager {
 	public int getState() {
 		return currentState;
 	}
-
+	public void restartMusic() {
+		if(gameStates[currentState] != null) gameStates[currentState].startMusic();
+	}
 	public void update() {
 		if(Keys.isPressed(Keymap.pause)) pause.requestChange();
 		
@@ -103,7 +110,6 @@ public class GameStateManager {
 			pause.update();
 			return;
 		}
-		
 		if (gameStates[currentState] != null) gameStates[currentState].update();
 	}
 
@@ -147,7 +153,6 @@ public class GameStateManager {
 		if (GamePanel.DEBUG && k == KeyEvent.VK_L) {
 			try {
 				setState(Integer.parseInt(JOptionPane.showInputDialog("Enter the level code (lv + 4): ")));
-				AudioLoad.stopAll();
 			} catch (Exception e) {}
 		}
 

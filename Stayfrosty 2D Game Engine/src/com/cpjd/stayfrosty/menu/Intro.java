@@ -43,7 +43,7 @@ public class Intro extends GameState {
 		}
 
 	}
-
+	public void startMusic() {};
 	public void update() {
 		if (AudioLoad.finished) {
 			gsm.setState(GameStateManager.MENU);
@@ -65,7 +65,7 @@ public class Intro extends GameState {
 
 			double percent = AudioLoad.p / AudioLoad.TOTAL_ITEMS * 100;
 
-			g.setColor(Color.DARK_GRAY);
+			g.setColor(GameStateManager.hud);
 			g.fillRect((int) Layout.centerw(200), (int) Layout.aligny(90), (int) percent * 2, 20);
 
 			// Draw total

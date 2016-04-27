@@ -3,6 +3,7 @@ package com.cpjd.stayfrosty.main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -103,7 +104,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		gsm.update();
 	}
 	
-	private void draw() { 
+	private void draw() {
+		if(QUALITY) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		else g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+		
 		gsm.draw(g);
 		
 		//if(QUALITY) Toolkit.getDefaultToolkit().sync(); // Refreshes the display on some systems

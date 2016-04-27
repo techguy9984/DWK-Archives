@@ -52,10 +52,10 @@ public class Pause extends GameState {
 		}
 		
 		paused = false;
-		opts = new Options();
+		opts = new Options(gsm);
 		options_on = false;
 	}
-	
+	public void startMusic() {};
 	public void update() {
 		if(options_on) opts.update();
 	}
@@ -64,7 +64,7 @@ public class Pause extends GameState {
 	public void draw(Graphics2D g) {	
 		g.drawImage(background, 0, 0, null);
 		
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(GameStateManager.hud);
 		g.fillRect(0, Layout.centerh(200), width, 200);
 		
 		if(width < maxWidth) width+=25;
@@ -73,8 +73,8 @@ public class Pause extends GameState {
 		g.setFont(font);
 		for(int i = 0, j = 1; i < options.length; i++, j++) {
 			if(currentSelection == i) {
-				g.setColor(Color.WHITE);
-			} else g.setColor(Color.BLACK);
+				g.setColor(Color.BLACK);
+			} else g.setColor(new Color(255 - GameStateManager.hud.getRed(), 255 - GameStateManager.hud.getBlue(), 255 - GameStateManager.hud.getGreen()));
 			
 			g.drawString(options[i], 5, Layout.aligny(25+(j * 10)));
 		}

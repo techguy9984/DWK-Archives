@@ -35,9 +35,13 @@ public class Lv1_1 extends GameState {
 		daniel = new Daniel(tileMap, gsm);
 		daniel.setPosition(190, 1150);
 		
-		AudioPlayer.loopMusic(SKeys.Baby);
+
 	}
 
+	public void startMusic() {
+		AudioPlayer.loopMusic(SKeys.Baby);
+	}
+	
 	public void update() {
 		daniel.update();
 		

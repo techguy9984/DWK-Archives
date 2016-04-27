@@ -22,6 +22,12 @@ public class Credits extends GameState {
 
 	// Display
 	String[] items = { "The DWK Archives", "by Cats Pajamas Developers", "", "Team", "Will (techguy9984)", "Daniel (boblop)", "",
+			"ARTWORK",
+			"Explosion animation: http://wrathgames.com/blog",
+			"",
+			"SOUND",
+			"",
+			"",
 			"The story, all names, characters, and incidents portrayed in this production",
 			"are fictitious. No identification with actual persons, places, buildings", "and products is intended or should be inferred.", "",
 			"This program is not intended for commerical distribution", "", };
@@ -42,9 +48,7 @@ public class Credits extends GameState {
 		super(gsm);
 
 		y = GamePanel.HEIGHT;
-		AudioLoad.stopAll();
-		AudioPlayer.loopMusic(SKeys.Credits);
-
+		
 		try {
 			cpjd = ImageIO.read(getClass().getResourceAsStream("/CPJD/cpjdlogosmall.png"));
 
@@ -59,7 +63,9 @@ public class Credits extends GameState {
 			e.printStackTrace();
 		}
 	}
-
+	public void startMusic() {
+		AudioPlayer.loopMusic(SKeys.Credits);
+	};
 	public void update() {
 		elapsed = (System.nanoTime() - startTime) / 1_000_000_000;
 		if (elapsed > 3) {

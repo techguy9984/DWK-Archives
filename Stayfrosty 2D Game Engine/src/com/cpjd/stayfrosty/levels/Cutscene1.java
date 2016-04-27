@@ -33,7 +33,7 @@ public class Cutscene1 extends GameState {// intro
 		init();
 	}
 	
-
+	public void startMusic() {};
 	public void init() {
 		storyLevel = 0;
 		Narration[0] = " The DWK Archives: vol 1";

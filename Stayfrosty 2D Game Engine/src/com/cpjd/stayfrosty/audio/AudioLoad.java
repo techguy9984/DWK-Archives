@@ -59,7 +59,7 @@ public class AudioLoad implements Runnable {
 		AudioPlayer.addMusic(SKeys.Theme, "/Audio/Music/theme.ogg");
 		AudioPlayer.addMusic(SKeys.Epic, "/Audio/Music/epic.ogg");
 		
-		// Sneak in the massive explosion loading
+		// Sneak in the massive explosion loading here
 		MassiveExplosion.init();
 		
 		long elapsed = (System.nanoTime() - start) / 1000000;

@@ -53,6 +53,10 @@ public class Cube extends Sprite {
 	private ArrayList<MassiveExplosion> explosions;
 	private boolean exploding;
 	
+	// Explosion damage
+	private final double damage = 100;
+	private final double damageRadius = 300;
+	
 	/*
 	 * @param px & py - player x and y
 	 * @param tx & ty - target x and y (not exactly a target location, but the distance between player loc and target loc)
@@ -206,5 +210,11 @@ public class Cube extends Sprite {
 	// Calculates the distance between two points in a cartesian plane
 	private double calculateDifference(double x1, double y1, double x2, double y2) {
 		return Math.hypot(Math.abs(x2 - x1), Math.abs(y2 - y1));
+	}
+	public int getDamage() {
+		return (int)damage;
+	}
+	public int getDamageRadius() {
+		return (int)damageRadius;
 	}
 }

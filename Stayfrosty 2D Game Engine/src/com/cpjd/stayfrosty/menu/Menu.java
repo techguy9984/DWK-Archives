@@ -47,8 +47,6 @@ public class Menu extends GameState {
 	public Menu(GameStateManager gsm) {
 		super(gsm);
 		
-		AudioPlayer.loopMusic(SKeys.Theme);
-		
 		currentSelection = 0;
 		
 		display = false;
@@ -72,7 +70,9 @@ public class Menu extends GameState {
 		}
 		
 	}
-
+	public void startMusic() {
+		AudioPlayer.loopMusic(SKeys.Theme);
+	};
 	public void update() {
 		background.update();
 		
