@@ -21,9 +21,9 @@ public class GUI {
       int diff = g - 255;
       g = diff;
     }
-    if(g > 255) {
-      int diff = g - 255;
-      g = diff;
+    if(b > 255) {
+      int diff = b - 255;
+      b = diff;
     }
     
     boldText = new Color(r,g,b);
