@@ -2,6 +2,8 @@ package com.cpjd.stayfrosty.menu;
 
 import java.awt.Graphics2D;
 
+import com.cpjd.stayfrosty.gamestate.GameStateManager;
+
 public class Slider {
 	
 	// The slider

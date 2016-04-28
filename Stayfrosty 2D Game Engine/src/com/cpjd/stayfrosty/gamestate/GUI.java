@@ -1,3 +1,7 @@
+package com.cpjd.stayfrosty.gamestate;
+
+import java.awt.Color;
+
 public class GUI {
   
   public static Color background;
@@ -12,7 +16,7 @@ public class GUI {
     int g = text.getGreen();
     int b = text.getBlue();
     
-    r += 30; g += 30; b += 3-;
+    r += 30; g += 30; b += 30;
     if(r > 255) {
       int diff = r - 255;
       r = diff;
