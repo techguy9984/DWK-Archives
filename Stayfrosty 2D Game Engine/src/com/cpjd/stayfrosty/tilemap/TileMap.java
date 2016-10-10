@@ -263,6 +263,8 @@ public class TileMap {
 	}
 	
 	public void draw(Graphics2D g) {
+		colOffset = -100;
+		
 		// Draw tiles
 		for(int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
 			

@@ -37,7 +37,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	
 	/* MODIFY THIS PARAMTERS, NOT ANY OTHERS */
 	public static String TITLE = "DWK Archives";
-	private static String version = "Alpha 2.0";
+	private static String version = "Pre-Alpha 1.0";
 	private static int versionCode  = 4;
 	
 	/*
@@ -95,7 +95,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setLayout(null);
-		getContentPane().setBackground(Color.BLACK);
+		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		addMouseMotionListener(this);
@@ -117,14 +117,14 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		options = new JLabel("Options: ");
 		controls = new JButton("Controls...");
 		bug = new JButton("Report a bug...");
-		noSound = new JCheckBox("-nosound");
+		noSound = new JCheckBox("Mute");
 		
 		// Set unique attributes
 		bug.setSize(130,40);
 		bug.setLocation(110,220);
 		bug.setFocusable(false);
 		bug.setBorderPainted(false);
-		bug.setBackground(Color.DARK_GRAY);
+		bug.setBackground(Color.GRAY);
 		bug.setForeground(Color.WHITE);
 		bug.addActionListener(this);
 		add(bug);
@@ -133,7 +133,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		reset.setLocation(5,270);
 		reset.setFocusable(false);
 		reset.setBorderPainted(false);
-		reset.setBackground(Color.DARK_GRAY);
+		reset.setBackground(Color.GRAY);
 		reset.setForeground(Color.WHITE);
 		reset.addActionListener(this);
 		add(reset);
@@ -142,7 +142,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		controls.setLocation(5,220);
 		controls.setFocusable(false);
 		controls.setBorderPainted(false);
-		controls.setBackground(Color.DARK_GRAY);
+		controls.setBackground(Color.GRAY);
 		controls.setForeground(Color.WHITE);
 		controls.addActionListener(this);
 		add(controls);
@@ -150,13 +150,13 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		resInfo.setSize(100,15);
 		resInfo.setLocation(5,105);
 		resInfo.setFocusable(false);
-		resInfo.setForeground(Color.DARK_GRAY);
+		resInfo.setForeground(Color.GRAY);
 		add(resInfo);
 		
 		resolution.setSize(100,25);
 		resolution.setLocation(5, 125);
 		resolution.setFocusable(false);
-		resolution.setBackground(Color.DARK_GRAY);
+		resolution.setBackground(Color.GRAY);
 		resolution.setForeground(Color.WHITE);
 		resolution.setSelectedIndex(load.getResolution());
 		resolution.addActionListener(this);
@@ -167,7 +167,8 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		quality.setLocation(5, 160);
 		quality.setFocusable(false);
 		quality.setBorderPainted(false);
-		quality.setForeground(Color.DARK_GRAY);
+		quality.setForeground(Color.GRAY);
+		quality.setBackground(Color.WHITE);
 		quality.setSelected(load.getQuality());
 		quality.setToolTipText("<html> Enable high-quality for deeper calculations <br>"
 				+ "and rendering procedures</html>");
@@ -178,7 +179,8 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		noSound.setLocation(110, 160);
 		noSound.setFocusable(false);
 		noSound.setBorderPainted(false);
-		noSound.setForeground(Color.DARK_GRAY);
+		noSound.setForeground(Color.GRAY);
+		noSound.setBackground(Color.WHITE);
 		noSound.setSelected(load.getSound());
 		noSound.addActionListener(this);
 		noSound.setToolTipText("Disables all music and SFX effects. Can be reenabled in game");
@@ -206,7 +208,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		// Add images to the launcher
 		ImageIcon titleImage = new ImageIcon(getClass().getResource("/CPJD/enginesmall.png"));
 		JLabel title = new JLabel(titleImage);
-		title.setLocation(0,0);
+		title.setLocation(-5,0);
 		title.setSize(276,39);
 		add(title);
 		
@@ -233,7 +235,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 	private void buttonDefaults(JButton b) {
 		b.setFocusable(false);
 		b.setBorderPainted(false);
-		b.setBackground(Color.DARK_GRAY);
+		b.setBackground(Color.GRAY);
 		b.addActionListener(this);
 		add(b);
 	}
@@ -293,7 +295,7 @@ public class Launcher extends JFrame implements ActionListener, MouseMotionListe
 		
 		if(e.getSource() == cpjdLogo) {
 			try {
-				URI url = new URI("http://catspjsdevelopers.weebly.com");
+				URI url = new URI("http://cpjd.weebly.com");
 				Desktop.getDesktop().browse(url);
 			} catch (Exception e1) {
 				e1.printStackTrace();

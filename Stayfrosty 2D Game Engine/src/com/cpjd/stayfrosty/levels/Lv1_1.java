@@ -1,6 +1,7 @@
 package com.cpjd.stayfrosty.levels;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import com.cpjd.stayfrosty.audio.AudioPlayer;
 import com.cpjd.stayfrosty.audio.SKeys;
@@ -9,6 +10,7 @@ import com.cpjd.stayfrosty.gamestate.GameState;
 import com.cpjd.stayfrosty.gamestate.GameStateManager;
 import com.cpjd.stayfrosty.main.GamePanel;
 import com.cpjd.stayfrosty.players.Daniel;
+import com.cpjd.stayfrosty.players.Switcher;
 import com.cpjd.stayfrosty.tilemap.Background;
 import com.cpjd.stayfrosty.tilemap.TileMap;
 
@@ -18,6 +20,8 @@ public class Lv1_1 extends GameState {
 	private Background bg;
 	private Daniel daniel;
 	private HUD hud;
+	
+	Switcher sw;
 	
 	public Lv1_1(GameStateManager gsm) {
 		super(gsm);
@@ -35,6 +39,7 @@ public class Lv1_1 extends GameState {
 		daniel = new Daniel(tileMap, gsm);
 		daniel.setPosition(190, 1150);
 		
+		sw = new Switcher();
 
 	}
 
@@ -50,6 +55,8 @@ public class Lv1_1 extends GameState {
 		tileMap.setPosition(GamePanel.WIDTH / 2 - daniel.getx(), GamePanel.HEIGHT / 2 - daniel.gety()); 
 		
 		bg.setPosition(tileMap.getx(), tileMap.gety());
+		
+		sw.update();
 	}
 
 	public void draw(Graphics2D g) {
@@ -57,10 +64,11 @@ public class Lv1_1 extends GameState {
 		tileMap.draw(g);
 		daniel.draw(g);
 		hud.draw(g);
+		sw.draw(g);
 	}
 
 	public void keyPressed(int k) {
-		
+		if(k == KeyEvent.VK_Q) sw.requestChange();
 	}
 
 	public void keyReleased(int k) {
